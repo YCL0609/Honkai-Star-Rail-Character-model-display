@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script src="https://ycl.cool/js/function.js"></script>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <title>角色立绘展示</title>
+    <link href="https://ycl.cool/media/icon.ico" rel="shortcut icon">
+    <link rel="stylesheet" type="text/css" href="css/picture.css">
+</head>
+
+<body>
+    <table style="border-collapse: collapse">
+        <tbody>
+            <tr style="background-color: darkgray;">
+                <td>姓名</td>
+                <td>属性</td>
+                <td>命途</td>
+                <td>3D模型</td>
+                <td>立绘</td>
+            </tr>
+            <tr>
+                <td id="name"></td>
+                <td id="list"></td>
+                <td id="line"></td>
+                <td id="model-normale" style="display:none">
+                    <button onclick="model(1)">查看</button>
+                </td>
+                <!-- 开拓者 -->
+                <td id="model-main" style="display:none">
+                    <button onclick="model(2)">男主</button>
+                    <button onclick="model(3)">女主</button>
+                </td>
+                <td id="model-no"><a style="color: red;">暂缺</a></td>
+                <td><button onclick="download()">下载</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <img id="img1" src="">
+    <img id="img2" src="" style="display: none">
+    <script src="./js/picture.js"></script>
+</body>
+
+</html>
