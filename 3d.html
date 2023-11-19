@@ -5,29 +5,29 @@
 	<title>3D模型查看</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<link type="text/css" rel="stylesheet" href="css/3d.css"> 
-	<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js" async></script>
-	<script src="https://threejs.org/examples/jsm/libs/ammo.wasm.js" async></script>
+	<link type="text/css" rel="stylesheet" href="css/3d.css">
+	<script async src="js/es-module-shims.js" async></script>
+	<script src="js/libs/ammo.wasm.js" async></script>
+	<script src="https://ycl.cool/js/function.js"></script>
 	<link href="https://ycl.cool/media/icon.ico" rel="shortcut icon">
 </head>
 
 <body>
 	<div id="progrsess">
-        <div id="text_div" style="width:100%;background-color:#000">
-            <h3>加载网页主文件...100.00%</h3>
-            <h3>网页主文件加载完成.</h3>
-            <h3>初始化模型加载器...</h3>
-        </div>
+		<h3 id="info">初始化模型加载器.</h3>
+		<h3 id="error" style="display: none;">0</h3>		
 	</div>
-	<input type="file" accept=".pmx" id="fileInput">
 	<script type="importmap">{
 		"imports": {
-			"three": "https://threejs.org/build/three.module.js",
-			"three/addons/": "https://threejs.org/examples/jsm/",
+			"three": "https://sr.ycl.cool/js/three.module.min.js",
+			"three/": "https://sr.ycl.cool/js/",
 			"js/3d/":"https://ycl.cool/js/3d/"
 		}
 	}</script>
-	<script type="module" src="js/3d.js"></script>
+	<script type="module" src="js/3d.js" defer></script>
+	<script defer>
+	  console.log('Finish!')
+	</script>
 </body>
 
 </html>

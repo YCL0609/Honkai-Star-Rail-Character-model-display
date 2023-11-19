@@ -13,7 +13,6 @@ body {
 
 h2,
 h3,
-h4,
 h5 {
     color: #D8D8D8;
     text-align: center;
@@ -39,9 +38,10 @@ th,td{
     background-color: rgba(74, 74, 74, 0.971);
 }
 
+
 .table-title,
-.table-title td{
-    background-color: rgb(46, 46, 46);
+.table-title td {
+    background-color: #2e2e2e;
 }
 
 .note {
@@ -51,7 +51,7 @@ th,td{
 
 .note-div {
     width: 90%;
-    color: white;
+    color: #fff;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
