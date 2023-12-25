@@ -1,0 +1,57 @@
+* {
+	-webkit-transition: 1s;
+	-moz-transition: 1s;
+	-ms-transition: 1s;
+	-o-transition: 1s;
+	transition: 1s;
+}
+
+a{
+	color: aqua;
+}
+
+body {
+	margin: 0;
+	background-color: #000;
+	color: #fff;
+	font-family: Monospace;
+	font-size: 13px;
+	line-height: 24px;
+	overscroll-behavior: none;
+	overflow: hidden;
+	width: 100%;
+}
+
+#info {
+	padding: 5px;
+	width: 300px;
+	margin: 0 auto;
+	background-color: darkgray;
+}
+
+#progrsess {
+	top: 50px;
+	position: absolute;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: center;
+	z-index: 0;
+}
+
+#three {
+	top: 10px;
+	position: absolute;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: center;
+	z-index: 0;
+}
+
+#VMDList {
+	position: absolute;
+	text-align: center;
+	margin-top: 50px;
+	left: -100px;
+	width: 90px;
+	z-index: 1;
+}

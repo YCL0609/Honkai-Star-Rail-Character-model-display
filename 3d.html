@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>3D模型查看</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link type="text/css" rel="stylesheet" href="css/3d.css">
+	<link href="https://ycl.cool/media/icon.ico" rel="shortcut icon">
+	<!-- <script src="js/baidu.js"></script>百度统计 -->
+	<script async src="js/es-module-shims.js" async></script>
+	<script src="js/libs/ammo.wasm.js" async></script>
+	<!-- <script src="https://ycl.cool/js/function.js"></script> -->
+	<script src="outside/function.js"></script>
+	<!-- <script src="https://ycl.cool/tool/browser/browser.js"></script> -->
+	<script src="outside/browser.js"></script>
+	<script>
+		function Gotovmd(cho) {
+			var id = getUrlParams('id');
+			var other = getUrlParams('other');
+			if (typeof id === 'undefined') {
+				id = 1
+			}
+			if (!other) {
+				window.location.href = "3d.html?id=" + id + "&vmd=" + cho;
+			} else {
+				window.location.href = "3d.html?id=" + id + "&other=1" + "&vmd=" + cho;
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<script type="importmap">{
+		"imports": {
+			"three": "./js/three.module.min.js",
+			"three/": "./js/"
+		}
+	}</script>
+	<script type="module" src="js/3d.js" defer></script>
+	<!-- 加载进度 -->
+	<div id="progrsess">
+		<h3 id="info" style="z-index: 2">初始化模型加载器.</h3>
+	</div>
+	<!-- vmd动作选择 -->
+	<div id="VMDList">
+		<a style="color: white">可用动作列表</a>
+		<hr>
+		<a href="#" onclick="Gotovmd(1)">极乐净土</a><br>
+		<a href="#" onclick="Gotovmd(2)">彩虹节拍</a>
+		<hr>
+		<button onclick="document.getElementById('VMDList').style.left='-100px'">关闭</button>
+	</div>
+	<!-- three.js -->
+	<div id="three">
+		此页使用<a href="https://threejs.org/">three.js</a>作为webgl渲染引擎
+	</div>
+</body>
+
+</html>

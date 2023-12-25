@@ -1,0 +1,38 @@
+{
+    "1": {
+        "name": "帕姆",
+        "from": "神帝宇",
+        "mmd": false,
+        "weapons": 0
+    },
+    "2": {
+        "name": "史瓦罗",
+        "from": "神帝宇",
+        "mmd": false,
+        "weapons": 0
+    },
+    "3": {
+        "name": "三月七new",
+        "from": "给你柠檬椰果养乐多你会跟我玩吗",
+        "mmd": true,
+        "weapons": 0
+    },
+    "4": {
+        "name": "雪衣",
+        "from": "隔壁的隔壁老黄",
+        "mmd": true,
+        "weapons": 0
+    },
+    "5": {
+        "name": "幻胧",
+        "from": "隔壁的隔壁老黄",
+        "mmd": false,
+        "weapons": 1
+    },
+    "6": {
+        "name": "可可利亚BOSS",
+        "from": "隔壁的隔壁老黄",
+        "mmd": false,
+        "weapons": 0
+    }
+}

@@ -1,0 +1,135 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <title>《崩坏:星穹铁道》角色立绘和3D模型展示</title>
+  <link href="https://ycl.cool/media/icon.ico" rel="shortcut icon">
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+  <!-- <script src="js/baidu.js"></script>百度统计 -->
+  <!-- <script src="https://ycl.cool/js/function.js"></script> -->
+  <script src="outside/function.js"></script>
+</head>
+
+<body>
+  <div class="box">
+    <h2>《崩坏:星穹铁道》角色立绘和3D模型展示<a class="note" href="#note1">(1)</a></h2>
+    <h3>点击角色名查看详细信息</h3>
+    <table colspan="2">
+      <thead>
+        <!-- 战斗属性  -->
+        <tr class="table-title">
+          <td style="min-width: 20px;"></td>
+          <!-- 物理  -->
+          <td>
+            <img src="img/物理.png">
+          </td>
+          <!-- 火  -->
+          <td>
+            <img src="img/火.png">
+          </td>
+          <!-- 冰  -->
+          <td>
+            <img src="img/冰.png">
+          </td>
+          <!-- 雷  -->
+          <td>
+            <img src="img/雷.png">
+          </td>
+          <!-- 风(电脑) -->
+          <td data-device="mobile">
+            <img src="img/风.png">
+          </td>
+          <!-- 量子(电脑) -->
+          <td data-device="mobile">
+            <img src="img/量子.png">
+          </td>
+          <!-- 虚数(电脑) -->
+          <td data-device="mobile">
+            <img src="img/虚数.png">
+          </td>
+        </tr>
+      </thead>
+      <tbody id="pc">
+        <tr>
+          <td colspan="8">加载表格...</td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="moble-div" style="display: none">
+      <h5>续表</h5>
+      <table colspan="2">
+        <thead>
+          <tr class="table-title">
+            <td></td>
+            <!-- 风(手机) -->
+            <td>
+              <img src="img/风.png">
+            </td>
+            <!-- 量子(手机) -->
+            <td>
+              <img src="img/量子.png">
+            </td>
+            <!-- 虚数(手机) -->
+            <td>
+              <img src="img/虚数.png">
+            </td>
+          </tr>
+        </thead>
+        <tbody id="mobile">
+          <tr>
+            <td colspan="3">加载表格...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>未分类模型</h3>
+    <table colspan="2">
+      <thead>
+        <tr class="table-title" style="color: white;">
+          <td>
+            已公布人物
+            <a class="note" href="#note4">(4)</a>
+          </td>
+          <td>
+            未公布人物
+            <a class="note" href="#note5">(5)</a>
+          </td>
+          <td>
+            其他人物模型
+            <a class="note" href="#note6">(6)</a>
+          </td>
+        </tr>
+      </thead>
+      <tbody id="unknow">
+        <tr>
+          <td colspan="3">加载表格...</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note-div">
+      注释:<br>
+      <a id="note1">
+        (1) <a style="color: #00bfff" href="https://www.bilibili.com/read/cv23111427/">《崩坏: 星穹铁道》同人衍生作品创作指引</a>;<br>
+      </a>
+      <a id="note2">(2) 此角色暂时没有官方公布的人物立绘, 立绘页使用大招立绘;</a><br>
+      <a id="note3">(3) 此角色暂时没有官方公布的3D模型;</a><br>
+      <a id="note4">(4) 此列为官方公布的无法分类的人物模型;</a><br>
+      <a id="note5">(5) 此列处为<a style="font-weight: bolder">非官方</a>公布的无法分类的人物模型;</a><br>
+      <a id="note6">(6) 此列处为<a style="font-weight: bolder">非官方</a>公布的无法分类的其他模型。</a><br>
+    </div>
+    <h5>
+      崩坏:星穹铁道角色展示 <a id="version"><a>
+          <a href="https://ycl.cool/blog/index.php/archives/17/" style="color: deepskyblue">更新日志</a>
+    </h5>
+    <script>
+      json("./data.json", "0", "version", (ver) => {
+        document.getElementById('version').innerText = ver
+      })
+    </script>
+  </div>
+  <script src="js/index.js"></script>
+</body>
+
+</html>
