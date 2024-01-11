@@ -12,8 +12,8 @@ let helper, mesh;
 let camera, scene, renderer, effect, composer;
 let info = document.getElementById('info');
 const clock = new THREE.Clock();
-let urlroot = "https://ycl069.github.io";
-// let urlroot = ".";
+// let urlroot = "https://model.ycl.cool";
+let urlroot = "./models";
 
 // 处理传入参数
 var id = getUrlParams('id');
@@ -91,7 +91,7 @@ function init() {
         var name = "男主"
       }
     }
-    var pmxfile = `${urlroot}/models/${name}/index.pmx`;
+    var pmxfile = `${urlroot}/${name}/index.pmx`;
     if (!vmd) {
       loader.load(
         pmxfile,
@@ -146,8 +146,10 @@ function init() {
                   animation: mmd.animation,
                   physics: true
                 });
+
                 // 播放音频
                 oceanAmbientSound.play();
+                
                 // 提示信息
                 info.innerHTML = "请稍等..."
                 setTimeout(() => {
@@ -157,8 +159,10 @@ function init() {
                   setTimeout(() => {
                     document.getElementById('progrsess').style.display = "none";
                   }, 3000)
+                  
                 }, 1500)
               }
+
               // 提示信息2
               document.getElementById('VMDList').style.left = "0px";
               info.style.backgroundColor = "#00ff00a4";
@@ -235,42 +239,63 @@ function render() {
 // 加载武器模型
 function weapons(loader, name, number) {
   if (number == 1) {
-    loader.load(`${urlroot}/models/${name}/1.pmx`, function (mesh) {
-      // 添加到屏幕( X:-10 y:-10 Z:0)
-      mesh.position.x = -10;
-      mesh.position.y = -10;
-      scene.add(mesh);
-    })
+    var x = [0, -10];
+    var z = [0, 0];
   } else if (1 < number && number <= 4) {
-    let x = [0, -10, +10, +5, -5, -10];
-    let z = [0, 0, 0, -10, -10, 0];
-    for (let i = 1; i <= number; i++) {
-      loader.load(`${urlroot}/models/${name}/${i}.pmx`, (mesh) => {
+    var x = [0, -10, +10, +5, -5, -10];
+    var z = [0, 0, 0, -10, -10, 0];
+  } else if (number > 4) {// 姬子、玲可
+    var x = [0, -15, +20, +10, -10, -20, 0, +20];
+    var z = [0, 0, 0, -15, -15, -15, -15, -15];
+  }
+  for (let i = 1; i <= number; i++) {
+
+    // 动态添加提示信息
+    var info = document.createElement('h3');
+    info.style.height = "50px"
+    info.style.width = "300px";
+    info.id = "info" + i;
+    info.style.zIndex = 2;
+    info.className = "info";
+    document.getElementById('progrsess').appendChild(info);
+    let infoh3 = document.getElementById('info' + i);
+
+    loader.load(
+      `${urlroot}/${name}/${i}.pmx`,
+      (mesh) => {
+
+        // 提示信息
+        infoh3.style.backgroundColor = "#00ff00a4";
+        infoh3.innerText = `武器模型${i}加载完成.`;
+        infoh3.style.height = "20px";
+        infoh3.style.width = "250px"
+        setTimeout(() => {
+          infoh3.style.height = "0px";
+          infoh3.innerText = "";
+          infoh3.style.padding = "0px";
+        }, 2000)
+
         // 添加到屏幕(X,Y,Z)
         mesh.position.x = x[i];
         mesh.position.y = -10;
         mesh.position.z = z[i];
         scene.add(mesh);
+
+      },
+      (xhr) => {
+        infoh3.innerHTML = `加载武器模型${i}...` + (xhr.loaded / xhr.total * 100).toFixed(2) + "%<br>" + (xhr.loaded / 1024).toFixed(0) + " KB / " + (xhr.total / 1024).toFixed(0) + " KB";
+      },
+      (err) => {
+        console.error(err);
       });
-    }
-  } else if (number > 4) {
-    // 姬子、玲可
-    let x = [0, -15, +20, +10, -10, -20, 0, +20];
-    let z = [0, 0, 0, -15, -15, -15, -15, -15];
-    for (let i = 1; i <= number; i++) {
-      loader.load(`${urlroot}/models/${name}/${i}.pmx`, (mesh) => {
-        // 添加到屏幕(X,Y,Z)
-        mesh.position.x = x[i];
-        mesh.position.y = -10;
-        mesh.position.z = z[i];
-        scene.add(mesh);
-      });
-    }
   }
 }
 
 // 加载完成提示信息
 function Finish() {
+  info.style.backgroundColor = "#00ff00a4";
+  info.style.width = "250px";
+
   // 关闭按钮
   var ok = document.createElement('button');
   ok.innerText = "关闭";
@@ -282,8 +307,8 @@ function Finish() {
       document.getElementById('progrsess').style.display = "none";
     }, 3000)
   }
-  info.style.backgroundColor = "#00ff00a4";
-  info.style.width = "250px";
+
+  // 官方模型
   if (!other) {
     info.innerHTML = "加载完成! 请等待模型贴图下载.<hr>模型来源: 神帝宇<hr>";
     info.appendChild(ok);
@@ -291,17 +316,22 @@ function Finish() {
       document.getElementById('VMDList').style.left = "0px";
       document.getElementById('three').style.top = "-20px"
     }, 1500)
+
+  // 非官方模型
   } else {
     json(dataurl, id, "from", (from) => {
       info.innerHTML = `加载完成! 请等待模型贴图下载.<hr>模型来源: ${from}<hr>`;
       info.appendChild(ok);
     })
     setTimeout(() => {
+      
+      // 检查是否可以使用mmd动作
       json(dataurl, id, "mmd", (CanVMD) => {
         if (CanVMD) {
           document.getElementById('VMDList').style.left = "0px";
         }
       })
+
       document.getElementById('three').style.top = "-20px"
     }, 1500)
   }

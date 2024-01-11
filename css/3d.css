@@ -22,11 +22,12 @@ body {
 	width: 100%;
 }
 
-#info {
+.info {
 	padding: 5px;
 	width: 300px;
 	margin: 0 auto;
 	background-color: darkgray;
+	z-index: 2;
 }
 
 #progrsess {

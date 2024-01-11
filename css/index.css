@@ -36,6 +36,16 @@ th,td{
     padding: 5px 0px;
 }
 
+#info {
+    margin-top: 10px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#info button{
+    line-height: 20px;
+}
+
 .box{
     margin: auto;
     width: 500px;
