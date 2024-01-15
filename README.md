@@ -5,12 +5,12 @@
 3.  演示地址[https://sr.ycl.cool][URL3]<br>
 ## 主页面 -- index.html
 此处可以根据需要查看的角色的属性和命途进行选择。<br>
-所有表格独立为文件以方便后续更新。<br>
+所有表格独立为文件以方便后续更新。(表格文件使用html语法)<br>
 &nbsp;&nbsp;pc.table     -- 主表格<br>
 &nbsp;&nbsp;moble.table  -- 主表格续表(用于兼容手机)<br>
 &nbsp;&nbsp;unknow.table -- 未分类模型<br>
 ![主页面](https://www.ycl.cool/blog/usr/uploads/2023/11/2659766377.png "主页面")
-点击未分类模型会绕过picture.html直接跳转到3d.html并使用data2.json。
+点击未分类模型会绕过picture.html直接跳转到3d.html并使用data2.json。<br>
 data2.json示例:
 ```
 "3": { // 人物编号
