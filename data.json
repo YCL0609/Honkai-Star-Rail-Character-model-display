@@ -6,7 +6,7 @@
         "urlroot": true,
         "model": false,
         "weapons": 0,
-        "version": "V2.1"
+        "version": "V2.1.1"
     },
     "1": {
         "name": "艾丝妲",
@@ -246,8 +246,8 @@
         "data": "1,6",
         "picurl": "/a/ab/0oy5nb9sqvjyff89j1jsq6vkran5a82.png",
         "urlroot": true,
-        "model": false,
-        "weapons": 0
+        "model": true,
+        "weapons": 1
     },
     "31": {
         "name": "藿藿",
@@ -326,38 +326,38 @@
         "data": "4,3",
         "picurl": "/f/f3/enc8l44r8z89keumyagi2zkd9zzv72a.png",
         "urlroot": true,
-        "model": false,
-        "weapons": 0
+        "model": true,
+        "weapons": 2
     },
     "40": {
         "name": "真理医生",
         "data": "2,7",
-        "picurl": "/2023/10/30/288909600/bb8d50255eb38c25b93200b7d35fc264_791748237386081536.jpg",
-        "urlroot": false,
-        "model": false,
-        "weapons": 0
+        "picurl": "/6/68/art8sao8fcbmil27hd874zjb2wlw9wx.png",
+        "urlroot": true,
+        "model": true,
+        "weapons": 1
     },
     "41": {
         "name": "黑天鹅",
         "data": "5,5",
-        "picurl": "/2023/10/30/288909600/bb8d50255eb38c25b93200b7d35fc264_791748237386081536.jpg",
-        "urlroot": false,
+        "picurl": "/5/55/daz1xi6s2uy8loajbihqas5lrsufrse.png",
+        "urlroot": true,
         "model": false,
         "weapons": 0
     },
     "42": {
         "name": "花火",
         "data": "4,6",
-        "picurl": "/2023/12/13/288909600/714aae81c38a7f101a18bc524c970697_847036244424473361.jpg",
-        "urlroot": false,
+        "picurl": "/e/ee/2e9ryoqq4ux2cw4qamheaere2yblusw.png",
+        "urlroot": true,
         "model": false,
         "weapons": 0
     },
     "43": {
         "name": "米沙",
         "data": "1,3",
-        "picurl": "/2023/12/13/288909600/a1b7aadccaf9b6ecc18e2d5cb9cdfe12_2757489369192553193.jpg",
-        "urlroot": false,
+        "picurl": "/1/1c/sv2t0pu837gggdu1uk2khfxlwykrb35.png",
+        "urlroot": true,
         "model": false,
         "weapons": 0
     },
