@@ -28,14 +28,14 @@ data.json示例:
 ```
 "1": {  // 人物编号
     "name": "艾丝妲",  // 名称
-    "data": "4,2",    // 表格位置
+    "data": "4,2",    // 表格位置 (前者为命途后者为战斗属性)
     "picurl": "/f/fb/t3l8ksl1j60xbi9zpfdhj8w2wb5hibh.png", // 立绘地址
     "urlroot": true,  // 立绘地址是否为 wiki.biligame.com
     "model": true,    // 是否有3D模型
     "weapons": 1      // 人物有几个武器模型
 },
 ```
-若网站带宽充足，可删除"urlroot"行并替换"picurl"为本地路径，同时请删除picture.js的一下代码。
+若网站带宽充足，可删除"urlroot"行并替换"picurl"为本地路径，同时请删除picture.js以下代码。
 ```
 // 判断立绘图片的所属域名前缀
 if (result) {
