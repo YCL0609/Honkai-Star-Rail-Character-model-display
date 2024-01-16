@@ -10,10 +10,7 @@
     7. 虚数
      -->
     <td><a href="picture.html?id=34">刃</a></td>
-    <td>
-        <a href="picture.html?id=30" style="color: aqua;">雪衣</a>
-        <a class="note" href="#note3">(3)</a>
-    </td>
+    <td><a href="picture.html?id=30">雪衣</a></td>
     <td><a href="picture.html?id=7">饮月</a></td>
 </tr>
 <!-- 巡猎  -->
@@ -29,10 +26,7 @@
      -->
     <td><a href="picture.html?id=6">丹恒</a></td>
     <td><a href="picture.html?id=19">希儿</a></td>
-    <td>
-        <a href="picture.html?id=40" style="color: aqua;">真理医生</a>
-        <a class="note" href="#note3">(3)</a>
-    </td>
+    <td><a href="picture.html?id=40">真理医生</a></td>
 </tr>
 <!-- 智识  -->
 <tr>

@@ -92,6 +92,7 @@ function init() {
       }
     }
     var pmxfile = `${urlroot}/${name}/index.pmx`;
+    info.innerText = "模型主文件待加载.";
     if (!vmd) {
       loader.load(
         pmxfile,
@@ -254,9 +255,10 @@ function weapons(loader, name, number) {
     var info = document.createElement('h3');
     info.style.height = "50px"
     info.style.width = "300px";
-    info.id = "info" + i;
     info.style.zIndex = 2;
+    info.id = "info" + i;
     info.className = "info";
+    info.innerText = `武器模型${i}待加载`
     document.getElementById('progrsess').appendChild(info);
     let infoh3 = document.getElementById('info' + i);
 

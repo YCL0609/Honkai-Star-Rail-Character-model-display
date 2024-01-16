@@ -28,10 +28,7 @@
   </td>
   <td><a href="picture.html?id=3">阿兰</a></td>
   <td data-device="mobile"><a href="picture.html?id=34">刃</a></td>
-  <td data-device="mobile">
-    <a href="picture.html?id=30" style="color: aqua;">雪衣</a>
-    <a class="note" href="#note3">(3)</a>
-  </td>
+  <td data-device="mobile"><a href="picture.html?id=30">雪衣</a></td>
   <td data-device="mobile"><a href="picture.html?id=7">饮月</a></td>
 </tr>
 <!-- 巡猎  -->
@@ -55,10 +52,7 @@
   <td></td>
   <td data-device="mobile"><a href="picture.html?id=6">丹恒</a></td>
   <td data-device="mobile"><a href="picture.html?id=19">希儿</a></td>
-  <td data-device="mobile">
-    <a href="picture.html?id=40" style="color: aqua;">真理医生</a>
-    <a class="note" href="#note3">(3)</a>
-  </td>
+  <td data-device="mobile"><a href="picture.html?id=40">真理医生</a></td>
 </tr>
 <!-- 智识  -->
 <tr>
@@ -105,10 +99,7 @@
   -->
   <td><a href="picture.html?id=44">寒鸦</a></td>
   <td><a href="picture.html?id=1">艾丝妲</a></td>
-  <td>
-    <a href="picture.html?id=39" style="color: aqua;">阮•梅</a>
-    <a class="note" href="#note3">(3)</a>
-  </td>
+  <td><a href="picture.html?id=39">阮•梅</a></td>
   <td><a href="picture.html?id=25">停云</a></td>
   <td data-device="mobile"><a href="picture.html?id=10">布洛妮娅</a></td>
   <td data-device="mobile">

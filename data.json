@@ -6,7 +6,7 @@
         "urlroot": true,
         "model": false,
         "weapons": 0,
-        "version": "V2.1.1"
+        "version": "V2.2"
     },
     "1": {
         "name": "艾丝妲",
@@ -292,7 +292,7 @@
     "35": {
         "name": "罗刹",
         "data": "7,7",
-        "picurl": "/3/36/10dqd1wzjx1xoppxz46ygeqmbxf6rpt.png",
+        "picurl": "/e/e4/snkt80kmu6qjcfbo4mchcdcolnerx0t.png",
         "urlroot": true,
         "model": true,
         "weapons": 3
@@ -300,7 +300,7 @@
     "36": {
         "name": "银狼",
         "data": "5,6",
-        "picurl": "/9/9b/1tyxty69xim1zpm4gps64ob8b9gygyq.png",
+        "picurl": "/e/ea/mavqad0rxp6zttalka56tspnd1t9qi8.png",
         "urlroot": true,
         "model": true,
         "weapons": 2
@@ -308,7 +308,7 @@
     "37": {
         "name": "托帕",
         "data": "2,2",
-        "picurl": "/3/36/10dqd1wzjx1xoppxz46ygeqmbxf6rpt.png",
+        "picurl": "/9/9b/1tyxty69xim1zpm4gps64ob8b9gygyq.png",
         "urlroot": true,
         "model": true,
         "weapons": 3
