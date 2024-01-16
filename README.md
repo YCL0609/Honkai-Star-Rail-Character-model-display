@@ -9,7 +9,7 @@
 &nbsp;&nbsp;pc.table     -- 主表格<br>
 &nbsp;&nbsp;moble.table  -- 主表格续表(用于兼容手机)<br>
 &nbsp;&nbsp;unknow.table -- 未分类模型<br>
-![主页面](https://www.ycl.cool/blog/usr/uploads/2023/11/2659766377.png "主页面")
+![主页面](https://github.com/YCL0609/Honkai-Star-Rail-Character-model-display/blob/main/README/main.jpeg "主页面")
 点击未分类模型会绕过picture.html直接跳转到3d.html并使用data2.json。<br>
 data2.json示例:
 ```
@@ -23,7 +23,7 @@ data2.json示例:
 ## 立绘页面 -- picture.html
 点击对应的角色名字以后即可进入立绘查看页面，此处可根据需要下载立绘。<br>
 点击查看3D模型后会从data.json里读取模型相关信息并传递给3D页面。<br>
-![立绘页面](https://www.ycl.cool/blog/usr/uploads/2023/11/4171367656.jpeg "立绘页面")
+![立绘页面](https://github.com/YCL0609/Honkai-Star-Rail-Character-model-display/blob/main/README/picture.jpeg "立绘页面")
 data.json示例:
 ```
 "1": {  // 人物编号
@@ -48,7 +48,7 @@ if (result) {
 点击查看将进入3D模型查看页面。(演示页面的模型在Github Page上所以可能会出现较长的加载时间)<br>
 对应角色的武器会显示在角色周围。<br>
 网页左侧会显示当前可以使用的模型动作文件，点击可以查看对应mmd动作.
-![模型查看](https://www.ycl.cool/blog/usr/uploads/2023/12/1452640808.jpeg "模型查看")
+![模型查看](https://github.com/YCL0609/Honkai-Star-Rail-Character-model-display/blob/main/README/3d.jpeg "模型查看")
 进入页面会先行判断访问设备是否为webket内核若是则弹出提示框。
 此处判断浏览器内核用的是https://github.com/mumuy/browser/
 ```
