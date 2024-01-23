@@ -2,13 +2,13 @@
 ## 前言
 1.  本站展示的所有3D模型和角色立绘版权均[为米哈游科技(上海)有限公司][URL1]所有, 本站仅提供展示!<br>
 2. [《崩坏: 星穹铁道》同人衍生作品创作指引][URL2]<br>
-3.  演示地址[https://sr.ycl.cool][URL3]<br>
+3. 演示地址[https://sr.ycl.cool][URL3]<br>
+## outsite目录
+目录内为引用的其他网站js文件副本。<br>
+&nbsp;&nbsp;&nbsp;function.js — 此文件为www.ycl.cool主网站及其附属页公用函数库，可按需要删除未用到的函数;<br>
+&nbsp;&nbsp;&nbsp;browser.js —此文件为3D页判断浏览器内核所用，源库地址为[https://github.com/mumuy/browser/][URL4]<br>
 ## 主页面 -- index.html
 此处可以根据需要查看的角色的属性和命途进行选择。<br>
-所有表格独立为文件以方便后续更新。(表格文件使用html语法)<br>
-&nbsp;&nbsp;pc.table     -- 主表格<br>
-&nbsp;&nbsp;moble.table  -- 主表格续表(用于兼容手机)<br>
-&nbsp;&nbsp;unknow.table -- 未分类模型<br>
 ![主页面](https://www.ycl.cool/blog/usr/uploads/2023/11/2659766377.png "主页面")<br>
 点击未分类模型会绕过picture.html直接跳转到3d.html并使用data2.json。<br>
 data2.json示例:
@@ -60,10 +60,19 @@ if (browser().engine == "webkit" || isSafari) {
 ```
 当模型读取成功时控制台会输出详细信息。<br>
 正常读取示例:
-```ID:1 Name:艾丝妲 Weapons:1```<br>
+```
+Model:
+ ID:1 Name:艾丝妲 Weapons:1
+```
 带mmd动作读取示例:
-```ID:1 Name:艾丝妲 ModelFrom:神帝宇 AnimationID:1 AnimationName:极乐净土 AnimationFrom:だんぶち```
+```
+Model:
+ ID:1 Name:艾丝妲 From:神帝宇
+Animation:
+ ID:1 Name:极乐净土 From:だんぶち
+```
 
 [URL1]:https://www.mihoyo.com/
 [URL2]:https://www.bilibili.com/read/cv23111427/
 [URL3]:https://sr.ycl.cool/
+[URL4]:https://github.com/mumuy/browser/

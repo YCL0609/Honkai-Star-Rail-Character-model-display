@@ -1,57 +1,59 @@
-// 处理主表格
-fetch('pc.table')
-    .then(response => response.text())
-    .then(text => {
-        // 将数据填入表格
-        const pc = document.getElementById('pc');
-        pc.innerHTML = text;
-        // 手机
-        if (isMobile()) {
-            // 网页背景
-            var url = "url('https://upload-bbs.miyoushe.com/upload/2023/05/08/160629650/a76cc3fdfca9be96d2f716a57852dcdd_5751512773958571924.jpg')";
-            document.body.style.background = url;
-            // 处理主表续表
-            fetch('mobile.table')
-                .then(response => response.text())
-                .then(text => {
-                    // 将数据填入表格
-                    const mobile = document.getElementById('mobile');
-                    mobile.innerHTML = text;
-                })
-                .catch(error => console.error(error));
-            document.getElementById('moble-div').style.display = "";
-            // 遍历单元格隐藏data-device="mobile"单元格
-            const cells = document.querySelectorAll('td');
-            cells.forEach(cell => {
-                // 将符合条件的单元格隐藏
-                if (cell.getAttribute('data-device') == 'mobile') {
-                    cell.style.display = 'none';
+// 无介绍立绘id
+var nopic = [4, 12, 17, 25, 45];
+// 主表格
+JsonToTable('data.json', 'table', true, 'table2');
+// 未分类模型
+JsonToTable('data2.json', 'table3', false);
+
+async function JsonToTable(file, tablename, main) {
+    var data = await ReadJson(file, 0, 0, true);
+    for (let i = 1; i <= data[0]['total']; i++) {
+        let parts = data[i]['data'].split(",");
+        let cell = document.getElementById(`${tablename}-${parts[0]}${parts[1]}`)
+        let a = document.createElement('a');
+        let note = document.createElement('a');
+        let br = document.createElement('br');
+
+        // 设置单元格内容
+        a.innerText = data[i]['name'];
+        a.href = `3d.html?id=${i}&other=1`;
+        note.classList = "note";
+
+        // 主表人物标记
+        if (main) {
+            // 跳转
+            a.href = `picture.html?id=${i}`;
+            // 无模型
+            if (!data[i]['model']) {
+                a.style.color = "aqua";
+                note.innerText = "(3)";
+                note.href = "#note3";
+            }
+            // 无人物介绍立绘
+            nopic.forEach(element => {
+                if (i == element) {
+                    a.style.color = "greenyellow";
+                    note.innerText = "(2)";
+                    note.href = "#note2";
                 }
-            });
+            })
+            // 手机
+            if (isMobile()) {
+                document.getElementById('moble-div').style.display = null;
+                for (let i = 0; i <= 7; i++) {
+                    for (let e = 5; e <= 7; e++) {
+                        let td = document.getElementById(`table-${i}${e}`);
+                        let td2 = document.getElementById(`table2-${i}${e}`);
+                        td.style.display = "none";
+                        td2.innerHTML = td.innerHTML;
+                    }
+                }
+            }
         }
-    })
-    .catch(error => console.error(error));
 
-
-
-// 未分类模型表格
-fetch('unknow.table')
-    .then(response => response.text())
-    .then(text => {
-        // 将数据填入表格
-        const unknow = document.getElementById('unknow');
-        unknow.innerHTML = text;
-    })
-    .catch(error => console.error(error));
-
-function jump(line, list, name, other) {
-    if (typeof (other) == "undefined" || other == null) {
-        window.location.href = "picture.html?line=" + line + "&list=" + list + "&name=" + name;
-    } else {
-        window.location.href = "picture.html?line=" + line + "&list=" + list + "&name=" + name + "&other=" + other;
+        // 添加到页面
+        cell.appendChild(a);
+        cell.appendChild(note);
+        cell.appendChild(br);
     }
-}
-
-function jump3D(name) {
-    window.location.href = "3d.html?name=" + name;
 }

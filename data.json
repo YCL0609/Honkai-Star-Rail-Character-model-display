@@ -1,12 +1,8 @@
 {
     "0": {
-        "name": "<a style='color:red'>参数错误</a>",
-        "data": "0,0",
-        "picurl": "/a/a9/iz7lu3jtjitew6an9kyiijagnwrfilc.png",
-        "urlroot": true,
-        "model": false,
-        "weapons": 0,
-        "version": "V2.2"
+        "total": 45,
+        "version": "V2.3",
+        "version2": "2024-01-15"
     },
     "1": {
         "name": "艾丝妲",
