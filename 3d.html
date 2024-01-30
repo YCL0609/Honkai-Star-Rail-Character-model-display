@@ -6,14 +6,14 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	<link type="text/css" rel="stylesheet" href="css/3d.css">
-	<link href="https://ycl.cool/media/icon.ico" rel="shortcut icon">
-	<script src="js/baidu.js"></script>
-	<script async src="js/es-module-shims.js" defer></script>
-	<script src="js/libs/ammo.wasm.js" defer></script>
-	<script src="https://www.ycl.cool/js/function.js" defer></script>
-	<!-- <script src="outside/function.js" defer></script> -->
-	<script src="https://www.ycl.cool/tool/browser/browser.js" defer></script>
-	<!-- <script src="outside/browser.js" defer></script> -->
+	<link href="https://www.ycl.cool/media/icon.ico" rel="shortcut icon">
+	<!-- <script src="js/baidu.js"></script> -->
+	<script async src="js/three.js/es-module-shims.js" defer></script>
+	<script src="js/three.js/libs/ammo.wasm.js" defer></script>
+	<!-- <script src="https://www.ycl.cool/js/function.js" defer></script> -->
+	<script src="outside/function.js" defer></script>
+	<!-- <script src="https://www.ycl.cool/tool/browser/browser.js" defer></script> -->
+	<script src="outside/browser.js" defer></script>
 	<script>
 		function Gotovmd(cho) {
 			var id = getUrlParams('id');
@@ -33,24 +33,56 @@
 <body>
 	<script type="importmap">{
 		"imports": {
-			"three": "./js/three.module.min.js",
-			"three/": "./js/"
+			"three": "./js/three.js/three.module.min.js",
+			"three/": "./js/three.js/"
 		}
 	}</script>
 	<script type="module" src="js/3d.js" defer></script>
 	<!-- 加载进度 -->
-	<div id="progrsess">
-		<h3 id="info" class="info">初始化模型加载器...(1/2)<br>加载three.js主文件...</h3>
-		<script>
-			window.onload = () => {
-				document.getElementById('info').innerHTML = "初始化模型加载器...(2/2)<br>加载MMDLoader插件..."
-			}
-		</script>
+	<div id="info">
+		<div id="info-main">
+			<div id="main">
+				<h4 id="main-h4" style="margin-left: 12%;text-align: left;">主进度:<a id="text0" class="text">(1/4)加载three.js主文件</a></h4>
+				<div class="progress">
+					<div id="progress0" class="progress-inside" style="width: 0%"></div>
+				</div>
+			</div>
+			<div id="module" style="display: none">
+				<h4><a id="text1" class="text">主模型:</a></h4>
+				<div class="progress">
+					<div id="progress1" class="progress-inside" style="width: 0%"></div>
+				</div>
+			</div>
+			<button id="start" style="display: none;"></button>
+			<div id="background" style="display: none">
+				<h4>场景模型:<a id="text2" class="text"></a></h4>
+				<div class="progress">
+					<div id="progress2" class="progress-inside" style="width: 0%"></div>
+				</div>
+			</div>
+			<div id="skybox" style="display: none">
+				<h4>天空盒:<a id="text3" class="text">加载材质...</a></h4>
+				<div class="progress">
+					<div id="progress3" class="progress-inside" style="width: 0%"></div>
+				</div>
+			</div>
+			<script>
+				window.onload = () => {
+					// 判断是否为Webkit用户
+					var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+					if (browser().engine == "webkit" || isSafari) {
+						alert('!!!注意!!!\n由于Webkit内核对于WebGL兼容性有限, 页面可能出现未知渲染问题。\n若可能请更换非Webkit内核浏览器访问。')
+					}
+					document.getElementById('text0').innerText = "(2/4)加载MMDLoader插件..."
+					document.getElementById('progress0').style.width = "25%"
+				}
+			</script>
+		</div>
 	</div>
 	<!-- vmd动作选择 -->
 	<div id="VMDList">
-		<a style="color: white">可用动作列表</a>
-		<hr>
+		<a style="color: #ffffff">可用动作列表</a>
+		<br>
 		<a href="#" onclick="Gotovmd(1)">极乐净土</a><br>
 		<a href="#" onclick="Gotovmd(2)">彩虹节拍</a>
 		<hr>

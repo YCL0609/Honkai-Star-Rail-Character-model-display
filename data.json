@@ -1,8 +1,8 @@
 {
     "0": {
-        "total": 45,
-        "version": "V2.3",
-        "version2": "2024-01-15"
+        "total": 48,
+        "version": "V2.3 Bata",
+        "version2": "2024-01-24"
     },
     "1": {
         "name": "艾丝妲",
@@ -43,7 +43,7 @@
         "picurl": "/e/e8/1q46duvfdnp2bpd67qfaa1dsbycrijj.png",
         "urlroot": true,
         "model": true,
-        "weapons": 1
+        "weapons": 2
     },
     "6": {
         "name": "丹恒",
@@ -54,7 +54,7 @@
         "weapons": 1
     },
     "7": {
-        "name": "丹恒•饮月",
+        "name": "饮月",
         "data": "1,7",
         "picurl": "/0/04/43nk7fcvbcmeflbxziccsra8havwu5u.png",
         "urlroot": true,
@@ -95,7 +95,7 @@
     },
     "12": {
         "name": "希露瓦",
-        "data": "4,3",
+        "data": "3,4",
         "picurl": "/c/cf/l5kq8zxopx7wfs9jjjm0zm2bvnufju6.png",
         "urlroot": true,
         "model": true,
@@ -167,7 +167,7 @@
     },
     "21": {
         "name": "景元",
-        "data": "4,3",
+        "data": "3,4",
         "picurl": "/2/21/7cdhu682y5kup1lcp06ve2cncp4kz2g.png",
         "urlroot": true,
         "model": true,
@@ -230,7 +230,7 @@
         "weapons": 1
     },
     "29": {
-        "name": "静流",
+        "name": "镜流",
         "data": "1,3",
         "picurl": "/b/b9/b1v5kx6pyxkq288telfdwdik5qiyw64.png",
         "urlroot": true,
@@ -263,7 +263,7 @@
     },
     "44": {
         "name": "寒鸦",
-        "data": "4,7",
+        "data": "4,1",
         "picurl": "/d/df/bla69hsv1inbrflt70o1s9t5xby1res.png",
         "urlroot": true,
         "model": true,
@@ -299,7 +299,7 @@
         "picurl": "/e/ea/mavqad0rxp6zttalka56tspnd1t9qi8.png",
         "urlroot": true,
         "model": true,
-        "weapons": 2
+        "weapons": 1
     },
     "37": {
         "name": "托帕",
@@ -307,7 +307,7 @@
         "picurl": "/9/9b/1tyxty69xim1zpm4gps64ob8b9gygyq.png",
         "urlroot": true,
         "model": true,
-        "weapons": 3
+        "weapons": 2
     },
     "38": {
         "name": "银枝",
@@ -365,5 +365,29 @@
         "picurl2": "/c/ca/4pvz8amab0bem4vazg00blxhr7xnaau.png",
         "model": true,
         "weapons": 2
+    },
+    "46": {
+        "name": "黄泉",
+        "data": "5,4",
+        "urlroot": false,
+        "picurl": "/2024/01/22/288909600/04b0d0b734a6b8541e880cde582527c0_8230522888929671387.jpg",
+        "model": false,
+        "weapons": 0
+    },
+    "47": {
+        "name": "砂金",
+        "data": "6,7",
+        "urlroot": false,
+        "picurl": "/2024/01/23/288909600/d946d6c401ad9b2ebbd354936e451638_3029755409916751313.jpg",
+        "model": false,
+        "weapons": 0
+    },
+    "48": {
+        "name":"加拉赫",
+        "data":"7,2",
+        "urlroot":false,
+        "picurl":"/2024/01/24/288909600/3cccc8369e95c2689443880427139209_1920403837972137716.jpg",
+        "model":false,
+        "weapons":0
     }
 }
