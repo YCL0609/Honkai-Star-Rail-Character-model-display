@@ -1,8 +1,8 @@
 {
     "0": {
         "total": 48,
-        "version": "V2.3 Bata",
-        "version2": "2024-01-24"
+        "version": "V2.4",
+        "version2": "2024-02-06"
     },
     "1": {
         "name": "艾丝妲",
@@ -338,24 +338,24 @@
         "data": "5,5",
         "picurl": "/5/55/daz1xi6s2uy8loajbihqas5lrsufrse.png",
         "urlroot": true,
-        "model": false,
-        "weapons": 0
+        "model": true,
+        "weapons": 1
     },
     "42": {
         "name": "花火",
         "data": "4,6",
         "picurl": "/e/ee/2e9ryoqq4ux2cw4qamheaere2yblusw.png",
         "urlroot": true,
-        "model": false,
-        "weapons": 0
+        "model": true,
+        "weapons": 1
     },
     "43": {
         "name": "米沙",
         "data": "1,3",
         "picurl": "/1/1c/sv2t0pu837gggdu1uk2khfxlwykrb35.png",
         "urlroot": true,
-        "model": false,
-        "weapons": 0
+        "model": true,
+        "weapons": 1
     },
     "45": {
         "name": "开拓者",
@@ -371,15 +371,15 @@
         "data": "5,4",
         "urlroot": false,
         "picurl": "/2024/01/22/288909600/04b0d0b734a6b8541e880cde582527c0_8230522888929671387.jpg",
-        "model": false,
-        "weapons": 0
+        "model": true,
+        "weapons": 1
     },
     "47": {
         "name": "砂金",
         "data": "6,7",
         "urlroot": false,
         "picurl": "/2024/01/23/288909600/d946d6c401ad9b2ebbd354936e451638_3029755409916751313.jpg",
-        "model": false,
+        "model": true,
         "weapons": 0
     },
     "48": {
@@ -387,7 +387,7 @@
         "data":"7,2",
         "urlroot":false,
         "picurl":"/2024/01/24/288909600/3cccc8369e95c2689443880427139209_1920403837972137716.jpg",
-        "model":false,
+        "model":true,
         "weapons":0
     }
 }

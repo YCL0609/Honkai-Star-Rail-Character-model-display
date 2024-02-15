@@ -6,18 +6,26 @@ import { OrbitControls } from 'three/controls/OrbitControls.js';
 import { OutlineEffect } from 'three/effects/OutlineEffect.js';
 import { MMDLoader } from 'three/loaders/MMDLoader.js';
 import { MMDAnimationHelper } from 'three/animation/MMDAnimationHelper.js';
-import { AutoFinish, MMDFinish, BGFinish } from './AutoFinish.js';
+import { AutoFinish, MMDFinish, BGFinish } from './Finish.js';
+// 提示信息
+window.onload = null;
+localStorage.setItem('onload', 0);
+localStorage.setItem('onload_bg', 0);
+document.getElementById('text0').innerText = "(3/4)初始化加载器...";
+document.getElementById('progress0').style.width = "50%";
+document.getElementById('skybox').style.display = null;
+document.getElementById('module').style = null;
+document.getElementById('background').style = null;
 console.log('three.js version: ' + THREE.REVISION);
 
 let stats;
 export let helper, mesh;
 let camera, scene, renderer, effect, composer;
 const clock = new THREE.Clock();
-// let urlroot = "https://model.ycl.cool";
-let urlroot = "models";
+let urlroot = "https://model.ycl.cool";
+// let urlroot = "models";
 
 // 处理传入参数
-
 export let other = getUrlParams('other');
 export let vmd = getUrlParams('vmd');
 export let id = getUrlParams('id');
@@ -54,7 +62,7 @@ function init() {
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x151515);
   // 光照
-  const ambientLight = new THREE.AmbientLight(0xffffff);
+  const ambientLight = new THREE.AmbientLight(0xffc66b);
   scene.add(ambientLight);
   const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
   directionalLight.position.set(-10, -15, -10);
@@ -76,19 +84,10 @@ function init() {
   stats = new Stats();
   container.appendChild(renderer.domElement);
   container.appendChild(stats.dom);
-  // 提示信息
-  window.onload = null;
-  localStorage.setItem('onload', 0);
-  localStorage.setItem('onload_bg', 0);
-  document.getElementById('text0').innerText = "(3/4)初始化加载器...";
-  document.getElementById('progress0').style.width = "50%";
-  document.getElementById('skybox').style.display = null;
-  document.getElementById('module').style = null;
-  document.getElementById('background').style = null;
 
   // 天空盒
   const SkyLoader = new THREE.CubeTextureLoader();
-  SkyLoader.setPath('img/skybox/');
+  SkyLoader.setPath('img/skybox/')
   const SkyBox = SkyLoader.load(['px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png',], () => {
     // 添加到屏幕
     scene.background = SkyBox;
