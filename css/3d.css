@@ -1,4 +1,6 @@
-
+* {
+	transition: 1.5s;
+}
 
 body {
 	margin: 0;
@@ -30,15 +32,15 @@ body {
 	padding: 20px 0;
 }
 
-#info-main h4{
+#info-main h4 {
 	line-height: 0px;
 	margin-left: 12%;
 }
 
 #main h4 {
-    margin-top: 0px;
-    margin-left: 0px;
-    text-align: center;
+	margin-top: 0px;
+	margin-left: 0px;
+	text-align: center;
 }
 
 .progress {
@@ -48,7 +50,7 @@ body {
 	margin: 0 auto;
 }
 
-.progress-inside{
+.progress-inside {
 	height: 100%;
 	background-color: greenyellow;
 }

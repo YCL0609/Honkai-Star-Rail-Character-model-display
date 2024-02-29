@@ -25,8 +25,7 @@ function isMobile() {
 /**
  * 异步加载资源函数
  * @param {URL} url 资源路径
- * @param {Type} type 资源类型 (js/css)
- * @returns 
+ * @param {string} type 资源类型 (js/css)
  */
 function loadExternalResource(url, type) {
     return new Promise((resolve, reject) => {
@@ -50,6 +49,7 @@ function loadExternalResource(url, type) {
 /**
  * 网页URL参数获取
  *  @param {string} name 不传name返回所有值，传入则返回对应值
+ *  @returns {string} 对应参数值
  */
 function getUrlParams(name) {
     var url = window.location.search;
@@ -88,7 +88,7 @@ function getUrlParams(name) {
  * @param {string} val2 返回Json数据对象名
  * @param {boolean} all 是否返回全部Json数据
  * @param {boolean} allkey 是否返回选定键值全部数据
- * @returns {string} 若all参数为否返回指定值，若all参数为是返回全部Json数据
+ * @returns {string} 返回指定值
  */
 async function ReadJson(url, val1, val2, all, allkey) {
     try {
@@ -114,7 +114,7 @@ async function ReadJson(url, val1, val2, all, allkey) {
 
 // YCL
 console.log(
-`+---------------------------------------------------------+
+    `+---------------------------------------------------------+
 
          o     o          o o o          o
            o o           o               o

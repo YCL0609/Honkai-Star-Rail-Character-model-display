@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <meta name="keywords" content="星穹铁道, Star Rail, 人物模型, Star Rail model">
+  <meta name="description" content="角色立绘和3D模型展示(部分模型支持使用网页预览MMD动作)，已分类模型来源为官方, 未分类模型部分来自官方部分来源于网络。">
+  <meta name="author" content="YCL">
   <title>《崩坏:星穹铁道》角色立绘和3D模型展示</title>
   <link href="https://www.ycl.cool/media/icon.ico" rel="shortcut icon">
   <link rel="stylesheet" type="text/css" href="css/index.css">
@@ -19,16 +22,12 @@
     function Change(card) {
       const main = document.getElementById('main');
       const picture = document.getElementById('picture');
-      const model = document.getElementById('model');
       if (card === "picture") {
         main.style.display = "none";
         picture.style.display = null;
       } else if (card === "main") {
         picture.style.display = "none";
         main.style.display = null;
-      } else if (card === "model") {
-        picture.style.display ="none";
-        model.style.display = null;
       }
     }
   </script>
@@ -36,7 +35,7 @@
 
 <body>
   <div id="loading" class="box" style="width: auto;">
-    <img class=" loading"
+    <img class="loading"
       src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0ibWFyZ2luOiBhdXRvOyBkaXNwbGF5OiBibG9jazsgLS1kYXJrcmVhZGVyLWlubGluZS1iZ2ltYWdlOiBpbml0aWFsOyAtLWRhcmtyZWFkZXItaW5saW5lLWJnY29sb3I6ICMxZjIyMjM7IiB3aWR0aD0iMjAwcHgiIGhlaWdodD0iMjAwcHgiIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCIgZGF0YS1kYXJrcmVhZGVyLWlubGluZS1iZ2ltYWdlPSIiIGRhdGEtZGFya3JlYWRlci1pbmxpbmUtYmdjb2xvcj0iIj4NCjxyZWN0IHg9IjE5IiB5PSIzMCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjQwIiBmaWxsPSIjOTNkYmU5IiBkYXRhLWRhcmtyZWFkZXItaW5saW5lLWZpbGw9IiIgc3R5bGU9Ii0tZGFya3JlYWRlci1pbmxpbmUtZmlsbDogIzE2NWQ2YjsiPg0KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJ5IiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgZHVyPSIxLjI1cyIgY2FsY01vZGU9InNwbGluZSIga2V5VGltZXM9IjA7MC41OzEiIHZhbHVlcz0iMTQ7MzA7MzAiIGtleVNwbGluZXM9IjAgMC41IDAuNSAxOzAgMC41IDAuNSAxIiBiZWdpbj0iLTAuMjVzIj48L2FuaW1hdGU+DQogIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9ImhlaWdodCIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIGR1cj0iMS4yNXMiIGNhbGNNb2RlPSJzcGxpbmUiIGtleVRpbWVzPSIwOzAuNTsxIiB2YWx1ZXM9IjcyOzQwOzQwIiBrZXlTcGxpbmVzPSIwIDAuNSAwLjUgMTswIDAuNSAwLjUgMSIgYmVnaW49Ii0wLjI1cyI+PC9hbmltYXRlPg0KPC9yZWN0Pg0KPHJlY3QgeD0iNDQiIHk9IjMwIiB3aWR0aD0iMTIiIGhlaWdodD0iNDAiIGZpbGw9IiM2ODljYzUiIGRhdGEtZGFya3JlYWRlci1pbmxpbmUtZmlsbD0iIiBzdHlsZT0iLS1kYXJrcmVhZGVyLWlubGluZS1maWxsOiAjMzE1ZDdmOyI+DQogIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9InkiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiBkdXI9IjEuMjVzIiBjYWxjTW9kZT0ic3BsaW5lIiBrZXlUaW1lcz0iMDswLjU7MSIgdmFsdWVzPSIxODszMDszMCIga2V5U3BsaW5lcz0iMCAwLjUgMC41IDE7MCAwLjUgMC41IDEiIGJlZ2luPSItMC4xMjVzIj48L2FuaW1hdGU+DQogIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9ImhlaWdodCIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIGR1cj0iMS4yNXMiIGNhbGNNb2RlPSJzcGxpbmUiIGtleVRpbWVzPSIwOzAuNTsxIiB2YWx1ZXM9IjY0OzQwOzQwIiBrZXlTcGxpbmVzPSIwIDAuNSAwLjUgMTswIDAuNSAwLjUgMSIgYmVnaW49Ii0wLjEyNXMiPjwvYW5pbWF0ZT4NCjwvcmVjdD4NCjxyZWN0IHg9IjY5IiB5PSIzMCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjQwIiBmaWxsPSIjNWU2ZmEzIiBkYXRhLWRhcmtyZWFkZXItaW5saW5lLWZpbGw9IiIgc3R5bGU9Ii0tZGFya3JlYWRlci1pbmxpbmUtZmlsbDogIzRhNTc4MTsiPg0KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJ5IiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgZHVyPSIxLjI1cyIgY2FsY01vZGU9InNwbGluZSIga2V5VGltZXM9IjA7MC41OzEiIHZhbHVlcz0iMTg7MzA7MzAiIGtleVNwbGluZXM9IjAgMC41IDAuNSAxOzAgMC41IDAuNSAxIj48L2FuaW1hdGU+DQogIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9ImhlaWdodCIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiIGR1cj0iMS4yNXMiIGNhbGNNb2RlPSJzcGxpbmUiIGtleVRpbWVzPSIwOzAuNTsxIiB2YWx1ZXM9IjY0OzQwOzQwIiBrZXlTcGxpbmVzPSIwIDAuNSAwLjUgMTswIDAuNSAwLjUgMSI+PC9hbmltYXRlPg0KPC9yZWN0Pg0KPC9zdmc+"
       alt="" />
     <span style="font-size:xx-large;">加载中...</span>
@@ -300,18 +299,19 @@
     <div class="note-div">
       注释:<br>
       <a id="note1">
-        (1) <a style="color: #00bfff" href="https://www.bilibili.com/read/cv23111427/">《崩坏: 星穹铁道》同人衍生作品创作指引</a>;<br>
+        (1) <a style="color: #00bfff" href="https://www.bilibili.com/read/cv23111427/"><u>《崩坏:
+            星穹铁道》同人衍生作品创作指引</u></a>;<br>
       </a>
-      <a id="note2">(2) 此角色暂时没有官方公布的人物立绘, 立绘页使用大招立绘;</a><br>
+      <a id="note2">(2) 此角色暂时没有官方公布的人物介绍立绘, 使用大招立绘代替;</a><br>
       <a id="note3">(3) 此角色暂时没有官方公布的3D模型;</a><br>
-      <a id="note4">(4) 此列为官方公布的无法分类的人物模型;</a><br>
-      <a id="note5">(5) 此列处为<a style="font-weight: bolder">非官方</a>公布的无法分类的人物模型;</a><br>
-      <a id="note6">(6) 此列处为<a style="font-weight: bolder">非官方</a>公布的无法分类的其他模型。</a><br>
+      <a id="note4">(4) 此列为<a style="font-weight: bolder">官方</a>公布的无法分类的人物模型;</a><br>
+      <a id="note5">(5) 此列为<a style="font-weight: bolder">非官方</a>公布的无法分类的人物模型, 模型来源于网络;</a><br>
+      <a id="note6">(6) 此列为<a style="font-weight: bolder">非官方</a>公布的无法分类的其他模型, 模型来源于网络。</a><br>
     </div>
     <h5>
       程序版本:<a id="version" style="color: #3391ff"></a>
       数据库版本:<a id="version2" style="color: #3391ff"></a>
-      <a href="https://ycl.cool/blog/index.php/archives/17/" style="color: deepskyblue">更新日志</a>
+      <a href="https://ycl.cool/blog/index.php/archives/17/" style="color: deepskyblue"><u>更新日志</u></a>
     </h5>
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
@@ -327,13 +327,14 @@
     <a style="color: #b3ccff;" href="#" onclick="Change('main')">◀返回</a>
     <table style=" border-collapse: collapse">
       <thead>
-        <td colspan="5" style="background-color: #2e2e2e;color: white;">角色立绘展示</td>
+        <td colspan="6" style="background-color: #2e2e2e;color: white;">角色立绘展示</td>
       </thead>
       <tbody>
         <tr style="background-color: darkgray;">
           <td>姓名</td>
           <td>属性</td>
           <td>命途</td>
+          <td>实装版本</td>
           <td>3D模型</td>
           <td>立绘</td>
         </tr>
@@ -341,6 +342,7 @@
           <td id="name"></td>
           <td id="list"></td>
           <td id="line"></td>
+          <td id="firstup"></td>
           <td id="showmodel"></td>
           <td id="download">
             <button id="btn" onclick="window.open(document.getElementById('img1').src, '_blank')">下载</button>
@@ -348,8 +350,14 @@
         </tr>
       </tbody>
     </table>
+    <h3 id="picloading" style="line-height: 0cm;">加载图片中...</h3>
     <div id="imgdiv">
       <img id="img1" src="https://patchwiki.biligame.com/images/sr/a/a9/iz7lu3jtjitew6an9kyiijagnwrfilc.png">
+      <script>
+        document.getElementById('img1').onload = () => {
+          document.getElementById('picloading').style.display = "none";
+        }
+      </script>
     </div>
   </div>
   <script src="js/index.js" defer></script>

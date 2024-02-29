@@ -2,12 +2,13 @@
     "0": {
         "total": 48,
         "version": "V2.4",
-        "version2": "2024-02-06"
+        "version2": "2024-02-27"
     },
     "1": {
         "name": "艾丝妲",
         "data": "4,2",
         "picurl": "/f/fb/t3l8ksl1j60xbi9zpfdhj8w2wb5hibh.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -16,6 +17,7 @@
         "name": "黑塔",
         "data": "3,3",
         "picurl": "/f/f7/7prg1ft3buafziroyspnnutke4yvotw.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -24,6 +26,7 @@
         "name": "阿兰",
         "data": "1,4",
         "picurl": "/3/34/0jz91oea8wwcx537p4cyy5c73nu0cj0.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -34,6 +37,7 @@
         "urlroot": true,
         "picurl": "/5/51/a8tjm9d781ac6tw2vyhg5q8ss058415.png",
         "picurl2": "/5/58/2dishd6nydg68hp6ay0wjtpgjgjbmfz.png",
+        "firstup":"V1.0",
         "model": true,
         "weapons": 2
     },
@@ -41,6 +45,7 @@
         "name": "三月七",
         "data": "6,3",
         "picurl": "/e/e8/1q46duvfdnp2bpd67qfaa1dsbycrijj.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 2
@@ -49,6 +54,7 @@
         "name": "丹恒",
         "data": "2,5",
         "picurl": "/3/34/hf2o5suregc5fswecw8o5x7oki5229a.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -57,6 +63,7 @@
         "name": "饮月",
         "data": "1,7",
         "picurl": "/0/04/43nk7fcvbcmeflbxziccsra8havwu5u.png",
+        "firstup":"V1.3",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -65,6 +72,7 @@
         "name": "姬子",
         "data": "3,2",
         "picurl": "/0/05/af9uyqk356aa8q4n27lw7wn12j1t7we.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 5
@@ -73,6 +81,7 @@
         "name": "瓦尔特",
         "data": "5,7",
         "picurl": "/c/cf/pbqb1ox5vizg3klavrd41fdtawx2tk3.jpg",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -81,6 +90,7 @@
         "name": "布洛妮娅",
         "data": "4,5",
         "picurl": "/f/f8/k08zmgcxrh26gso7z8w4afpcj8n3sov.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -89,6 +99,7 @@
         "name": "杰帕德",
         "data": "6,3",
         "picurl": "/b/b5/58je6egugnhlr7mwsjjkc3a58o08fgl.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -97,6 +108,7 @@
         "name": "希露瓦",
         "data": "3,4",
         "picurl": "/c/cf/l5kq8zxopx7wfs9jjjm0zm2bvnufju6.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 2
@@ -105,6 +117,7 @@
         "name": "佩拉",
         "data": "5,3",
         "picurl": "/e/ec/s2ttvcyq91wjmherjpwisxl3gutkqat.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 2
@@ -113,6 +126,7 @@
         "name": "桑博",
         "data": "5,5",
         "picurl": "/e/e8/23cwpt0m7yk0tkxh8h59mwipcwq1grk.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 3
@@ -121,6 +135,7 @@
         "name": "虎克",
         "data": "1,2",
         "picurl": "/7/78/4c8wt8eejiudj1s5a97kih5epfrj8pc.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 2
@@ -129,6 +144,7 @@
         "name": "玲可",
         "data": "7,6",
         "picurl": "/1/10/1h9lkavk03ztppspdyhjkltrs2py6a2.png",
+        "firstup":"V1.3",
         "urlroot": true,
         "model": true,
         "weapons": 7
@@ -137,6 +153,7 @@
         "name": "娜塔莎",
         "data": "7,1",
         "picurl": "/c/c7/ou11kkss3vmr44v7iosik4uyrrof3vr.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 3
@@ -145,6 +162,7 @@
         "name": "克拉拉",
         "data": "1,1",
         "picurl": "/9/9e/fb0howtu57fgb0ccm4qegqbtc4zvt6p.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 0
@@ -153,6 +171,7 @@
         "name": "希儿",
         "data": "2,6",
         "picurl": "/9/92/jxsxrkyhkjyoyp39gvjw8b6i98u4gam.jpg",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -161,6 +180,7 @@
         "name": "卢卡",
         "data": "5,1",
         "picurl": "/f/fc/b7aquclnjlgarcnjzu0pbiegxoplirv.png",
+        "firstup":"V1.2",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -169,6 +189,7 @@
         "name": "景元",
         "data": "3,4",
         "picurl": "/2/21/7cdhu682y5kup1lcp06ve2cncp4kz2g.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 3
@@ -177,6 +198,7 @@
         "name": "白露",
         "data": "7,4",
         "picurl": "/d/dc/20tvbl6dxcecm6rn2imnzlemhh3ffr0.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 0
@@ -185,6 +207,7 @@
         "name": "彦卿",
         "data": "2,3",
         "picurl": "/5/50/feltlebdj6273djraeix51z9wrpxf2x.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -193,6 +216,7 @@
         "name": "驭空",
         "data": "4,7",
         "picurl": "/7/72/k3jp2bsclezw6h7gqq61uw6qvsecjox.png",
+        "firstup":"V1.1",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -201,6 +225,7 @@
         "name": "停云",
         "data": "4,4",
         "picurl": "/9/92/5em7gpwscup6ag18wf46qduk5uilv5t.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -209,6 +234,7 @@
         "name": "青雀",
         "data": "3,6",
         "picurl": "/9/9d/f1l3bb3agxofvt78pagrikgyiitcq7a.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -217,6 +243,7 @@
         "name": "素裳",
         "data": "2,1",
         "picurl": "/6/62/03l6560bveh17pigs9jxsrg9jjk1qlk.png",
+        "firstup":"V1.0",
         "urlroot": true,
         "model": true,
         "weapons": 4
@@ -225,6 +252,7 @@
         "name": "符玄",
         "data": "6,6",
         "picurl": "/2/2e/4xjrcxr90bt7o2u2964twkd4vli0q4m.png",
+        "firstup":"V1.3",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -233,6 +261,7 @@
         "name": "镜流",
         "data": "1,3",
         "picurl": "/b/b9/b1v5kx6pyxkq288telfdwdik5qiyw64.png",
+        "firstup":"V1.4",
         "urlroot": true,
         "model": true,
         "weapons": 3
@@ -241,6 +270,7 @@
         "name": "雪衣",
         "data": "1,6",
         "picurl": "/a/ab/0oy5nb9sqvjyff89j1jsq6vkran5a82.png",
+        "firstup":"V1.6",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -249,6 +279,7 @@
         "name": "藿藿",
         "data": "7,5",
         "picurl": "/8/8f/27x77fecakgcazi7cih58zro9ulleyn.png",
+        "firstup":"V1.5",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -257,6 +288,7 @@
         "name": "桂乃芬",
         "data": "5,2",
         "picurl": "/5/5b/3yl1xu5msuci9000oxbuoc4m8gez8ky.png",
+        "firstup":"V1.4",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -265,6 +297,7 @@
         "name": "寒鸦",
         "data": "4,1",
         "picurl": "/d/df/bla69hsv1inbrflt70o1s9t5xby1res.png",
+        "firstup":"V1.5",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -273,6 +306,7 @@
         "name": "卡芙卡",
         "data": "5,4",
         "picurl": "/4/4d/nknfqbj6ig88564ivr3q079qh960c1b.png",
+        "firstup":"V1.2",
         "urlroot": true,
         "model": true,
         "weapons": 4
@@ -281,6 +315,7 @@
         "name": "刃",
         "data": "1,5",
         "picurl": "/3/36/10dqd1wzjx1xoppxz46ygeqmbxf6rpt.png",
+        "firstup":"V1.2",
         "urlroot": true,
         "model": true,
         "weapons": 2
@@ -289,6 +324,7 @@
         "name": "罗刹",
         "data": "7,7",
         "picurl": "/e/e4/snkt80kmu6qjcfbo4mchcdcolnerx0t.png",
+        "firstup":"V1.1",
         "urlroot": true,
         "model": true,
         "weapons": 3
@@ -297,6 +333,7 @@
         "name": "银狼",
         "data": "5,6",
         "picurl": "/e/ea/mavqad0rxp6zttalka56tspnd1t9qi8.png",
+        "firstup":"V1.1",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -305,6 +342,7 @@
         "name": "托帕",
         "data": "2,2",
         "picurl": "/9/9b/1tyxty69xim1zpm4gps64ob8b9gygyq.png",
+        "firstup":"V1.4",
         "urlroot": true,
         "model": true,
         "weapons": 2
@@ -313,6 +351,7 @@
         "name": "银枝",
         "data": "3,1",
         "picurl": "/5/57/6s7lzrxg0wwzyueoehyakj4y20vql12.png",
+        "firstup":"V1.5",
         "urlroot": true,
         "model": true,
         "weapons": 2
@@ -321,6 +360,7 @@
         "name": "阮•梅",
         "data": "4,3",
         "picurl": "/f/f3/enc8l44r8z89keumyagi2zkd9zzv72a.png",
+        "firstup":"V1.6",
         "urlroot": true,
         "model": true,
         "weapons": 2
@@ -329,6 +369,7 @@
         "name": "真理医生",
         "data": "2,7",
         "picurl": "/6/68/art8sao8fcbmil27hd874zjb2wlw9wx.png",
+        "firstup":"V1.6",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -337,6 +378,7 @@
         "name": "黑天鹅",
         "data": "5,5",
         "picurl": "/5/55/daz1xi6s2uy8loajbihqas5lrsufrse.png",
+        "firstup":"V2.0",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -345,6 +387,7 @@
         "name": "花火",
         "data": "4,6",
         "picurl": "/e/ee/2e9ryoqq4ux2cw4qamheaere2yblusw.png",
+        "firstup":"V2.0",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -353,6 +396,7 @@
         "name": "米沙",
         "data": "1,3",
         "picurl": "/1/1c/sv2t0pu837gggdu1uk2khfxlwykrb35.png",
+        "firstup":"V2.0",
         "urlroot": true,
         "model": true,
         "weapons": 1
@@ -363,6 +407,7 @@
         "urlroot": true,
         "picurl": "/2/24/g3gk5z35af2xbrhdm6jwrvdlx71lo0p.png",
         "picurl2": "/c/ca/4pvz8amab0bem4vazg00blxhr7xnaau.png",
+        "firstup":"V1.0",
         "model": true,
         "weapons": 2
     },
@@ -371,6 +416,7 @@
         "data": "5,4",
         "urlroot": false,
         "picurl": "/2024/01/22/288909600/04b0d0b734a6b8541e880cde582527c0_8230522888929671387.jpg",
+        "firstup":"V2.1(预测)",
         "model": true,
         "weapons": 1
     },
@@ -379,6 +425,7 @@
         "data": "6,7",
         "urlroot": false,
         "picurl": "/2024/01/23/288909600/d946d6c401ad9b2ebbd354936e451638_3029755409916751313.jpg",
+        "firstup":"V2.1(预测)",
         "model": true,
         "weapons": 0
     },
@@ -387,6 +434,7 @@
         "data":"7,2",
         "urlroot":false,
         "picurl":"/2024/01/24/288909600/3cccc8369e95c2689443880427139209_1920403837972137716.jpg",
+        "firstup":"V2.1(预测)",
         "model":true,
         "weapons":0
     }

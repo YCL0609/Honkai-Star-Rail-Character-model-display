@@ -1,5 +1,9 @@
 localStorage.onload = 0;
+// 主表格
+JsonToTable('data.json', 'table', true, 'table2');
+// 未分类模型
 (async () => {
+  // 获取总行数
   var total_line = await ReadJson('data2.json', 0, 'total_line', false, false);
   for (let a = 1; a <= total_line; a++) {
     var table = document.getElementById('unknow');
@@ -17,11 +21,9 @@ localStorage.onload = 0;
     tr_.appendChild(td2);
     tr_.appendChild(td3);
   }
+  // 填入数据
+  JsonToTable('data2.json', 'table3', false);
 })()
-// 主表格
-JsonToTable('data.json', 'table', true, 'table2');
-// 未分类模型
-JsonToTable('data2.json', 'table3', false);
 
 async function JsonToTable(file, tablename, main) {
   var data = await ReadJson(file, 0, 0, true);
@@ -40,6 +42,7 @@ async function JsonToTable(file, tablename, main) {
       // 跳转
       a.href = `#`;
       a.onclick = () => {
+        document.getElementById('picloading').style.display = null;
         Change('picture');
         ShowPicture(i);
       };
@@ -98,6 +101,8 @@ async function ShowPicture(id) {
   document.getElementById('line').innerText = linedata[line];
   // 战斗属性
   document.getElementById('list').innerText = listdata[list];
+  // 实装版本
+  document.getElementById('firstup').innerText = role['firstup']
   // 模型
   var model = document.getElementById('showmodel');
   var btn = document.createElement('button');

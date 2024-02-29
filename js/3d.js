@@ -7,6 +7,7 @@ import { OutlineEffect } from 'three/effects/OutlineEffect.js';
 import { MMDLoader } from 'three/loaders/MMDLoader.js';
 import { MMDAnimationHelper } from 'three/animation/MMDAnimationHelper.js';
 import { AutoFinish, MMDFinish, BGFinish } from './Finish.js';
+
 // 提示信息
 window.onload = null;
 localStorage.setItem('onload', 0);
@@ -22,8 +23,8 @@ let stats;
 export let helper, mesh;
 let camera, scene, renderer, effect, composer;
 const clock = new THREE.Clock();
-let urlroot = "https://model.ycl.cool";
-// let urlroot = "models";
+// let urlroot = "https://model.ycl.cool";
+let urlroot = "models";
 
 // 处理传入参数
 export let other = getUrlParams('other');
@@ -62,11 +63,13 @@ function init() {
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x151515);
   // 光照
-  const ambientLight = new THREE.AmbientLight(0xffc66b);
+  const ambientLight = new THREE.AmbientLight(0xffce80);
   scene.add(ambientLight);
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
-  directionalLight.position.set(-10, -15, -10);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+  directionalLight.position.set(0, 20, 0);
   scene.add(directionalLight);
+  // const lihelper = new THREE.DirectionalLightHelper(directionalLight);
+  // scene.add(lihelper);
   // 抗锯齿
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -76,7 +79,6 @@ function init() {
   composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
   effect = new OutlineEffect(renderer);
-  renderer.outputEncoding = THREE.sRGBEncoding;
   // 模型加载器
   const loader = new MMDLoader();
   helper = new MMDAnimationHelper();
@@ -84,10 +86,9 @@ function init() {
   stats = new Stats();
   container.appendChild(renderer.domElement);
   container.appendChild(stats.dom);
-
   // 天空盒
   const SkyLoader = new THREE.CubeTextureLoader();
-  SkyLoader.setPath('img/skybox/')
+  SkyLoader.setPath('img/skybox/');
   const SkyBox = SkyLoader.load(['px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png',], () => {
     // 添加到屏幕
     scene.background = SkyBox;
@@ -189,11 +190,16 @@ function animate() {
 
 function weapons(loader, name, number) {
   if (1 <= number && number <= 4) {
-    var x = [0, -10, +10, +5, -5, -10];
-    var z = [0, 0, 0, -10, -10, 0];
+    var x = [0, -10, +10, +5, -5];
+    var z = [0, 0, 0, -10, -10];
   } else if (number > 4) { // 姬子、玲可
     var x = [0, -15, +20, +10, -10, -20, 0, +20];
     var z = [0, 0, 0, -15, -15, -15, -15, -15];
+  }
+  // 素裳(大赤鸢模型太大)
+  if (name == "素裳") {
+    var x = [0, -15, +20, +10, -10];
+    var z = [0, 0, 0, -20, -20];
   }
   for (let i = 1; i <= number; i++) {
     // 动态添加提示信息
@@ -272,14 +278,14 @@ function MMDload(loader, pmxfile) {
             var ok = document.getElementById('start')
             ok.innerText = "开始";
             ok.onclick = () => {
+              oceanAmbientSound.setLoop(true);//设置音频循环
+              oceanAmbientSound.play();// 播放音频
+              document.getElementById('info').style.display = "none";
               // 开始动画
               helper.add(mesh, {
                 animation: mmd.animation,
-                physics: true
+                physics: true,
               });
-              // 播放音频
-              oceanAmbientSound.play();
-              document.getElementById('info').style.display = "none";
             }
           }, 2000);
 

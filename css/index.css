@@ -99,12 +99,13 @@ td {
     padding: 10px;
     margin: 0 auto;
     width: 95%;
+    max-width: 950px;
 }
 
 #picture td {
     border: 1px solid #999;
     text-align: center;
-    width: 20%;
+    width: 15%;
 }
 
 #picture img {

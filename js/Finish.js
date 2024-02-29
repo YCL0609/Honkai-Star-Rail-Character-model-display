@@ -35,7 +35,7 @@ export function AutoFinish() {
     var text = roledata['other'];
   }
   var h4 = document.createElement('h4');
-  console.log("Model:\n ID:" + id + " Name:" + roledata['name'] + " From:" + from);
+  console.log("Model:\n ID:" + id + " Name:" + roledata['name'] + " From:" + from + " Weapons:" + roledata['weapons']);
   h4.innerHTML = `模型来源: ${from}`;
   h4.style.marginLeft = "0px";
   h4.style.textAlign = "center";
@@ -56,8 +56,8 @@ export function AutoFinish() {
     if (mmd) {
       document.getElementById('VMDList').style.left = "0px";
     }
-    document.getElementById('three').style.top = "-20px";
-  }, 1500);
+    document.getElementById('three').style.top = "-60px";
+  }, 2000);
 }
 
 // MMD加载
@@ -80,17 +80,17 @@ export async function MMDFinish() {
   document.getElementById('main-h4').style = null;
   if (!other) {
     // 官方模型
-    var name = "神帝宇";
+    var from = "神帝宇";
   } else {
     // 非官方模型
-    var name = roledata['from'];
+    var from = roledata['from'];
   }
   var h4_0 = document.createElement('h4');
   var h4_1 = document.createElement('h4');
   var h4_2 = document.createElement('h4');
   var h4_3 = document.createElement('h4');
-  console.log("Model:\n ID:" + id + " Name:" + name + " From:" + roledata['from'] + "\nAnimation:\n ID:" + vmd + " Name:" + vmddata['name'] + " From:" + vmddata['from']);
-  h4_0.innerHTML = `模型来源: ${name}`;
+  console.log("Model:\n ID:" + id + " Name:" + roledata['name'] + " From:" + from + "\nAnimation:\n ID:" + vmd + " Name:" + vmddata['name'] + " From:" + vmddata['from']);
+  h4_0.innerHTML = `模型来源: ${from}`;
   h4_1.innerHTML = `动作来源: ${vmddata['from']}`
   h4_2.innerHTML = `背景音乐: ${vmddata['name']}`
   h4_3.innerHTML = `制作软件: three.js`
@@ -100,7 +100,7 @@ export async function MMDFinish() {
   main.appendChild(h4_3);
   setTimeout(() => {
     document.getElementById('VMDList').style.left = "0px";
-    document.getElementById('three').style.top = "-20px";
-  }, 1500);
+    document.getElementById('three').style.top = "-60px";
+  }, 2000);
 }
 
