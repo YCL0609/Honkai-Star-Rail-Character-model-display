@@ -58,6 +58,7 @@ export function AutoFinish() {
     }
     document.getElementById('three').style.top = "-60px";
   }, 2000);
+  gui()
 }
 
 // MMD加载
@@ -102,5 +103,12 @@ export async function MMDFinish() {
     document.getElementById('VMDList').style.left = "0px";
     document.getElementById('three').style.top = "-60px";
   }, 2000);
+  gui()
 }
 
+function gui() {
+  var title = document.getElementsByClassName('title');
+  for (let i = 0; i < title.length; i++) {
+    title[i].click()
+  }
+}

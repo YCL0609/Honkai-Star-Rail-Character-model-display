@@ -7,6 +7,7 @@ import { OutlineEffect } from 'three/effects/OutlineEffect.js';
 import { MMDLoader } from 'three/loaders/MMDLoader.js';
 import { MMDAnimationHelper } from 'three/animation/MMDAnimationHelper.js';
 import { AutoFinish, MMDFinish, BGFinish } from './Finish.js';
+import { GUI } from 'three/lil-gui.module.min.js';
 
 // 提示信息
 window.onload = null;
@@ -23,8 +24,9 @@ let stats;
 export let helper, mesh;
 let camera, scene, renderer, effect, composer;
 const clock = new THREE.Clock();
-// let urlroot = "https://model.ycl.cool";
-let urlroot = "models";
+const gui = new GUI();
+let urlroot = "https://model.ycl.cool";
+// let urlroot = "models";
 
 // 处理传入参数
 export let other = getUrlParams('other');
@@ -37,10 +39,12 @@ if (!other) {
 };
 if (typeof id === 'undefined') {
   alert('URL参数错误\nThe UrlParams "id" is underfind.');
+  throw new Error('The UrlParams "id" is underfind.');
 };
 var total = await ReadJson(dataurl, 0, 'total');
 if (!(1 <= id && id <= total && !isNaN(id))) {
   alert('URL参数错误\nThe UrlParams "id" is not a number or not exist.');
+  throw new Error('The UrlParams "id" is not a number or not exist.');
 };
 // 获取全部角色数据
 export let roledata = await ReadJson(dataurl, id, 0, false, true);
@@ -63,13 +67,19 @@ function init() {
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x151515);
   // 光照
-  const ambientLight = new THREE.AmbientLight(0xffce80);
+  const ambientLight = new THREE.AmbientLight(0xf4e7e1, 1.7);
   scene.add(ambientLight);
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-  directionalLight.position.set(0, 20, 0);
-  scene.add(directionalLight);
-  // const lihelper = new THREE.DirectionalLightHelper(directionalLight);
-  // scene.add(lihelper);
+  const ambientLightFolder = gui.addFolder('光照');
+  const ambientLightParams = {
+    intensity: 1.7,
+    color: 0xf4e7e1
+  };
+  ambientLightFolder.add(ambientLightParams, 'intensity', 0, 4).onChange(() => {
+    ambientLight.intensity = ambientLightParams.intensity;
+  });
+  ambientLightFolder.addColor(ambientLightParams, 'color').onChange(() => {
+    ambientLight.color.set(ambientLightParams.color);
+  });
   // 抗锯齿
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -121,6 +131,21 @@ function init() {
         // 添加到屏幕( X:0 y:-10 Z:0)
         mesh.position.y = -10;
         scene.add(mesh);
+        const modelFolder = gui.addFolder('人物');
+        const modelParams = {
+          x: 0,
+          y: -10,
+          z: 0
+        }
+        modelFolder.add(modelParams, 'x', -200, 200).onChange(() => {
+          mesh.position.x = modelParams.x;
+        });
+        modelFolder.add(modelParams, 'y', -200, 200).onChange(() => {
+          mesh.position.y = modelParams.z;
+        });
+        modelFolder.add(modelParams, 'z', -200, 200).onChange(() => {
+          mesh.position.z = modelParams.z;
+        });
         // 提示信息
         document.getElementById('text1').innerText = "主模型:加载完成, 请等待材质下载.";
         setTimeout(() => {
@@ -136,9 +161,9 @@ function init() {
         console.error(err);
       }
     );
-    weapons(loader, name, roledata['weapons']); // 武器模型
+    weapons(loader, name, roledata['weapons'], gui); // 武器模型
   } else {
-    MMDload(loader, pmxfile);
+    MMDload(loader, pmxfile, gui);
   }
 
   // 场景模型
@@ -148,6 +173,21 @@ function init() {
       // 添加到屏幕( X:0 y:-11.7 Z:0)
       mesh.position.y = -11.7;
       scene.add(mesh);
+      const modelFolder = gui.addFolder('场景');
+      const modelParams = {
+        x: 0,
+        y: -10,
+        z: 0
+      }
+      modelFolder.add(modelParams, 'x', -200, 200).onChange(() => {
+        mesh.position.x = modelParams.x;
+      });
+      modelFolder.add(modelParams, 'y', -200, 200).onChange(() => {
+        mesh.position.y = modelParams.z;
+      });
+      modelFolder.add(modelParams, 'z', -200, 200).onChange(() => {
+        mesh.position.z = modelParams.z;
+      });
       // 提示信息
       document.getElementById('text2').innerText = "加载完成, 等待材质下载.";
       setTimeout(() => {
@@ -188,7 +228,7 @@ function animate() {
   stats.end();
 }
 
-function weapons(loader, name, number) {
+function weapons(loader, name, number, gui) {
   if (1 <= number && number <= 4) {
     var x = [0, -10, +10, +5, -5];
     var z = [0, 0, 0, -10, -10];
@@ -218,6 +258,21 @@ function weapons(loader, name, number) {
         mesh.position.x = x[i];
         mesh.position.y = -10;
         mesh.position.z = z[i];
+        const modelFolder = gui.addFolder(`武器${i}`);
+        const modelParams = {
+          x: 0,
+          y: -10,
+          z: 0
+        }
+        modelFolder.add(modelParams, 'x', -200, 200).onChange(() => {
+          mesh.position.x = modelParams.x;
+        });
+        modelFolder.add(modelParams, 'y', -200, 200).onChange(() => {
+          mesh.position.y = modelParams.z;
+        });
+        modelFolder.add(modelParams, 'z', -200, 200).onChange(() => {
+          mesh.position.z = modelParams.z;
+        });
         scene.add(mesh);
         // 提示信息
         document.getElementById(`text-w${i}`).innerText = "加载完成, 请等待材质下载.";
@@ -237,7 +292,7 @@ function weapons(loader, name, number) {
 }
 
 
-function MMDload(loader, pmxfile) {
+function MMDload(loader, pmxfile, gui) {
   // 提示信息
   var info = document.createElement('div');
   info.id = `music`;
@@ -254,6 +309,21 @@ function MMDload(loader, pmxfile) {
       mesh = mmd.mesh;
       mesh.position.y = -10;
       scene.add(mesh);
+      const modelFolder = gui.addFolder('人物');
+      const modelParams = {
+        x: 0,
+        y: -10,
+        z: 0
+      }
+      modelFolder.add(modelParams, 'x', -200, 200).onChange(() => {
+        mesh.position.x = modelParams.x;
+      });
+      modelFolder.add(modelParams, 'y', -200, 200).onChange(() => {
+        mesh.position.y = modelParams.z;
+      });
+      modelFolder.add(modelParams, 'z', -200, 200).onChange(() => {
+        mesh.position.z = modelParams.z;
+      });
       document.getElementById(`text1`).innerText = "加载完成, 等待材质下载.";
       setTimeout(() => {
         document.getElementById('module').style.display = "none";
