@@ -23,7 +23,7 @@ JsonToTable('data.json', 'table', true, 'table2');
   }
   // 填入数据
   JsonToTable('data2.json', 'table3', false);
-})()
+})();
 
 async function JsonToTable(file, tablename, main) {
   var data = await ReadJson(file, 0, 0, true);
@@ -79,12 +79,11 @@ async function JsonToTable(file, tablename, main) {
     cell.appendChild(br);
   }
   // 完成
-  var total = localStorage.onload;
-  if (total != 1) {
-    total++;
-    localStorage.setItem('onload', total);
+  localStorage.onload++;
+  if (localStorage.onload != 2) {
     return;
   }
+  console.log('0')
   document.getElementById('loading').style.display = "none";
   document.getElementById('main').style.display = null;
 }
@@ -124,12 +123,7 @@ async function ShowPicture(id) {
     model.innerHTML = "<a style='color:red'>暂缺</a>";
   }
   // 立绘
-  if (role['urlroot']) { // 判断立绘图片的所属域名前缀
-    var picurl_root = "https://patchwiki.biligame.com/images/sr";
-  } else {
-    var picurl_root = "https://upload-bbs.miyoushe.com/upload";
-  }
-  // 立绘图片地址
+  var picurl_root = role['urlroot'] ? "https://patchwiki.biligame.com/images/sr" : "https://upload-bbs.miyoushe.com/upload";
   document.getElementById('img1').src = picurl_root + role['picurl'];
   if (id == 4 || id == 45) {
     // 开拓者

@@ -25,8 +25,8 @@ export let helper, mesh;
 let camera, scene, renderer, effect, composer;
 const clock = new THREE.Clock();
 const gui = new GUI();
-let urlroot = "https://model.ycl.cool";
-// let urlroot = "models";
+// let urlroot = "https://model.ycl.cool";
+let urlroot = "models";
 
 // 处理传入参数
 export let other = getUrlParams('other');
@@ -92,9 +92,8 @@ function init() {
   // 模型加载器
   const loader = new MMDLoader();
   helper = new MMDAnimationHelper();
-  // 其他
+  // 帧数显示(左上角)
   stats = new Stats();
-  container.appendChild(renderer.domElement);
   container.appendChild(stats.dom);
   // 天空盒
   const SkyLoader = new THREE.CubeTextureLoader();
@@ -113,11 +112,7 @@ function init() {
   // 判断开拓者
   if (roledata['name'] == "开拓者") {
     var data = getUrlParams('isman');
-    if (data == "1") {
-      var name = "男主";
-    } else {
-      var name = "女主";
-    }
+    var name = (data == "1") ? "男主" : "女主";
   } else {
     var name = roledata['name'];
   };
@@ -132,11 +127,7 @@ function init() {
         mesh.position.y = -10;
         scene.add(mesh);
         const modelFolder = gui.addFolder('人物');
-        const modelParams = {
-          x: 0,
-          y: -10,
-          z: 0
-        }
+        const modelParams = { x: 0, y: -10, z: 0 }
         modelFolder.add(modelParams, 'x', -200, 200).onChange(() => {
           mesh.position.x = modelParams.x;
         });
@@ -174,11 +165,7 @@ function init() {
       mesh.position.y = -11.7;
       scene.add(mesh);
       const modelFolder = gui.addFolder('场景');
-      const modelParams = {
-        x: 0,
-        y: -10,
-        z: 0
-      }
+      const modelParams = { x: 0, y: -10, z: 0 }
       modelFolder.add(modelParams, 'x', -200, 200).onChange(() => {
         mesh.position.x = modelParams.x;
       });
@@ -229,21 +216,23 @@ function animate() {
 }
 
 function weapons(loader, name, number, gui) {
+  let x = [];
+  let z = [];
   if (1 <= number && number <= 4) {
-    var x = [0, -10, +10, +5, -5];
-    var z = [0, 0, 0, -10, -10];
+    x = [0, -10, +10, +5, -5];
+    z = [0, 0, 0, -10, -10];
   } else if (number > 4) { // 姬子、玲可
-    var x = [0, -15, +20, +10, -10, -20, 0, +20];
-    var z = [0, 0, 0, -15, -15, -15, -15, -15];
+    x = [0, -15, +20, +10, -10, -20, 0, +20];
+    z = [0, 0, 0, -15, -15, -15, -15, -15];
   }
   // 素裳(大赤鸢模型太大)
   if (name == "素裳") {
-    var x = [0, -15, +20, +10, -10];
-    var z = [0, 0, 0, -20, -20];
+    x = [0, -15, +20, +10, -10];
+    z = [0, 0, 0, -20, -20];
   }
   for (let i = 1; i <= number; i++) {
     // 动态添加提示信息
-    var info = document.createElement('div');
+    let info = document.createElement('div');
     info.id = `weapon${i}`;
     info.innerHTML = `<h4>武器模型${i}:<a id="text-w${i}" class="text"></a></h4>
     <div class="progress">
@@ -259,11 +248,7 @@ function weapons(loader, name, number, gui) {
         mesh.position.y = -10;
         mesh.position.z = z[i];
         const modelFolder = gui.addFolder(`武器${i}`);
-        const modelParams = {
-          x: 0,
-          y: -10,
-          z: 0
-        }
+        const modelParams = { x: 0, y: -10, z: 0 }
         modelFolder.add(modelParams, 'x', -200, 200).onChange(() => {
           mesh.position.x = modelParams.x;
         });
@@ -291,10 +276,9 @@ function weapons(loader, name, number, gui) {
   }
 }
 
-
 function MMDload(loader, pmxfile, gui) {
   // 提示信息
-  var info = document.createElement('div');
+  let info = document.createElement('div');
   info.id = `music`;
   info.innerHTML = `<h4>音乐文件:<a id="text4" class="text">等待启动...</a></h4>
         <div class="progress">
@@ -310,11 +294,7 @@ function MMDload(loader, pmxfile, gui) {
       mesh.position.y = -10;
       scene.add(mesh);
       const modelFolder = gui.addFolder('人物');
-      const modelParams = {
-        x: 0,
-        y: -10,
-        z: 0
-      }
+      const modelParams = { x: 0, y: -10, z: 0 }
       modelFolder.add(modelParams, 'x', -200, 200).onChange(() => {
         mesh.position.x = modelParams.x;
       });
@@ -345,7 +325,7 @@ function MMDload(loader, pmxfile, gui) {
           document.getElementById('music').style.display = "none";
           setTimeout(() => {
             MMDFinish();
-            var ok = document.getElementById('start')
+            let ok = document.getElementById('start');
             ok.innerText = "开始";
             ok.onclick = () => {
               oceanAmbientSound.setLoop(true);//设置音频循环

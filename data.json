@@ -1,8 +1,8 @@
 {
     "0": {
-        "total": 48,
+        "total": 49,
         "version": "V2.5",
-        "version2": "2024-02-27"
+        "version2": "2024-03-12"
     },
     "1": {
         "name": "艾丝妲",
@@ -435,6 +435,15 @@
         "urlroot":false,
         "picurl":"/2024/01/24/288909600/3cccc8369e95c2689443880427139209_1920403837972137716.jpg",
         "firstup":"V2.1(预测)",
+        "model":true,
+        "weapons":0
+    },
+    "49": {
+        "name": "知更鸟",
+        "data": "4,1",
+        "urlroot": true,
+        "picurl": "/d/db/au23wjkibt90fxug7ney502r5z6tx50.png",
+        "firstup": "V2.2(预测)",
         "model":true,
         "weapons":0
     }

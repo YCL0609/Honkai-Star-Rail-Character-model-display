@@ -1,78 +1,62 @@
 {
     "0": {
-        "total": 9,
-        "total_line":6
+        "total": 8,
+        "total_line":5
     },
     "1": {
         "name": "帕姆",
         "from": "神帝宇",
         "data": "1,1",
-        "mmd": false,
-        "weapons": 0,
-        "other": null
+        "mmd": true,
+        "weapons": 0
     },
     "2": {
         "name": "史瓦罗",
         "from": "神帝宇",
         "data": "2,1",
         "mmd": false,
-        "weapons": 0,
-        "other": null
+        "weapons": 0
     },
     "3": {
         "name": "三月七new",
         "from": "给你柠檬椰果养乐多你会跟我玩吗",
         "data":"1,2",
         "mmd": true,
-        "weapons": 0,
-        "other": "为什么不出皮肤!"
+        "weapons": 0
     },
     "4": {
         "name": "流萤",
         "from": "神帝宇",
         "data":"3,1",
         "mmd": true,
-        "weapons": 0,
-        "other": "烧鸡，你最好让她还能活着出现!"
+        "weapons": 0
     },
     "5": {
         "name": "幻胧",
         "from": "隔壁的隔壁老黄",
         "data":"1,3",
         "mmd": false,
-        "weapons": 0,
-        "other": null
+        "weapons": 0
     },
     "6": {
         "name": "可可利亚BOSS",
         "from": "隔壁的隔壁老黄",
         "data":"2,3",
         "mmd": false,
-        "weapons": 0,
-        "other": null
+        "weapons": 0
     },
     "7": {
         "name": "萨姆",
         "from": "神帝宇",
         "data":"4,1",
         "mmd": true,
-        "weapons": 0,
-        "other": null
+        "weapons": 0
     },
     "8": {
         "name": "星期日",
         "from": "神帝宇",
         "data":"5,1",
         "mmd": true,
-        "weapons": 0,
-        "other": null
-    },
-    "9": {
-        "name": "知更鸟",
-        "from": "神帝宇",
-        "data":"6,1",
-        "mmd": true,
-        "weapons": 0,
-        "other": "烧鸡，你..."
+        "weapons": 0
     }
 }
