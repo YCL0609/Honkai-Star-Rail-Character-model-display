@@ -25,7 +25,6 @@ export let helper, mesh;
 let camera, scene, renderer, effect, composer;
 const clock = new THREE.Clock();
 const gui = new GUI();
-// let urlroot = "https://model.ycl.cool";
 let urlroot = "models";
 
 // 处理传入参数
@@ -193,8 +192,8 @@ function init() {
 
   // 相机
   const controls = new OrbitControls(camera, renderer.domElement);
-  controls.minDistance = 10;
-  controls.maxDistance = 100;
+  controls.minDistance = 0;
+  controls.maxDistance = 1000;
   // 窗口拉伸
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;

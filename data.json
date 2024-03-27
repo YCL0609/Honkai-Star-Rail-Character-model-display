@@ -1,8 +1,8 @@
 {
     "0": {
-        "total": 49,
+        "total": 50,
         "version": "V2.5",
-        "version2": "2024-03-12"
+        "version2": "2024-03-14"
     },
     "1": {
         "name": "艾丝妲",
@@ -444,7 +444,16 @@
         "urlroot": true,
         "picurl": "/d/db/au23wjkibt90fxug7ney502r5z6tx50.png",
         "firstup": "V2.2(预测)",
-        "model":true,
-        "weapons":0
+        "model": true,
+        "weapons": 0
+    },
+    "50": {
+        "name": "波提欧",
+        "data": "2,1",
+        "urlroot": false,
+        "picurl": "/2024/03/12/288909600/a563ffb85a043fa2cbd98e0b1d790280_1569314730595586600.jpg",
+        "firstup": "V2.2(预测)",
+        "model": false,
+        "weapons": 0
     }
 }

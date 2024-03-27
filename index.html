@@ -4,33 +4,13 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="星穹铁道, Star Rail, 人物模型, Star Rail model">
   <meta name="description" content="角色立绘和3D模型展示(部分模型支持使用网页预览MMD动作)，已分类模型来源为官方, 未分类模型部分来自官方部分来源于网络。">
   <meta name="author" content="YCL">
   <title>《崩坏:星穹铁道》角色立绘和3D模型展示</title>
-  <link href="https://www.ycl.cool/media/icon.ico" rel="shortcut icon">
+  <link href="favicon.ico" rel="shortcut icon">
   <link rel="stylesheet" type="text/css" href="css/index.css">
-  <script src="https://www.ycl.cool/tool/browser/browser.js" defer></script>
-  <script src="https://www.ycl.cool/js/function.js" defer></script>
+  <script src="outside/function.js" defer></script>
   <script src="js/baidu.js"></script>
-  <script>
-    // 无介绍立绘id
-    var nopic = [4, 12, 17, 45];
-    // 人物属性 
-    var listdata = [null, "物理", "火", "冰", "雷", "风", "量子", "虚数"];
-    var linedata = [null, "毁灭", "巡猎", "智识", "同谐", "虚无", "存护", "丰饶"];
-    function Change(card) {
-      const main = document.getElementById('main');
-      const picture = document.getElementById('picture');
-      if (card === "picture") {
-        main.style.display = "none";
-        picture.style.display = null;
-      } else if (card === "main") {
-        picture.style.display = "none";
-        main.style.display = null;
-      }
-    }
-  </script>
 </head>
 
 <body>
@@ -312,19 +292,19 @@
       程序版本:<a id="version" style="color: #3391ff"></a>
       数据库版本:<a id="version2" style="color: #3391ff"></a>
       <a href="https://ycl.cool/blog/index.php/archives/17/" style="color: deepskyblue"><u>更新日志</u></a>
+      <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+          // 版本
+          const ver = await ReadJson('data.json', 0, 'version');
+          const ver2 = await ReadJson('data.json', 0, 'version2');
+          document.getElementById('version').innerText = ver;
+          document.getElementById('version2').innerText = ver2;
+        });
+      </script>
     </h5>
-    <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        // 版本
-        var ver = await ReadJson('data.json', 0, 'version');
-        var ver2 = await ReadJson('data.json', 0, 'version2');
-        document.getElementById('version').innerText = ver;
-        document.getElementById('version2').innerText = ver2;
-      });
-    </script>
   </div>
   <div id="picture" style="display: none;">
-    <a style="color: #b3ccff;" href="#" onclick="Change('main')">◀返回</a>
+    <a id="back" style="color: #b3ccff;cursor: pointer;" onclick="Change('main')">◀返回</a>
     <table style=" border-collapse: collapse">
       <thead>
         <td colspan="6" style="background-color: #2e2e2e;color: white;">角色立绘展示</td>

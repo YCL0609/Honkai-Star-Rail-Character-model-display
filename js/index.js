@@ -1,4 +1,9 @@
 localStorage.onload = 0;
+var nopic = [4, 12, 17, 45]; // 无介绍立绘id
+// 人物属性 
+var listdata = [null, "物理", "火", "冰", "雷", "风", "量子", "虚数"];
+var linedata = [null, "毁灭", "巡猎", "智识", "同谐", "虚无", "存护", "丰饶"];
+
 // 主表格
 JsonToTable('data.json', 'table', true, 'table2');
 // 未分类模型
@@ -35,17 +40,13 @@ async function JsonToTable(file, tablename, main) {
     let br = document.createElement('br');
     // 设置单元格内容
     a.innerText = data[i]['name'];
-    a.href = `3d.html?id=${i}&other=1`;
     note.classList = "note";
+    a.style.userSelect = "none"
+    a.style.cursor = "pointer"
     // 主表人物标记
     if (main) {
       // 跳转
-      a.href = `#`;
-      a.onclick = () => {
-        document.getElementById('picloading').style.display = null;
-        Change('picture');
-        ShowPicture(i);
-      };
+      a.setAttribute('data-id', i);
       // 无模型
       if (!data[i]['model']) {
         a.style.color = "aqua";
@@ -60,30 +61,41 @@ async function JsonToTable(file, tablename, main) {
           note.href = "#note2";
         }
       });
-      // 手机
-      if (isMobile()) {
-        document.getElementById('moble-div').style.display = null;
-        for (let i = 0; i <= 7; i++) {
-          for (let e = 5; e <= 7; e++) {
-            let td = document.getElementById(`table-${i}${e}`);
-            let td2 = document.getElementById(`table2-${i}${e}`);
-            td.style.display = "none";
-            td2.innerHTML = td.innerHTML;
-          }
-        }
-      }
+    } else {
+      a.href = `3d.html?id=${i}&other=1`;
     }
     // 添加到页面
     cell.appendChild(a);
     cell.appendChild(note);
     cell.appendChild(br);
   }
+  // 手机
+  if (isMobile()) {
+    document.getElementById('moble-div').style.display = null;
+    for (let i = 0; i <= 7; i++) {
+      for (let e = 5; e <= 7; e++) {
+        let td = document.getElementById(`table-${i}${e}`);
+        let td2 = document.getElementById(`table2-${i}${e}`);
+        td.style.display = "none";
+        td2.innerHTML = td.innerHTML
+      }
+    }
+  }
+  // 鼠标事件
+  const click = document.querySelectorAll('[data-id]');
+  click.forEach(e => {
+    e.addEventListener('click', () => {
+      const id = e.getAttribute('data-id');
+      document.getElementById('picloading').style.display = null;
+      Change('picture');
+      ShowPicture(id);
+    })
+  });
   // 完成
   localStorage.onload++;
   if (localStorage.onload != 2) {
     return;
   }
-  console.log('0')
   document.getElementById('loading').style.display = "none";
   document.getElementById('main').style.display = null;
 }
@@ -125,18 +137,31 @@ async function ShowPicture(id) {
   // 立绘
   var picurl_root = role['urlroot'] ? "https://patchwiki.biligame.com/images/sr" : "https://upload-bbs.miyoushe.com/upload";
   document.getElementById('img1').src = picurl_root + role['picurl'];
-  if (id == 4 || id == 45) {
-    // 开拓者
+  if (id == 4 || id == 45) { // 开拓者
+    var download2 = document.createElement('button');
     var imgdiv = document.getElementById('imgdiv');
     var img2 = document.createElement('img');
     img2.id = "img2";
+    img2.style.width = "48%";
     img2.src = "https://patchwiki.biligame.com/images/sr" + role['picurl2'];
-    imgdiv.appendChild(img2);
-    var pic = document.getElementById('picture');
-    var download2 = document.createElement('button');
     download2.innerText = "女主";
     download2.onclick = () => { window.open(document.getElementById('img2').src, '_blank'); };
-    pic.appendChild(download2);
+    document.getElementById('download').appendChild(download2);
     document.getElementById('btn').innerText = "男主";
+    document.getElementById('img1').style.width = "48%";
+    imgdiv.appendChild(img2);
+    document.getElementById('back').onclick = () => { location.reload() }
+  }
+}
+
+function Change(card) {
+  const main = document.getElementById('main');
+  const picture = document.getElementById('picture');
+  if (card === "picture") {
+    main.style.display = "none";
+    picture.style.display = null;
+  } else if (card === "main") {
+    picture.style.display = "none";
+    main.style.display = null;
   }
 }
