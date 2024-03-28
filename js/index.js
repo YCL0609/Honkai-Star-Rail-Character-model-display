@@ -118,8 +118,7 @@ async function ShowPicture(id) {
   var model = document.getElementById('showmodel');
   var btn = document.createElement('button');
   model.innerHTML = null;
-  if (id == 4 || id == 45) {
-    // 开拓者
+  if (id == 4 || id == 45) { // 开拓者
     btn.innerText = "男主";
     btn.onclick = () => { window.location.href = "3d.html?id=4&isman=1" }
     model.appendChild(btn);
@@ -133,6 +132,15 @@ async function ShowPicture(id) {
     model.appendChild(btn);
   } else {
     model.innerHTML = "<a style='color:red'>暂缺</a>";
+  }
+  if (id == 46) { // 黄泉
+    btn.innerText = "正常";
+    btn.onclick = () => { window.location.href = "3d.html?id=46" }
+    model.appendChild(btn);
+    var btn2 = document.createElement('button');
+    btn2.innerText = "白发";
+    btn2.onclick = () => { window.location.href = "3d.html?id=46&iswhite=1" };
+    model.appendChild(btn2);
   }
   // 立绘
   var picurl_root = role['urlroot'] ? "https://patchwiki.biligame.com/images/sr" : "https://upload-bbs.miyoushe.com/upload";

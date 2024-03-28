@@ -2,7 +2,7 @@
     "0": {
         "total": 50,
         "version": "V2.5",
-        "version2": "2024-03-14"
+        "version2": "2024-03-28"
     },
     "1": {
         "name": "艾丝妲",
@@ -416,7 +416,7 @@
         "data": "5,4",
         "urlroot": false,
         "picurl": "/2024/01/22/288909600/04b0d0b734a6b8541e880cde582527c0_8230522888929671387.jpg",
-        "firstup":"V2.1(预测)",
+        "firstup":"V2.1",
         "model": true,
         "weapons": 1
     },
@@ -425,7 +425,7 @@
         "data": "6,7",
         "urlroot": false,
         "picurl": "/2024/01/23/288909600/d946d6c401ad9b2ebbd354936e451638_3029755409916751313.jpg",
-        "firstup":"V2.1(预测)",
+        "firstup":"V2.1",
         "model": true,
         "weapons": 0
     },
@@ -434,7 +434,7 @@
         "data":"7,2",
         "urlroot":false,
         "picurl":"/2024/01/24/288909600/3cccc8369e95c2689443880427139209_1920403837972137716.jpg",
-        "firstup":"V2.1(预测)",
+        "firstup":"V2.1",
         "model":true,
         "weapons":0
     },

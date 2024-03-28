@@ -5,58 +5,58 @@
     },
     "1": {
         "name": "帕姆",
+        "folder": "帕姆",
         "from": "神帝宇",
         "data": "1,1",
-        "mmd": true,
         "weapons": 0
     },
     "2": {
         "name": "史瓦罗",
+        "folder": "史瓦罗",
         "from": "神帝宇",
         "data": "2,1",
-        "mmd": false,
         "weapons": 0
     },
     "3": {
         "name": "三月七new",
+        "folder": "三月七2",
         "from": "给你柠檬椰果养乐多你会跟我玩吗",
         "data":"1,2",
-        "mmd": true,
         "weapons": 0
     },
     "4": {
         "name": "流萤",
+        "folder": "流萤",
         "from": "神帝宇",
         "data":"3,1",
-        "mmd": true,
         "weapons": 0
     },
     "5": {
         "name": "幻胧",
+        "folder": "幻胧",
         "from": "隔壁的隔壁老黄",
         "data":"1,3",
-        "mmd": false,
         "weapons": 0
     },
     "6": {
         "name": "可可利亚BOSS",
+        "folder": "可可利亚",
         "from": "隔壁的隔壁老黄",
         "data":"2,3",
-        "mmd": false,
         "weapons": 0
     },
     "7": {
         "name": "萨姆",
+        "folder": "萨姆",
         "from": "神帝宇",
         "data":"4,1",
-        "mmd": true,
         "weapons": 0
     },
     "8": {
         "name": "星期日",
+        "folder": "星期日",
         "from": "神帝宇",
         "data":"5,1",
-        "mmd": true,
         "weapons": 0
     }
 }

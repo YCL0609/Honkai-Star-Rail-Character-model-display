@@ -27,26 +27,21 @@ const clock = new THREE.Clock();
 const gui = new GUI();
 let urlroot = "models";
 
-// 处理传入参数
+// 初始化
 export let other = getUrlParams('other');
 export let vmd = getUrlParams('vmd');
 export let id = getUrlParams('id');
-if (!other) {
-  var dataurl = "data.json";
-} else {
-  var dataurl = "data2.json";
-};
+var dataurl = other ? "data2.json" : "data.json";
+export let roledata = await ReadJson(dataurl, id, 0, false, true);
+var total = await ReadJson(dataurl, 0, 'total');
 if (typeof id === 'undefined') {
   alert('URL参数错误\nThe UrlParams "id" is underfind.');
   throw new Error('The UrlParams "id" is underfind.');
 };
-var total = await ReadJson(dataurl, 0, 'total');
 if (!(1 <= id && id <= total && !isNaN(id))) {
   alert('URL参数错误\nThe UrlParams "id" is not a number or not exist.');
   throw new Error('The UrlParams "id" is not a number or not exist.');
 };
-// 获取全部角色数据
-export let roledata = await ReadJson(dataurl, id, 0, false, true);
 
 // 主函数
 Ammo().then(AmmoLib => {
@@ -108,13 +103,11 @@ function init() {
       BGFinish();
     }, 2000);
   });
-  // 判断开拓者
-  if (roledata['name'] == "开拓者") {
-    var data = getUrlParams('isman');
-    var name = (data == "1") ? "男主" : "女主";
-  } else {
-    var name = roledata['name'];
-  };
+  // 模型所在文件夹名称
+  var name = roledata['name'];
+  if (other) { var name = roledata['folder']; }
+  if (roledata['name'] == "开拓者") { var name = (getUrlParams('isman') == "1") ? "男主" : "女主"; }
+  if (roledata['name'] == "黄泉") { var name = (getUrlParams('iswhite') == "1") ? "黄泉2" : "黄泉"; };
   var pmxfile = `${urlroot}/${name}/index.pmx`;
   document.getElementById('text0').innerText = "(3/4)等待响应...";
   document.getElementById('progress0').style.width = "75%";
@@ -126,12 +119,9 @@ function init() {
         mesh.position.y = -10;
         scene.add(mesh);
         const modelFolder = gui.addFolder('人物');
-        const modelParams = { x: 0, y: -10, z: 0 }
+        const modelParams = { x: 0, z: 0 }
         modelFolder.add(modelParams, 'x', -200, 200).onChange(() => {
           mesh.position.x = modelParams.x;
-        });
-        modelFolder.add(modelParams, 'y', -200, 200).onChange(() => {
-          mesh.position.y = modelParams.z;
         });
         modelFolder.add(modelParams, 'z', -200, 200).onChange(() => {
           mesh.position.z = modelParams.z;
@@ -164,12 +154,9 @@ function init() {
       mesh.position.y = -11.7;
       scene.add(mesh);
       const modelFolder = gui.addFolder('场景');
-      const modelParams = { x: 0, y: -10, z: 0 }
+      const modelParams = { x: 0, z: 0 }
       modelFolder.add(modelParams, 'x', -200, 200).onChange(() => {
         mesh.position.x = modelParams.x;
-      });
-      modelFolder.add(modelParams, 'y', -200, 200).onChange(() => {
-        mesh.position.y = modelParams.z;
       });
       modelFolder.add(modelParams, 'z', -200, 200).onChange(() => {
         mesh.position.z = modelParams.z;
@@ -215,15 +202,8 @@ function animate() {
 }
 
 function weapons(loader, name, number, gui) {
-  let x = [];
-  let z = [];
-  if (1 <= number && number <= 4) {
-    x = [0, -10, +10, +5, -5];
-    z = [0, 0, 0, -10, -10];
-  } else if (number > 4) { // 姬子、玲可
-    x = [0, -15, +20, +10, -10, -20, 0, +20];
-    z = [0, 0, 0, -15, -15, -15, -15, -15];
-  }
+  let x = [0, -15, +20, +10, -10, -20, 0, +20];
+  let z = [0, 0, 0, -15, -15, -15, -15, -15];
   // 素裳(大赤鸢模型太大)
   if (name == "素裳") {
     x = [0, -15, +20, +10, -10];
@@ -244,15 +224,12 @@ function weapons(loader, name, number, gui) {
       (mesh) => {
         // 添加到屏幕(X,Y,Z)
         mesh.position.x = x[i];
-        mesh.position.y = -10;
+        mesh.position.y = -7;
         mesh.position.z = z[i];
         const modelFolder = gui.addFolder(`武器${i}`);
-        const modelParams = { x: 0, y: -10, z: 0 }
+        const modelParams = { x: x[i], z: z[i] }
         modelFolder.add(modelParams, 'x', -200, 200).onChange(() => {
           mesh.position.x = modelParams.x;
-        });
-        modelFolder.add(modelParams, 'y', -200, 200).onChange(() => {
-          mesh.position.y = modelParams.z;
         });
         modelFolder.add(modelParams, 'z', -200, 200).onChange(() => {
           mesh.position.z = modelParams.z;
@@ -293,12 +270,9 @@ function MMDload(loader, pmxfile, gui) {
       mesh.position.y = -10;
       scene.add(mesh);
       const modelFolder = gui.addFolder('人物');
-      const modelParams = { x: 0, y: -10, z: 0 }
+      const modelParams = { x: 0, z: 0 }
       modelFolder.add(modelParams, 'x', -200, 200).onChange(() => {
         mesh.position.x = modelParams.x;
-      });
-      modelFolder.add(modelParams, 'y', -200, 200).onChange(() => {
-        mesh.position.y = modelParams.z;
       });
       modelFolder.add(modelParams, 'z', -200, 200).onChange(() => {
         mesh.position.z = modelParams.z;

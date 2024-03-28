@@ -26,12 +26,10 @@ export function AutoFinish() {
     document.getElementById('text0').innerText = "加载完成, 请等待材质下载.";
     document.getElementById('progress0').style.width = "100%";
     h4.innerHTML = `模型来源: ${from}`;
-    console.log("Model:\n ID:" + id + " Name:" + roledata['name'] + " From:" + from + " Weapons:" + roledata['weapons']);
     main.appendChild(br);
     main.appendChild(h4);
-    setTimeout(() => {
-        document.getElementById('info').style.display = "none"
-    },2500)
+    setTimeout(() => { document.getElementById('info').style.display = "none", 2500 })
+    console.log("Model:\n ID:" + id + " Name:" + roledata['name'] + " From:" + from + " Weapons:" + roledata['weapons']);
 }
 
 // MMD加载
@@ -50,7 +48,6 @@ export async function MMDFinish() {
     var h4_2 = document.createElement('h4');
     var h4_3 = document.createElement('h4');
     var br = document.createElement('br');
-    // document.getElementById('main-h4').style = null;
     document.getElementById('start').style = null;
     h4_0.innerHTML = `<br>模型来源: ${from}`;
     h4_1.innerHTML = `动作来源: ${vmddata['from']}`;
