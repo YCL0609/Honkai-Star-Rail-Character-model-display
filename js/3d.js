@@ -92,7 +92,7 @@ function init() {
   // 天空盒
   const SkyLoader = new THREE.CubeTextureLoader();
   SkyLoader.setPath('img/skybox/');
-  const SkyBox = SkyLoader.load(['px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png',], () => {
+  const SkyBox = SkyLoader.load(['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg',], () => {
     // 添加到屏幕
     scene.background = SkyBox;
     // 提示信息
