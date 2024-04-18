@@ -85,7 +85,7 @@ function init() {
   const SkyBox = SkyLoader.load(['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg',], () => {
     // 添加到屏幕
     scene.background = SkyBox;
-    UI.skybox()
+    UI.LoadUI.Skybox();
   });
   // 模型所在文件夹名称
   var name = roledata['name'];
@@ -238,13 +238,7 @@ function weapons(loader, name, number, gui) {
 
 function MMDload(loader, pmxfile, gui) {
   // 提示信息
-  let info = document.createElement('div');
-  info.id = `music`;
-  info.innerHTML = `<h4>音乐文件:<a id="text4" class="text">等待启动...</a></h4>
-        <div class="progress">
-          <div id="progress4" class="progress-inside" style="width: 0%"></div>
-        </div>`;
-  document.getElementById('info-main').appendChild(info);
+  UI.LoadUI.Music();
   loader.loadWithAnimation(
     pmxfile,
     `./vmd/${vmd}/index.vmd`,

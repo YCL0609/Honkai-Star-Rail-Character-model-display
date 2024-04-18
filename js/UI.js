@@ -20,68 +20,79 @@ export function Error(code, error) {
     Info[2] = "URL参数错误: 参数'vmd'不是数字或在可接受范围外";
     Info[3] = "three.js初始化错误";
     console.error(Info[code] + error);
+    /********!!!!!!unfinish!!!!*****/
 }
 
-export function skybox() {
-    // 提示信息
-    document.getElementById('text3').innerText = "天空盒加载完成.";
-    document.getElementById('progress3').style.width = "100%";
-    setTimeout(() => {
-        document.getElementById('skybox').style.display = "none";
-        if (vmd) { MMDFinish(); } else { AutoFinish(); }
-    }, 2000);
+export const Start = {
+    Music: () => {
+        let info = document.createElement('div');
+        info.id = `music`;
+        info.innerHTML = `<h4>音乐文件:<a id="text4" class="text">等待启动...</a></h4>
+          <div class="progress">
+            <div id="progress4" class="progress-inside" style="width: 0%"></div>
+          </div>`;
+        document.getElementById('info-main').appendChild(info);
+    }
+    /*******!!!unfinish!!!*/
 }
 
-// 正常加载
-export function AutoFinish() {
-    var total = localStorage.onload;
-    if (total != (2 + roledata['weapons'])) {
-        total++;
-        localStorage.setItem('onload', total);
-        return;
-    }; gui();
-    var from = other ? roledata['from'] : "神帝宇";
-    var main = document.getElementById('main');
-    var ok = document.getElementById('start');
-    var h4 = document.createElement('h4');
-    var br = document.createElement('br');
-    ok.onclick = () => { document.getElementById('info').style.display = "none"; };
-    document.getElementById('text0').innerText = "加载完成, 请等待材质下载.";
-    document.getElementById('progress0').style.width = "100%";
-    h4.innerHTML = `模型来源: ${from}`;
-    main.appendChild(br);
-    main.appendChild(h4);
-    setTimeout(() => { document.getElementById('info').style.display = "none", 2500 })
-    console.log("Model:\n ID:" + id + " Name:" + roledata['name'] + " From:" + from + " Weapons:" + roledata['weapons']);
-}
-
-// MMD加载
-export async function MMDFinish() {
-    var vmddata = await ReadJson('vmd/data.json', vmd, 0, false, true);
-    var total = localStorage.onload;
-    if (total != 3) {
-        total++;
-        localStorage.setItem('onload', total);
-        return;
-    }; gui();
-    var from = other ? roledata['from'] : "神帝宇";
-    var main = document.getElementById('main');
-    var h4_0 = document.createElement('h4');
-    var h4_1 = document.createElement('h4');
-    var h4_2 = document.createElement('h4');
-    var h4_3 = document.createElement('h4');
-    var br = document.createElement('br');
-    document.getElementById('start').style = null;
-    h4_0.innerHTML = `<br>模型来源: ${from}`;
-    h4_1.innerHTML = `动作来源: ${vmddata['from']}`;
-    h4_2.innerHTML = `背景音乐: ${vmddata['name']}`;
-    h4_3.innerHTML = `制作软件: three.js`;
-    main.appendChild(br);
-    main.appendChild(h4_0);
-    main.appendChild(h4_1);
-    main.appendChild(h4_2);
-    main.appendChild(h4_3);
-    console.log("Model:\n ID:" + id + " Name:" + roledata['name'] + " From:" + from + "\nAnimation:\n ID:" + vmd + " Name:" + vmddata['name'] + " From:" + vmddata['from']);
+export const Finish = {
+    Skybox: () => {
+        document.getElementById('text3').innerText = "天空盒加载完成.";
+        document.getElementById('progress3').style.width = "100%";
+        setTimeout(() => {
+            document.getElementById('skybox').style.display = "none";
+            if (vmd) { MMDFinish(); } else { AutoFinish(); }
+        }, 2000);
+    },
+    Auto: () =>{
+        var total = localStorage.onload;
+        if (total != (2 + roledata['weapons'])) {
+            total++;
+            localStorage.setItem('onload', total);
+            return;
+        }; gui();
+        var from = other ? roledata['from'] : "神帝宇";
+        var main = document.getElementById('main');
+        var ok = document.getElementById('start');
+        var h4 = document.createElement('h4');
+        var br = document.createElement('br');
+        ok.onclick = () => { document.getElementById('info').style.display = "none"; };
+        document.getElementById('text0').innerText = "加载完成, 请等待材质下载.";
+        document.getElementById('progress0').style.width = "100%";
+        h4.innerHTML = `模型来源: ${from}`;
+        main.appendChild(br);
+        main.appendChild(h4);
+        setTimeout(() => { document.getElementById('info').style.display = "none", 2500 })
+        console.log("Model:\n ID:" + id + " Name:" + roledata['name'] + " From:" + from + " Weapons:" + roledata['weapons']);
+    },
+    MMD: async ()=> {
+        var vmddata = await ReadJson('vmd/data.json', vmd, 0, false, true);
+        var total = localStorage.onload;
+        if (total != 3) {
+            total++;
+            localStorage.setItem('onload', total);
+            return;
+        }; gui();
+        var from = other ? roledata['from'] : "神帝宇";
+        var main = document.getElementById('main');
+        var h4_0 = document.createElement('h4');
+        var h4_1 = document.createElement('h4');
+        var h4_2 = document.createElement('h4');
+        var h4_3 = document.createElement('h4');
+        var br = document.createElement('br');
+        document.getElementById('start').style = null;
+        h4_0.innerHTML = `<br>模型来源: ${from}`;
+        h4_1.innerHTML = `动作来源: ${vmddata['from']}`;
+        h4_2.innerHTML = `背景音乐: ${vmddata['name']}`;
+        h4_3.innerHTML = `制作软件: three.js`;
+        main.appendChild(br);
+        main.appendChild(h4_0);
+        main.appendChild(h4_1);
+        main.appendChild(h4_2);
+        main.appendChild(h4_3);
+        console.log("Model:\n ID:" + id + " Name:" + roledata['name'] + " From:" + from + "\nAnimation:\n ID:" + vmd + " Name:" + vmddata['name'] + " From:" + vmddata['from']);
+    }
 }
 
 function gui() {
