@@ -1,0 +1,110 @@
+import * as THREE from 'three';
+import { roledata, other, vmd, id } from './3d.js';
+
+export function Init() {
+    window.onload = null;
+    localStorage.setItem('onload', 0);
+    localStorage.setItem('onload_bg', 0);
+    document.getElementById('text0').innerText = "(3/4)初始化加载器...";
+    document.getElementById('progress0').style.width = "50%";
+    document.getElementById('skybox').style.display = null;
+    document.getElementById('module').style = null;
+    document.getElementById('background').style = null;
+    console.log('three.js version: ' + THREE.REVISION);
+}
+
+export function Error(code, error) {
+    const Info = [];
+    Info[0] = "UI初始化错误";
+    Info[1] = "URL参数错误: 参数'id'不是数字或在可接受范围外";
+    Info[2] = "URL参数错误: 参数'vmd'不是数字或在可接受范围外";
+    Info[3] = "three.js初始化错误";
+    console.error(Info[code] + error);
+}
+
+export function skybox() {
+    // 提示信息
+    document.getElementById('text3').innerText = "天空盒加载完成.";
+    document.getElementById('progress3').style.width = "100%";
+    setTimeout(() => {
+        document.getElementById('skybox').style.display = "none";
+        if (vmd) { MMDFinish(); } else { AutoFinish(); }
+    }, 2000);
+}
+
+// 正常加载
+export function AutoFinish() {
+    var total = localStorage.onload;
+    if (total != (2 + roledata['weapons'])) {
+        total++;
+        localStorage.setItem('onload', total);
+        return;
+    }; gui();
+    var from = other ? roledata['from'] : "神帝宇";
+    var main = document.getElementById('main');
+    var ok = document.getElementById('start');
+    var h4 = document.createElement('h4');
+    var br = document.createElement('br');
+    ok.onclick = () => { document.getElementById('info').style.display = "none"; };
+    document.getElementById('text0').innerText = "加载完成, 请等待材质下载.";
+    document.getElementById('progress0').style.width = "100%";
+    h4.innerHTML = `模型来源: ${from}`;
+    main.appendChild(br);
+    main.appendChild(h4);
+    setTimeout(() => { document.getElementById('info').style.display = "none", 2500 })
+    console.log("Model:\n ID:" + id + " Name:" + roledata['name'] + " From:" + from + " Weapons:" + roledata['weapons']);
+}
+
+// MMD加载
+export async function MMDFinish() {
+    var vmddata = await ReadJson('vmd/data.json', vmd, 0, false, true);
+    var total = localStorage.onload;
+    if (total != 3) {
+        total++;
+        localStorage.setItem('onload', total);
+        return;
+    }; gui();
+    var from = other ? roledata['from'] : "神帝宇";
+    var main = document.getElementById('main');
+    var h4_0 = document.createElement('h4');
+    var h4_1 = document.createElement('h4');
+    var h4_2 = document.createElement('h4');
+    var h4_3 = document.createElement('h4');
+    var br = document.createElement('br');
+    document.getElementById('start').style = null;
+    h4_0.innerHTML = `<br>模型来源: ${from}`;
+    h4_1.innerHTML = `动作来源: ${vmddata['from']}`;
+    h4_2.innerHTML = `背景音乐: ${vmddata['name']}`;
+    h4_3.innerHTML = `制作软件: three.js`;
+    main.appendChild(br);
+    main.appendChild(h4_0);
+    main.appendChild(h4_1);
+    main.appendChild(h4_2);
+    main.appendChild(h4_3);
+    console.log("Model:\n ID:" + id + " Name:" + roledata['name'] + " From:" + from + "\nAnimation:\n ID:" + vmd + " Name:" + vmddata['name'] + " From:" + vmddata['from']);
+}
+
+function gui() {
+    var title = document.getElementsByClassName('title');
+    for (let i = 0; i < title.length; i++) {
+        title[i].click();
+    }
+    document.getElementById('text0').innerText = "加载完成, 请等待材质下载.";
+    document.getElementById('progress0').style.width = "100%";
+    document.getElementById('VMDList').style.left = "0px";
+    document.getElementById('three').style.top = "-60px";
+    if (roledata['name'] == '可可利亚BOSS') {
+        document.getElementById('VMDList').innerHTML = null;
+    }
+}
+
+function Poop(color, text, time) {
+    const PoopDiv = document.createElement('div');
+    PoopDiv.classList = "poop";
+    PoopDiv.style.backgroundColor = color;
+    PoopDiv.innerText = "错误: " + text;
+    document.body.append(PoopDiv)
+    setTimeout(() => {
+        PoopDiv.style.top = "-100px"
+    }, time * 1000)
+}

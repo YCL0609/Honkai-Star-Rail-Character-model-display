@@ -9,6 +9,18 @@ body {
 	overflow: hidden;
 }
 
+.poop {
+	top: 10px;
+	position: absolute;
+	width: 60%;
+	box-sizing: border-box;
+	text-align: center;
+	z-index: 10002;
+	transition: 1.5s;
+	background-color: aqua;
+	border-radius: 100px;
+}
+
 #info {
 	display: flex;
 	justify-content: center;

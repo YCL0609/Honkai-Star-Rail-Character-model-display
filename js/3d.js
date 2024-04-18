@@ -1,3 +1,4 @@
+import * as UI from 'WebUI';
 import * as THREE from 'three';
 import { EffectComposer } from 'three/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/postprocessing/RenderPass.js';
@@ -6,49 +7,38 @@ import { OrbitControls } from 'three/controls/OrbitControls.js';
 import { OutlineEffect } from 'three/effects/OutlineEffect.js';
 import { MMDLoader } from 'three/loaders/MMDLoader.js';
 import { MMDAnimationHelper } from 'three/animation/MMDAnimationHelper.js';
-import { AutoFinish, MMDFinish, BGFinish } from './Finish.js';
 import { GUI } from 'three/lil-gui.module.min.js';
 
-// 提示信息
-window.onload = null;
-localStorage.setItem('onload', 0);
-localStorage.setItem('onload_bg', 0);
-document.getElementById('text0').innerText = "(3/4)初始化加载器...";
-document.getElementById('progress0').style.width = "50%";
-document.getElementById('skybox').style.display = null;
-document.getElementById('module').style = null;
-document.getElementById('background').style = null;
-console.log('three.js version: ' + THREE.REVISION);
-
 let stats;
-export let helper, mesh;
+let helper, mesh;
 let camera, scene, renderer, effect, composer;
 const clock = new THREE.Clock();
 const gui = new GUI();
 let urlroot = "models";
 
 // 初始化
+try { UI.Init() } catch (e) { UI.Error(0, e) };
 export let other = getUrlParams('other');
 export let vmd = getUrlParams('vmd');
 export let id = getUrlParams('id');
 var dataurl = other ? "data2.json" : "data.json";
 export let roledata = await ReadJson(dataurl, id, 0, false, true);
 var total = await ReadJson(dataurl, 0, 'total');
-if (typeof id === 'undefined') {
-  alert('URL参数错误\nThe UrlParams "id" is underfind.');
-  throw new Error('The UrlParams "id" is underfind.');
-};
-if (!(1 <= id && id <= total && !isNaN(id))) {
-  alert('URL参数错误\nThe UrlParams "id" is not a number or not exist.');
-  throw new Error('The UrlParams "id" is not a number or not exist.');
-};
+const tmp = parseInt(id);
+if (isNaN(tmp) || tmp < 1 || tmp > total) { UI.Error(1) }
+const tmp2 = parseInt(id);
+if (isNaN(tmp2) || tmp2 < 1 || tmp2 > 3) { UI.Error(1) }
 
 // 主函数
-Ammo().then(AmmoLib => {
-  Ammo = AmmoLib;
-  init();
-  animate();
-});
+try {
+  Ammo().then(AmmoLib => {
+    Ammo = AmmoLib;
+    init();
+    animate();
+  })
+} catch (e) {
+  UI.Error(3, e)
+}
 
 // 场景配置
 function init() {
@@ -95,13 +85,7 @@ function init() {
   const SkyBox = SkyLoader.load(['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg',], () => {
     // 添加到屏幕
     scene.background = SkyBox;
-    // 提示信息
-    document.getElementById('text3').innerText = "天空盒加载完成.";
-    document.getElementById('progress3').style.width = "100%";
-    setTimeout(() => {
-      document.getElementById('skybox').style.display = "none";
-      BGFinish();
-    }, 2000);
+    UI.skybox()
   });
   // 模型所在文件夹名称
   var name = roledata['name'];
@@ -130,7 +114,7 @@ function init() {
         document.getElementById('text1').innerText = "主模型:加载完成, 请等待材质下载.";
         setTimeout(() => {
           document.getElementById('module').style.display = "none";
-          AutoFinish()
+          UI.AutoFinish()
         }, 2000)
       },
       (xhr) => {
@@ -165,7 +149,7 @@ function init() {
       document.getElementById('text2').innerText = "加载完成, 等待材质下载.";
       setTimeout(() => {
         document.getElementById('background').style.display = "none";
-        BGFinish()
+        if (vmd) { UI.MMDFinish(); } else { UI.AutoFinish(); }
       }, 2000)
     },
     (xhr) => {
@@ -239,7 +223,7 @@ function weapons(loader, name, number, gui) {
         document.getElementById(`text-w${i}`).innerText = "加载完成, 请等待材质下载.";
         setTimeout(() => {
           document.getElementById(`weapon${i}`).style.display = "none";
-          AutoFinish();
+          UI.AutoFinish();
         }, 2000);
       },
       (xhr) => {
@@ -280,7 +264,7 @@ function MMDload(loader, pmxfile, gui) {
       document.getElementById(`text1`).innerText = "加载完成, 等待材质下载.";
       setTimeout(() => {
         document.getElementById('module').style.display = "none";
-        MMDFinish();
+        UI.MMDFinish();
       }, 2000)
       // 监听
       const audioListener = new THREE.AudioListener();
@@ -297,7 +281,7 @@ function MMDload(loader, pmxfile, gui) {
           document.getElementById('text4').innerText = "加载完成.";
           document.getElementById('music').style.display = "none";
           setTimeout(() => {
-            MMDFinish();
+            UI.MMDFinish();
             let ok = document.getElementById('start');
             ok.innerText = "开始";
             ok.onclick = () => {
