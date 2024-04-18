@@ -41,7 +41,7 @@
 		<div id="info-main">
 			<div id="main">
 				<h4 id="main-h4" style="margin-left: 12%;text-align: left;">主进度:<a id="text0"
-						class="text">(1/4)加载three.js主文件</a></h4>
+						class="text">(1/4)加载three.js...</a></h4>
 				<div class="progress">
 					<div id="progress0" class="progress-inside" style="width: 0%"></div>
 				</div>
@@ -70,11 +70,6 @@
 				var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 				if (isSafari) {
 					alert('!!!注意!!!\n由于Webkit内核对于WebGL兼容性有限, 页面可能出现未知渲染问题。\n若可能请更换非Webkit内核浏览器访问。')
-				}
-				
-				window.onload = () => {
-					document.getElementById('text0').innerText = "(2/4)加载MMDLoader插件..."
-					document.getElementById('progress0').style.width = "25%"
 				}
 			</script>
 		</div>

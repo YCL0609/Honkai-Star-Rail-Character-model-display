@@ -17,17 +17,12 @@ const gui = new GUI();
 let urlroot = "models";
 
 // 初始化
-try { UI.Init() } catch (e) { UI.Error(0, e) };
 export let other = getUrlParams('other');
 export let vmd = getUrlParams('vmd');
 export let id = getUrlParams('id');
-var dataurl = other ? "data2.json" : "data.json";
+export let dataurl = other ? "data2.json" : "data.json";
 export let roledata = await ReadJson(dataurl, id, 0, false, true);
-var total = await ReadJson(dataurl, 0, 'total');
-const tmp = parseInt(id);
-if (isNaN(tmp) || tmp < 1 || tmp > total) { UI.Error(1) }
-const tmp2 = parseInt(id);
-if (isNaN(tmp2) || tmp2 < 1 || tmp2 > 3) { UI.Error(1) }
+try { UI.Init() } catch (e) { UI.Error(0, e) };
 
 // 主函数
 try {
@@ -85,7 +80,7 @@ function init() {
   const SkyBox = SkyLoader.load(['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg',], () => {
     // 添加到屏幕
     scene.background = SkyBox;
-    UI.LoadUI.Skybox();
+    UI.Finish.Skybox();
   });
   // 模型所在文件夹名称
   var name = roledata['name'];
@@ -114,14 +109,14 @@ function init() {
         document.getElementById('text1').innerText = "主模型:加载完成, 请等待材质下载.";
         setTimeout(() => {
           document.getElementById('module').style.display = "none";
-          UI.AutoFinish()
+          UI.Finish.Auto()
         }, 2000)
       },
       (xhr) => {
-        document.getElementById('text1').innerText = "主模型:" + "(" + (xhr.loaded / 1024).toFixed(0) + " KB/" + (xhr.total / 1024).toFixed(0) + " KB)";
-        document.getElementById('progress1').style.width = (xhr.loaded / xhr.total * 100) + "%";
+        UI.Progress.mainmod(xhr);
       },
       (err) => {
+        // UI.Error()
         console.error(err);
       }
     );
@@ -149,7 +144,7 @@ function init() {
       document.getElementById('text2').innerText = "加载完成, 等待材质下载.";
       setTimeout(() => {
         document.getElementById('background').style.display = "none";
-        if (vmd) { UI.MMDFinish(); } else { UI.AutoFinish(); }
+        if (vmd) { UI.Finish.MMD(); } else { UI.Finish.Auto(); }
       }, 2000)
     },
     (xhr) => {
@@ -194,15 +189,7 @@ function weapons(loader, name, number, gui) {
     z = [0, 0, 0, -20, -20];
   }
   for (let i = 1; i <= number; i++) {
-    // 动态添加提示信息
-    let info = document.createElement('div');
-    info.id = `weapon${i}`;
-    info.innerHTML = `<h4>武器模型${i}:<a id="text-w${i}" class="text"></a></h4>
-    <div class="progress">
-      <div id="progress-w${i}" class="progress-inside" style="width: 0%"></div>
-    </div>`;
-    document.getElementById('info-main').appendChild(info);
-
+    UI.Start.Weapons();
     loader.load(
       `${urlroot}/${name}/${i}.pmx`,
       (mesh) => {
@@ -219,12 +206,7 @@ function weapons(loader, name, number, gui) {
           mesh.position.z = modelParams.z;
         });
         scene.add(mesh);
-        // 提示信息
-        document.getElementById(`text-w${i}`).innerText = "加载完成, 请等待材质下载.";
-        setTimeout(() => {
-          document.getElementById(`weapon${i}`).style.display = "none";
-          UI.AutoFinish();
-        }, 2000);
+        UI.Finish.Weapons(i);
       },
       (xhr) => {
         document.getElementById(`text-w${i}`).innerHTML = (xhr.loaded / xhr.total * 100).toFixed(2) + "%(" + (xhr.loaded / 1024).toFixed(0) + " KB /" + (xhr.total / 1024).toFixed(0) + " KB)";
@@ -237,8 +219,7 @@ function weapons(loader, name, number, gui) {
 }
 
 function MMDload(loader, pmxfile, gui) {
-  // 提示信息
-  UI.LoadUI.Music();
+  UI.Start.Music();
   loader.loadWithAnimation(
     pmxfile,
     `./vmd/${vmd}/index.vmd`,
@@ -258,7 +239,7 @@ function MMDload(loader, pmxfile, gui) {
       document.getElementById(`text1`).innerText = "加载完成, 等待材质下载.";
       setTimeout(() => {
         document.getElementById('module').style.display = "none";
-        UI.MMDFinish();
+        UI.Finish.MMD();
       }, 2000)
       // 监听
       const audioListener = new THREE.AudioListener();
@@ -275,7 +256,7 @@ function MMDload(loader, pmxfile, gui) {
           document.getElementById('text4').innerText = "加载完成.";
           document.getElementById('music').style.display = "none";
           setTimeout(() => {
-            UI.MMDFinish();
+            UI.Finish.MMD();
             let ok = document.getElementById('start');
             ok.innerText = "开始";
             ok.onclick = () => {

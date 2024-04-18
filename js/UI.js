@@ -1,16 +1,19 @@
 import * as THREE from 'three';
-import { roledata, other, vmd, id } from './3d.js';
+import { dataurl, roledata, other, vmd, id } from './3d.js';
 
-export function Init() {
-    window.onload = null;
+export async function Init() {
     localStorage.setItem('onload', 0);
     localStorage.setItem('onload_bg', 0);
-    document.getElementById('text0').innerText = "(3/4)初始化加载器...";
-    document.getElementById('progress0').style.width = "50%";
+    Progress.main(2);
     document.getElementById('skybox').style.display = null;
     document.getElementById('module').style = null;
     document.getElementById('background').style = null;
     console.log('three.js version: ' + THREE.REVISION);
+    let total = await ReadJson(dataurl, 0, 'total');
+    const tmp = parseInt(id);
+    if (isNaN(tmp) || tmp < 1 || tmp > total) { Error(1) }
+    const tmp2 = parseInt(vmd);
+    if (isNaN(tmp2) || tmp2 < 1 || tmp2 > 3) { Error(2) }
 }
 
 export function Error(code, error) {
@@ -20,6 +23,7 @@ export function Error(code, error) {
     Info[2] = "URL参数错误: 参数'vmd'不是数字或在可接受范围外";
     Info[3] = "three.js初始化错误";
     console.error(Info[code] + error);
+    // Poop()
     /********!!!!!!unfinish!!!!*****/
 }
 
@@ -32,8 +36,31 @@ export const Start = {
             <div id="progress4" class="progress-inside" style="width: 0%"></div>
           </div>`;
         document.getElementById('info-main').appendChild(info);
+    },
+    Weapon: () => {
+        let info = document.createElement('div');
+        info.id = `weapon${i}`;
+        info.innerHTML = `<h4>武器模型${i}:<a id="text-w${i}" class="text"></a></h4>
+        <div class="progress">
+          <div id="progress-w${i}" class="progress-inside" style="width: 0%"></div>
+        </div>`;
+        document.getElementById('info-main').appendChild(info);
     }
-    /*******!!!unfinish!!!*/
+    /*******!!!unfinish!!!*********/
+}
+
+export const Progress = {
+    main: num => {
+        let info = [];
+        info[2] = "初始化加载器..."
+        info[3] = "等待响应..."
+        document.getElementById('text0').innerText = `(${num}/4)${info[num]}`;
+        document.getElementById('progress0').style.width = `${num * 25}%`;
+    },
+    mainmod: xhr => {
+        document.getElementById('text1').innerText = "主模型:" + "(" + (xhr.loaded / 1024).toFixed(0) + " KB/" + (xhr.total / 1024).toFixed(0) + " KB)";
+        document.getElementById('progress1').style.width = (xhr.loaded / xhr.total * 100) + "%";
+    }
 }
 
 export const Finish = {
@@ -42,10 +69,11 @@ export const Finish = {
         document.getElementById('progress3').style.width = "100%";
         setTimeout(() => {
             document.getElementById('skybox').style.display = "none";
-            if (vmd) { MMDFinish(); } else { AutoFinish(); }
+            if (vmd) { Finish.MMD(); } else { Finish.Auto(); }
         }, 2000);
     },
-    Auto: () =>{
+
+    Auto: () => {
         var total = localStorage.onload;
         if (total != (2 + roledata['weapons'])) {
             total++;
@@ -66,7 +94,16 @@ export const Finish = {
         setTimeout(() => { document.getElementById('info').style.display = "none", 2500 })
         console.log("Model:\n ID:" + id + " Name:" + roledata['name'] + " From:" + from + " Weapons:" + roledata['weapons']);
     },
-    MMD: async ()=> {
+
+    Weapon: id => {
+        document.getElementById(`text-w${id}`).innerText = "加载完成, 请等待材质下载.";
+        setTimeout(() => {
+            document.getElementById(`weapon${id}`).style.display = "none";
+            Finish.Auto();
+        }, 2000);
+    },
+
+    MMD: async () => {
         var vmddata = await ReadJson('vmd/data.json', vmd, 0, false, true);
         var total = localStorage.onload;
         if (total != 3) {
