@@ -1,4 +1,3 @@
-import * as THREE from 'three';
 import { dataurl, roledata, other, vmd, id } from './3d.js';
 
 export async function Init() {
@@ -8,12 +7,12 @@ export async function Init() {
     document.getElementById('skybox').style.display = null;
     document.getElementById('module').style = null;
     document.getElementById('background').style = null;
-    console.log('three.js version: ' + THREE.REVISION);
+
     let total = await ReadJson(dataurl, 0, 'total');
     const tmp = parseInt(id);
     if (isNaN(tmp) || tmp < 1 || tmp > total) { Error(1) }
-    const tmp2 = parseInt(vmd);
-    if (isNaN(tmp2) || tmp2 < 1 || tmp2 > 3) { Error(2) }
+    // const tmp2 = parseInt(vmd);
+    // if (isNaN(tmp2) || tmp2 < 1 || tmp2 > 3) { Error(2) }
 }
 
 export function Error(code, error) {
@@ -22,6 +21,7 @@ export function Error(code, error) {
     Info[1] = "URL参数错误: 参数'id'不是数字或在可接受范围外";
     Info[2] = "URL参数错误: 参数'vmd'不是数字或在可接受范围外";
     Info[3] = "three.js初始化错误";
+    Info[4] = "主模型加载错误"
     console.error(Info[code] + error);
     // Poop()
     /********!!!!!!unfinish!!!!*****/
@@ -37,7 +37,7 @@ export const Start = {
           </div>`;
         document.getElementById('info-main').appendChild(info);
     },
-    Weapon: () => {
+    Weapon: i => {
         let info = document.createElement('div');
         info.id = `weapon${i}`;
         info.innerHTML = `<h4>武器模型${i}:<a id="text-w${i}" class="text"></a></h4>
@@ -50,16 +50,18 @@ export const Start = {
 }
 
 export const Progress = {
-    main: num => {
+    main: (num) => {
         let info = [];
         info[2] = "初始化加载器..."
         info[3] = "等待响应..."
         document.getElementById('text0').innerText = `(${num}/4)${info[num]}`;
         document.getElementById('progress0').style.width = `${num * 25}%`;
     },
-    mainmod: xhr => {
-        document.getElementById('text1').innerText = "主模型:" + "(" + (xhr.loaded / 1024).toFixed(0) + " KB/" + (xhr.total / 1024).toFixed(0) + " KB)";
-        document.getElementById('progress1').style.width = (xhr.loaded / xhr.total * 100) + "%";
+
+    Model: (id, xhr, text) => {
+        let info = (text === undefined) ? '' : text;
+        document.getElementById(`text${id}`).innerText = info + "(" + (xhr.loaded / 1024).toFixed(0) + " KB/" + (xhr.total / 1024).toFixed(0) + " KB)";
+        document.getElementById(`progress${id}`).style.width = (xhr.loaded / xhr.total * 100) + "%";
     }
 }
 
@@ -91,15 +93,16 @@ export const Finish = {
         h4.innerHTML = `模型来源: ${from}`;
         main.appendChild(br);
         main.appendChild(h4);
-        setTimeout(() => { document.getElementById('info').style.display = "none", 2500 })
+        setTimeout(() => { document.getElementById('info').style.display = "none" }, 2500)
         console.log("Model:\n ID:" + id + " Name:" + roledata['name'] + " From:" + from + " Weapons:" + roledata['weapons']);
     },
 
-    Weapon: id => {
-        document.getElementById(`text-w${id}`).innerText = "加载完成, 请等待材质下载.";
+    Model: (id1, id2, text) => {
+        let info = (text === undefined) ? '' : text;
+        document.getElementById(id1).innerText = info + "加载完成, 请等待材质下载.";
         setTimeout(() => {
-            document.getElementById(`weapon${id}`).style.display = "none";
-            Finish.Auto();
+            document.getElementById(id2).style.display = "none";
+            if (vmd) { Finish.MMD(); } else { Finish.Auto(); }
         }, 2000);
     },
 
@@ -111,23 +114,19 @@ export const Finish = {
             localStorage.setItem('onload', total);
             return;
         }; gui();
-        var from = other ? roledata['from'] : "神帝宇";
-        var main = document.getElementById('main');
-        var h4_0 = document.createElement('h4');
-        var h4_1 = document.createElement('h4');
-        var h4_2 = document.createElement('h4');
-        var h4_3 = document.createElement('h4');
-        var br = document.createElement('br');
+        const from = other ? roledata['from'] : "神帝宇";
+        const main = document.getElementById('main');
+        [``,
+            `模型来源: ${from}`,
+            `动作来源: ${vmddata['from']}`,
+            `背景音乐: ${vmddata['name']}`,
+            `制作软件: three.js`,
+        ].map((text) => {
+            const h4 = document.createElement('h4');
+            h4.innerHTML = text;
+            main.appendChild(h4)
+        });
         document.getElementById('start').style = null;
-        h4_0.innerHTML = `<br>模型来源: ${from}`;
-        h4_1.innerHTML = `动作来源: ${vmddata['from']}`;
-        h4_2.innerHTML = `背景音乐: ${vmddata['name']}`;
-        h4_3.innerHTML = `制作软件: three.js`;
-        main.appendChild(br);
-        main.appendChild(h4_0);
-        main.appendChild(h4_1);
-        main.appendChild(h4_2);
-        main.appendChild(h4_3);
         console.log("Model:\n ID:" + id + " Name:" + roledata['name'] + " From:" + from + "\nAnimation:\n ID:" + vmd + " Name:" + vmddata['name'] + " From:" + vmddata['from']);
     }
 }

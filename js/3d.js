@@ -8,6 +8,7 @@ import { OutlineEffect } from 'three/effects/OutlineEffect.js';
 import { MMDLoader } from 'three/loaders/MMDLoader.js';
 import { MMDAnimationHelper } from 'three/animation/MMDAnimationHelper.js';
 import { GUI } from 'three/lil-gui.module.min.js';
+console.log('three.js version: ' + THREE.REVISION);
 
 let stats;
 let helper, mesh;
@@ -88,8 +89,7 @@ function init() {
   if (roledata['name'] == "开拓者") { var name = (getUrlParams('isman') == "1") ? "男主" : "女主"; }
   if (roledata['name'] == "黄泉") { var name = (getUrlParams('iswhite') == "1") ? "黄泉2" : "黄泉"; };
   var pmxfile = `${urlroot}/${name}/index.pmx`;
-  document.getElementById('text0').innerText = "(3/4)等待响应...";
-  document.getElementById('progress0').style.width = "75%";
+  UI.Progress.main(3);
   if (!vmd) {
     loader.load(
       pmxfile,
@@ -106,18 +106,13 @@ function init() {
           mesh.position.z = modelParams.z;
         });
         // 提示信息
-        document.getElementById('text1').innerText = "主模型:加载完成, 请等待材质下载.";
-        setTimeout(() => {
-          document.getElementById('module').style.display = "none";
-          UI.Finish.Auto()
-        }, 2000)
+        UI.Finish.Model('text1', 'module', '主模型:');
       },
       (xhr) => {
-        UI.Progress.mainmod(xhr);
+        UI.Progress.Model(1, xhr, '主模型:');
       },
       (err) => {
-        // UI.Error()
-        console.error(err);
+        UI.Error(4, err)
       }
     );
     weapons(loader, name, roledata['weapons'], gui); // 武器模型
@@ -134,22 +129,16 @@ function init() {
       scene.add(mesh);
       const modelFolder = gui.addFolder('场景');
       const modelParams = { x: 0, z: 0 }
-      modelFolder.add(modelParams, 'x', -200, 200).onChange(() => {
+      modelFolder.add(modelParams, 'x', -500, 500).onChange(() => {
         mesh.position.x = modelParams.x;
       });
-      modelFolder.add(modelParams, 'z', -200, 200).onChange(() => {
+      modelFolder.add(modelParams, 'z', -500, 500).onChange(() => {
         mesh.position.z = modelParams.z;
       });
-      // 提示信息
-      document.getElementById('text2').innerText = "加载完成, 等待材质下载.";
-      setTimeout(() => {
-        document.getElementById('background').style.display = "none";
-        if (vmd) { UI.Finish.MMD(); } else { UI.Finish.Auto(); }
-      }, 2000)
+      UI.Finish.Model('text2', 'background');
     },
     (xhr) => {
-      document.getElementById('text2').innerHTML = "(" + (xhr.loaded / 1024).toFixed(0) + " KB /" + (xhr.total / 1024).toFixed(0) + " KB)";
-      document.getElementById('progress2').style.width = (xhr.loaded / xhr.total * 100) + "%";
+      UI.Progress.Model(2, xhr);
     },
     (err) => {
       console.error(err);
@@ -189,7 +178,7 @@ function weapons(loader, name, number, gui) {
     z = [0, 0, 0, -20, -20];
   }
   for (let i = 1; i <= number; i++) {
-    UI.Start.Weapons();
+    UI.Start.Weapon(i);
     loader.load(
       `${urlroot}/${name}/${i}.pmx`,
       (mesh) => {
@@ -206,11 +195,10 @@ function weapons(loader, name, number, gui) {
           mesh.position.z = modelParams.z;
         });
         scene.add(mesh);
-        UI.Finish.Weapons(i);
+        UI.Finish.Model(`text-w${id}`, `weapon${id}`);
       },
       (xhr) => {
-        document.getElementById(`text-w${i}`).innerHTML = (xhr.loaded / xhr.total * 100).toFixed(2) + "%(" + (xhr.loaded / 1024).toFixed(0) + " KB /" + (xhr.total / 1024).toFixed(0) + " KB)";
-        document.getElementById(`progress-w${i}`).style.width = (xhr.loaded / xhr.total * 100).toFixed(2) + "%";
+        UI.Progress.Model(`-w${i}`, xhr);
       },
       (err) => {
         console.error(err);
@@ -274,8 +262,7 @@ function MMDload(loader, pmxfile, gui) {
         },
         // 声音回调函数
         (xhr) => {
-          document.getElementById('text4').innerText = "(" + (xhr.loaded / 1024).toFixed(0) + " KB /" + (xhr.total / 1024).toFixed(0) + " KB)";
-          document.getElementById('progress4').style.width = (xhr.loaded / xhr.total * 100).toFixed(2) + "%";
+          UI.Progress.Model(4, xhr);
         },
         (err) => {
           console.error(err);
@@ -284,8 +271,7 @@ function MMDload(loader, pmxfile, gui) {
     },
     // 模型和动作回调函数
     (xhr) => {
-      document.getElementById('text1').innerHTML = "模型和动作文件:" + "(" + (xhr.loaded / 1024).toFixed(0) + "KB/" + (xhr.total / 1024).toFixed(0) + "KB)";
-      document.getElementById('progress1').style.width = (xhr.loaded / xhr.total * 100).toFixed(2) + "%";
+      UI.Progress.Model(1, xhr, '模型和动作文件:');
     },
     (err) => {
       console.error(err);

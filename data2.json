@@ -1,6 +1,6 @@
 {
     "0": {
-        "total": 13,
+        "total": 12,
         "total_line": 7
     },
     "1": {
@@ -25,69 +25,62 @@
         "weapons": 0
     },
     "4": {
-        "name": "流萤",
-        "folder": "流萤",
-        "from": "神帝宇",
-        "data": "3,1",
-        "weapons": 0
-    },
-    "5": {
         "name": "幻胧",
         "folder": "幻胧",
         "from": "隔壁的隔壁老黄",
         "data": "1,3",
         "weapons": 0
     },
-    "6": {
+    "5": {
         "name": "可可利亚BOSS",
         "folder": "可可利亚",
         "from": "隔壁的隔壁老黄",
         "data": "2,3",
         "weapons": 0
     },
-    "7": {
+    "6": {
         "name": "萨姆",
         "folder": "萨姆",
         "from": "神帝宇",
-        "data": "4,1",
+        "data": "2,2",
         "weapons": 0
     },
-    "8": {
+    "7": {
         "name": "星期日",
         "folder": "星期日",
         "from": "神帝宇",
-        "data": "5,1",
+        "data": "3,2",
         "weapons": 0
     },
-    "9": {
+    "8": {
         "name": "绝区零--比利(临时)",
         "folder": "Billy",
         "from": "立刃于心",
         "data": "3,3",
         "weapons": 1
     },
-    "10": {
+    "9": {
         "name": "绝区零--星见雅(临时)",
         "folder": "Miyabi1",
         "from": "立刃于心",
         "data": "4,3",
         "weapons": 2
     },
-    "11": {
+    "10": {
         "name": "绝区零--安比(临时)",
         "folder": "Anby",
         "from": "立刃于心",
         "data": "5,3",
         "weapons": 1
     },
-    "12": {
+    "11": {
         "name": "绝区零--妮可(临时)",
         "folder": "Nicole",
         "from": "立刃于心",
         "data": "6,3",
         "weapons": 1
     },
-    "13": {
+    "12": {
         "name": "绝区零--猫宫又奈(临时)",
         "folder": "Nekomata",
         "from": "立刃于心",
