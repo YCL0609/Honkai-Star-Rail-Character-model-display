@@ -93,7 +93,7 @@ export const Finish = {
         h4.innerHTML = `模型来源: ${from}`;
         main.appendChild(br);
         main.appendChild(h4);
-        setTimeout(() => { document.getElementById('info').style.display = "none" }, 2500)
+        setTimeout(() => { document.getElementById('info').style.display = "none" }, 2000)
         console.log("Model:\n ID:" + id + " Name:" + roledata['name'] + " From:" + from + " Weapons:" + roledata['weapons']);
     },
 

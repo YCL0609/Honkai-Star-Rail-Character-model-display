@@ -1,6 +1,6 @@
 {
     "0": {
-        "total": 51,
+        "total": 52,
         "version": "V2.6 Preview 1",
         "version2": "2024-04-23"
     },
@@ -414,8 +414,8 @@
     "46": {
         "name": "黄泉",
         "data": "5,4",
-        "urlroot": false,
-        "picurl": "/2024/01/22/288909600/04b0d0b734a6b8541e880cde582527c0_8230522888929671387.jpg",
+        "urlroot": true,
+        "picurl": "/0/09/tbsyww1cmlr4k5sulsqo2pstfhk80t6.png",
         "firstup": "V2.1",
         "model": true,
         "weapons": 1
@@ -423,8 +423,8 @@
     "47": {
         "name": "砂金",
         "data": "6,7",
-        "urlroot": false,
-        "picurl": "/2024/01/23/288909600/d946d6c401ad9b2ebbd354936e451638_3029755409916751313.jpg",
+        "urlroot": true,
+        "picurl": "/0/0a/m0e6yjlx97gmtazwe619jamcrt3w6sm.png",
         "firstup": "V2.1",
         "model": true,
         "weapons": 0
@@ -432,8 +432,8 @@
     "48": {
         "name": "加拉赫",
         "data": "7,2",
-        "urlroot": false,
-        "picurl": "/2024/01/24/288909600/3cccc8369e95c2689443880427139209_1920403837972137716.jpg",
+        "urlroot": true,
+        "picurl": "/e/ea/lpb0ppfr6k6d2bkogqjupxsb5qoirxz.png",
         "firstup": "V2.1",
         "model": true,
         "weapons": 0
@@ -450,8 +450,8 @@
     "50": {
         "name": "波提欧",
         "data": "2,1",
-        "urlroot": false,
-        "picurl": "/2024/03/12/288909600/a563ffb85a043fa2cbd98e0b1d790280_1569314730595586600.jpg",
+        "urlroot": true,
+        "picurl": "/a/ad/huilqas2k0y697l8s6e0k1e1ctuzmdr.png",
         "firstup": "V2.2(预测)",
         "model": false,
         "weapons": 0
@@ -459,10 +459,19 @@
     "51": {
         "name": "流萤",
         "data": "1,2",
-        "urlroot": false,
-        "picurl": "/2024/04/22/288909600/27b6cc4703f5f39af3420783b9f67da9_2507262937110060233.jpg",
+        "urlroot": true,
+        "picurl": "/5/51/gpth5r6kd96nmu5goer4wv3i6kojxqc.png",
         "firstup": "V2.3(预测)",
         "model": true,
+        "weapons": 0
+    },
+    "52": {
+        "name": "翡翠",
+        "data": "3,6",
+        "urlroot": true,
+        "picurl": "/0/08/7rhdzzkpa040vu46q9kjvpvv2bqeocn.png",
+        "firstup": "V2.3(预测)",
+        "model": false,
         "weapons": 0
     }
 }

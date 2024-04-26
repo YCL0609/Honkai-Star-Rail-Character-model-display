@@ -60,6 +60,15 @@ function init() {
   ambientLightFolder.addColor(ambientLightParams, 'color').onChange(() => {
     ambientLight.color.set(ambientLightParams.color);
   });
+
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+  directionalLight.position.y = 20
+  directionalLight.position.z = 20
+  directionalLight.castShadow = true
+  scene.add(directionalLight);
+  var directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1, 0xff0000);
+  scene.add(directionalLightHelper);
+
   // 抗锯齿
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -96,6 +105,7 @@ function init() {
       (mesh) => {
         // 添加到屏幕( X:0 y:-10 Z:0)
         mesh.position.y = -10;
+        mesh.castShadow = true
         scene.add(mesh);
         const modelFolder = gui.addFolder('人物');
         const modelParams = { x: 0, z: 0 }
@@ -126,6 +136,7 @@ function init() {
     (mesh) => {
       // 添加到屏幕( X:0 y:-11.7 Z:0)
       mesh.position.y = -11.7;
+      mesh.receiveShadow = true
       scene.add(mesh);
       const modelFolder = gui.addFolder('场景');
       const modelParams = { x: 0, z: 0 }

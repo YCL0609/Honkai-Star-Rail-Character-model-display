@@ -1,7 +1,7 @@
 {
     "0": {
-        "total": 12,
-        "total_line": 7
+        "total": 13,
+        "total_line": 8
     },
     "1": {
         "name": "帕姆",
@@ -42,21 +42,21 @@
         "name": "萨姆",
         "folder": "萨姆",
         "from": "神帝宇",
-        "data": "2,2",
+        "data": "3,1",
         "weapons": 0
     },
     "7": {
         "name": "星期日",
         "folder": "星期日",
         "from": "神帝宇",
-        "data": "3,2",
+        "data": "4,1",
         "weapons": 0
     },
     "8": {
         "name": "绝区零--比利(临时)",
         "folder": "Billy",
         "from": "立刃于心",
-        "data": "3,3",
+        "data": "8,3",
         "weapons": 1
     },
     "9": {
@@ -85,6 +85,13 @@
         "folder": "Nekomata",
         "from": "立刃于心",
         "data": "7,3",
+        "weapons": 0
+    },
+    "13": {
+        "name": "诡弈砂金",
+        "folder": "诡弈砂金",
+        "from": "隔壁的隔壁老黄",
+        "data": "3,3",
         "weapons": 0
     }
 }
