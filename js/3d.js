@@ -1,7 +1,5 @@
 import * as UI from 'WebUI';
 import * as THREE from 'three';
-import { EffectComposer } from 'three/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/postprocessing/RenderPass.js';
 import Stats from 'three/libs/stats.module.js';
 import { OrbitControls } from 'three/controls/OrbitControls.js';
 import { OutlineEffect } from 'three/effects/OutlineEffect.js';
@@ -12,7 +10,7 @@ console.log('three.js version: ' + THREE.REVISION);
 
 let stats;
 let helper, mesh;
-let camera, scene, renderer, effect, composer;
+let camera, scene, renderer, effect;
 const clock = new THREE.Clock();
 const gui = new GUI();
 let urlroot = "models";
@@ -47,36 +45,19 @@ function init() {
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x151515);
   // 光照
-  const ambientLight = new THREE.AmbientLight(0xf4e7e1, 1.7);
-  scene.add(ambientLight);
-  const ambientLightFolder = gui.addFolder('光照');
-  const ambientLightParams = {
-    intensity: 1.7,
-    color: 0xf4e7e1
-  };
-  ambientLightFolder.add(ambientLightParams, 'intensity', 0, 4).onChange(() => {
-    ambientLight.intensity = ambientLightParams.intensity;
-  });
-  ambientLightFolder.addColor(ambientLightParams, 'color').onChange(() => {
-    ambientLight.color.set(ambientLightParams.color);
-  });
-
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+  const directionalLight = new THREE.DirectionalLight(0xf4e7e1, 2);
   directionalLight.position.y = 20
-  directionalLight.position.z = 20
+  // directionalLight.position.z = 20
   directionalLight.castShadow = true
   scene.add(directionalLight);
-  var directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1, 0xff0000);
-  scene.add(directionalLightHelper);
+  // var directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1, 0xff0000);
+  // scene.add(directionalLightHelper);
 
-  // 抗锯齿
+  // 渲染器
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   container.appendChild(renderer.domElement);
-  // 渲染器   
-  composer = new EffectComposer(renderer);
-  composer.addPass(new RenderPass(scene, camera));
   effect = new OutlineEffect(renderer);
   // 模型加载器
   const loader = new MMDLoader();
@@ -105,7 +86,10 @@ function init() {
       (mesh) => {
         // 添加到屏幕( X:0 y:-10 Z:0)
         mesh.position.y = -10;
-        mesh.castShadow = true
+        mesh.material.castShadow = true;
+				mesh.castShadow = true;
+				mesh.material.receiveShadow = true;
+				mesh.receiveShadow = true;
         scene.add(mesh);
         const modelFolder = gui.addFolder('人物');
         const modelParams = { x: 0, z: 0 }
@@ -136,7 +120,10 @@ function init() {
     (mesh) => {
       // 添加到屏幕( X:0 y:-11.7 Z:0)
       mesh.position.y = -11.7;
-      mesh.receiveShadow = true
+      mesh.material.castShadow = true;
+      mesh.castShadow = true;
+      mesh.material.receiveShadow = true;
+      mesh.receiveShadow = true;
       scene.add(mesh);
       const modelFolder = gui.addFolder('场景');
       const modelParams = { x: 0, z: 0 }
@@ -166,8 +153,13 @@ function init() {
     camera.updateProjectionMatrix();
     effect.setSize(window.innerWidth, window.innerHeight);
     renderer.setSize(window.innerWidth, window.innerHeight);
-    composer.setSize(window.innerWidth, window.innerHeight);
   });
+
+  function updateLight() {
+    directionalLight.target.updateMatrixWorld();
+    helper.update();
+  }
+  updateLight();
 }
 
 // 场景渲染和动画
@@ -175,7 +167,6 @@ function animate() {
   helper.update(clock.getDelta());
   requestAnimationFrame(animate);
   stats.begin();
-  composer.render();
   effect.render(scene, camera);
   stats.end();
 }
