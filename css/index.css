@@ -46,14 +46,26 @@ td {
     padding: 5px 0px;
 }
 
-#info {
+.info {
     margin-top: 10px;
     margin: 0 auto;
     text-align: center;
 }
 
-#info button {
+.info button {
     line-height: 20px;
+}
+
+.a1 {
+    color: #0069d2;
+    text-decoration:underline
+}
+
+.info h3 {
+    /* margin-top: 100px; */
+    line-height: 20px;
+    max-width: 50px;
+    display: inline;
 }
 
 .box {
