@@ -1,21 +1,36 @@
 localStorage.onload = 0;
-var nopic = [4, 12, 17, 45]; // 无介绍立绘id
+
+let lang
+
+lang = getUrlParams('lang');
+if (lang === undefined || lang === 'zh') {
+  lang = "zh"
+} else {
+  ChangeText(lang)
+}
+
+const nopic = [4, 12, 17, 45]; // 无介绍立绘id
+
+// if (lang === 'en') {
+//  
+// }
+
 // 人物属性 
-var listdata = [null, "物理", "火", "冰", "雷", "风", "量子", "虚数"];
-var linedata = [null, "毁灭", "巡猎", "智识", "同谐", "虚无", "存护", "丰饶"];
+const listdata = ["物理", "火", "冰", "雷", "风", "量子", "虚数"];
+const linedata = ["毁灭", "巡猎", "智识", "同谐", "虚无", "存护", "丰饶"];
 
 // 主表格
 JsonToTable('data.json', 'table', true, 'table2');
 // 未分类模型
 (async () => {
   // 获取总行数
-  var total_line = await ReadJson('data2.json', 0, 'total_line', false, false);
+  let total_line = await ReadJson('data2.json', 0, 'total_line', false, false);
   for (let a = 1; a <= total_line; a++) {
-    var table = document.getElementById('unknow');
-    var tr = document.createElement('tr');
+    let table = document.getElementById('unknow');
+    let tr = document.createElement('tr');
     tr.id = `table3-line${a}`;
     table.appendChild(tr);
-    var tr_ = document.getElementById(`table3-line${a}`);
+    let tr_ = document.getElementById(`table3-line${a}`);
     let td1 = document.createElement('td');
     let td2 = document.createElement('td');
     let td3 = document.createElement('td');
@@ -30,8 +45,13 @@ JsonToTable('data.json', 'table', true, 'table2');
   JsonToTable('data2.json', 'table3', false);
 })();
 
+async function ChangeText(lang) {
+  let text = await ReadJson(`lang/${lang}/text.json`, null, null, true)
+  console.log(text)
+}
+
 async function JsonToTable(file, tablename, main) {
-  var data = await ReadJson(file, 0, 0, true);
+  let data = await ReadJson(file, 0, 0, true);
   for (let i = 1; i <= data[0]['total']; i++) {
     let parts = data[i]['data'].split(",");
     let cell = document.getElementById(`${tablename}-${parts[0]}${parts[1]}`);
@@ -101,28 +121,28 @@ async function JsonToTable(file, tablename, main) {
 }
 
 async function ShowPicture(id) {
-  var role = await ReadJson('data.json', id, '', false, true);
+  let role = await ReadJson('data.json', id, '', false, true);
   // 姓名
   document.getElementById('name').innerHTML = role['name'];
   // 属性
-  var parts = role['data'].split(",");
-  var line = parts[0];
-  var list = parts[1];
+  let parts = role['data'].split(",");
+  let line = parts[0];
+  let list = parts[1];
   // 命途
-  document.getElementById('line').innerText = linedata[line];
+  document.getElementById('line').innerText = linedata[line - 1];
   // 战斗属性
-  document.getElementById('list').innerText = listdata[list];
+  document.getElementById('list').innerText = listdata[list - 1];
   // 实装版本
   document.getElementById('firstup').innerText = role['firstup']
   // 模型
-  var model = document.getElementById('showmodel');
-  var btn = document.createElement('button');
+  let model = document.getElementById('showmodel');
+  let btn = document.createElement('button');
   model.innerHTML = null;
   if (id == 4 || id == 45) { // 开拓者
     btn.innerText = "男主";
     btn.onclick = () => { window.location.href = "3d.html?id=4&isman=1" }
     model.appendChild(btn);
-    var btn2 = document.createElement('button');
+    let btn2 = document.createElement('button');
     btn2.innerText = "女主";
     btn2.onclick = () => { window.location.href = "3d.html?id=4" };
     model.appendChild(btn2);
@@ -137,18 +157,18 @@ async function ShowPicture(id) {
     btn.innerText = "正常";
     btn.onclick = () => { window.location.href = "3d.html?id=46" }
     model.appendChild(btn);
-    var btn2 = document.createElement('button');
+    let btn2 = document.createElement('button');
     btn2.innerText = "白发";
     btn2.onclick = () => { window.location.href = "3d.html?id=46&iswhite=1" };
     model.appendChild(btn2);
   }
   // 立绘
-  var picurl_root = role['urlroot'] ? "https://patchwiki.biligame.com/images/sr" : "https://upload-bbs.miyoushe.com/upload";
+  let picurl_root = role['urlroot'] ? "https://patchwiki.biligame.com/images/sr" : "https://upload-bbs.miyoushe.com/upload";
   document.getElementById('img1').src = picurl_root + role['picurl'];
   if (id == 4 || id == 45) { // 开拓者
-    var download2 = document.createElement('button');
-    var imgdiv = document.getElementById('imgdiv');
-    var img2 = document.createElement('img');
+    let download2 = document.createElement('button');
+    let imgdiv = document.getElementById('imgdiv');
+    let img2 = document.createElement('img');
     img2.id = "img2";
     img2.style.width = "48%";
     img2.src = "https://patchwiki.biligame.com/images/sr" + role['picurl2'];

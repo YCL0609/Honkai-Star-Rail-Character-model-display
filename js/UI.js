@@ -11,17 +11,14 @@ export async function Init() {
     let total = await ReadJson(dataurl, 0, 'total');
     const tmp = parseInt(id);
     if (isNaN(tmp) || tmp < 1 || tmp > total) { Error(1) }
-    // const tmp2 = parseInt(vmd);
-    // if (isNaN(tmp2) || tmp2 < 1 || tmp2 > 3) { Error(2) }
 }
 
 export function Error(code, error) {
     const Info = [];
     Info[0] = "UI初始化错误";
     Info[1] = "URL参数错误: 参数'id'不是数字或在可接受范围外";
-    Info[2] = "URL参数错误: 参数'vmd'不是数字或在可接受范围外";
-    Info[3] = "three.js初始化错误";
-    Info[4] = "主模型加载错误"
+    Info[2] = "three.js初始化错误";
+    Info[3] = "主模型加载错误"
     console.error(Info[code] + error);
     // Poop()
     /********!!!!!!unfinish!!!!*****/
@@ -46,7 +43,6 @@ export const Start = {
         </div>`;
         document.getElementById('info-main').appendChild(info);
     }
-    /*******!!!unfinish!!!*********/
 }
 
 export const Progress = {
@@ -76,17 +72,17 @@ export const Finish = {
     },
 
     Auto: () => {
-        var total = localStorage.onload;
+        let total = localStorage.onload;
         if (total != (2 + roledata['weapons'])) {
             total++;
             localStorage.setItem('onload', total);
             return;
         }; gui();
-        var from = other ? roledata['from'] : "神帝宇";
-        var main = document.getElementById('main');
-        var ok = document.getElementById('start');
-        var h4 = document.createElement('h4');
-        var br = document.createElement('br');
+        let from = other ? roledata['from'] : "神帝宇";
+        let main = document.getElementById('main');
+        let ok = document.getElementById('start');
+        let h4 = document.createElement('h4');
+        let br = document.createElement('br');
         ok.onclick = () => { document.getElementById('info').style.display = "none"; };
         document.getElementById('text0').innerText = "加载完成, 请等待材质下载.";
         document.getElementById('progress0').style.width = "100%";
@@ -107,8 +103,8 @@ export const Finish = {
     },
 
     MMD: async () => {
-        var vmddata = await ReadJson('vmd/data.json', vmd, 0, false, true);
-        var total = localStorage.onload;
+        let vmddata = await ReadJson('vmd/data.json', vmd, 0, false, true);
+        let total = localStorage.onload;
         if (total != 3) {
             total++;
             localStorage.setItem('onload', total);
@@ -132,7 +128,7 @@ export const Finish = {
 }
 
 function gui() {
-    var title = document.getElementsByClassName('title');
+    let title = document.getElementsByClassName('title');
     for (let i = 0; i < title.length; i++) {
         title[i].click();
     }

@@ -13,8 +13,8 @@
 	<script src="outside/function.js" defer></script>
 	<script>
 		function Gotovmd(cho) {
-			var id = getUrlParams('id');
-			var other = getUrlParams('other');
+			let id = getUrlParams('id');
+			let other = getUrlParams('other');
 			if (typeof id === 'undefined') {
 				id = 1
 			}
@@ -67,7 +67,7 @@
 			<button id="start" style="display: none;"></button>
 			<script>
 				// 判断是否为Webkit用户
-				var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+				let isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 				if (isSafari) {
 					alert('!!!注意!!!\n由于Webkit内核对于WebGL兼容性有限, 页面可能出现未知渲染问题。\n若可能请更换非Webkit内核浏览器访问。')
 				}

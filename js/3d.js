@@ -50,7 +50,7 @@ function init() {
   // directionalLight.position.z = 20
   directionalLight.castShadow = true
   scene.add(directionalLight);
-  // var directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1, 0xff0000);
+  // let directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1, 0xff0000);
   // scene.add(directionalLightHelper);
 
   // 渲染器
@@ -74,11 +74,11 @@ function init() {
     UI.Finish.Skybox();
   });
   // 模型所在文件夹名称
-  var name = roledata['name'];
-  if (other) { var name = roledata['folder']; }
-  if (roledata['name'] == "开拓者") { var name = (getUrlParams('isman') == "1") ? "男主" : "女主"; }
-  if (roledata['name'] == "黄泉") { var name = (getUrlParams('iswhite') == "1") ? "黄泉2" : "黄泉"; };
-  var pmxfile = `${urlroot}/${name}/index.pmx`;
+  let name = roledata['name'];
+  if (other) { let name = roledata['folder']; }
+  if (roledata['name'] == "开拓者") { let name = (getUrlParams('isman') == "1") ? "男主" : "女主"; }
+  if (roledata['name'] == "黄泉") { let name = (getUrlParams('iswhite') == "1") ? "黄泉2" : "黄泉"; };
+  let pmxfile = `${urlroot}/${name}/index.pmx`;
   UI.Progress.main(3);
   if (!vmd) {
     loader.load(
@@ -197,7 +197,7 @@ function weapons(loader, name, number, gui) {
           mesh.position.z = modelParams.z;
         });
         scene.add(mesh);
-        UI.Finish.Model(`text-w${id}`, `weapon${id}`);
+        UI.Finish.Model(`text-w${i}`, `weapon${i}`);
       },
       (xhr) => {
         UI.Progress.Model(`-w${i}`, xhr);

@@ -44,9 +44,9 @@ data.json示例:
 ```
 // 判断立绘图片的所属域名前缀
 if (result) {
-    var picurl_root = "https://patchwiki.biligame.com/images/sr";
+    let picurl_root = "https://patchwiki.biligame.com/images/sr";
 } else {
-    var picurl_root = "https://upload-bbs.miyoushe.com/upload";
+    let picurl_root = "https://upload-bbs.miyoushe.com/upload";
 }
 ```
 ## 模型查看 -- 3d.html
@@ -57,7 +57,7 @@ if (result) {
 进入页面会先行判断访问设备是否为webket内核若是则弹出提示框。
 ```
 // 判断是否为Webkit用户
-var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+let isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 if (isSafari) {
   alert("!!!注意!!!\n由于Webkit内核对于WebGL兼容性有限,  页面可能出现未知渲染问题。\n若可能请更换非Webkit内核浏览器访问。")
 }
