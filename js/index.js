@@ -9,7 +9,7 @@ if (lang === undefined || lang === 'zh') {
   ChangeText(lang)
 }
 
-const nopic = [4, 12, 17, 45]; // 无介绍立绘id
+const nopic = [4, 12, 17, 45, 53]; // 无介绍立绘id
 
 // if (lang === 'en') {
 //  
@@ -103,12 +103,15 @@ async function JsonToTable(file, tablename, main) {
   }
   // 鼠标事件
   const click = document.querySelectorAll('[data-id]');
-  click.forEach(e => {
-    e.addEventListener('click', () => {
-      const id = e.getAttribute('data-id');
+  click.forEach((element) => {
+    element.addEventListener('click', (e) => {
+      // e.preventDefault(); 
+      const id = element.getAttribute('data-id');
       document.getElementById('picloading').style.display = null;
       Change('picture');
-      ShowPicture(id);
+      console.log('只触发一次?');
+      ShowPicture(id);//  !!!!!!!!!!!!!!!!!!出现问题，触发两次事件!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // return false
     })
   });
   // 完成
@@ -138,7 +141,7 @@ async function ShowPicture(id) {
   let model = document.getElementById('showmodel');
   let btn = document.createElement('button');
   model.innerHTML = null;
-  if (id == 4 || id == 45) { // 开拓者
+  if (id == 4 || id == 45 || id == 53) { // 开拓者
     btn.innerText = "男主";
     btn.onclick = () => { window.location.href = "3d.html?id=4&isman=1" }
     model.appendChild(btn);
@@ -165,7 +168,7 @@ async function ShowPicture(id) {
   // 立绘
   let picurl_root = role['urlroot'] ? "https://patchwiki.biligame.com/images/sr" : "https://upload-bbs.miyoushe.com/upload";
   document.getElementById('img1').src = picurl_root + role['picurl'];
-  if (id == 4 || id == 45) { // 开拓者
+  if (id == 4 || id == 45 || id == 53) { // 开拓者
     let download2 = document.createElement('button');
     let imgdiv = document.getElementById('imgdiv');
     let img2 = document.createElement('img');
@@ -178,6 +181,8 @@ async function ShowPicture(id) {
     document.getElementById('btn').innerText = "男主";
     document.getElementById('img1').style.width = "48%";
     imgdiv.appendChild(img2);
+    console.log(img2)
+    console.log(imgdiv)
     document.getElementById('back').onclick = () => { location.reload() }
   }
 }
