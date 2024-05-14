@@ -82,7 +82,7 @@ function getUrlParams(name) {
 }
 
 /**
- * Json处理函数 !!!请使用await调用!!!
+ * Json处理函数(异步)
  * @param {URL} url Json文件URL路径
  * @param {string} val1 返回Json数据键名
  * @param {string} val2 返回Json数据对象名

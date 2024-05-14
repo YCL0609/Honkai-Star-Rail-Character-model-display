@@ -1,4 +1,18 @@
-import { dataurl, roledata, other, vmd, id } from './3d.js';
+import { dataurl, other, vmd, id } from './3d.js';
+
+console.log(`
+
+
+
++-----------------------------+
+|  当前为测试版本可能会出bug!  |
++-----------------------------+
+
+
+
+`)
+
+
 
 export async function Init() {
     localStorage.setItem('onload', 0);
@@ -71,13 +85,21 @@ export const Finish = {
         }, 2000);
     },
 
-    Auto: () => {
+    Auto: async () => {
+        let dataurl = other ? "data2.json" : "data.json";
+        let roledata = await ReadJson(dataurl, id, 0, false, true)
         let total = localStorage.onload;
+        // console.log(roledata)
         if (total != (2 + roledata['weapons'])) {
             total++;
             localStorage.setItem('onload', total);
+            console.log(total)
+            console.log(total != (2 + roledata['weapons']))
             return;
-        }; gui();
+        }; 
+        // console.log('1')
+        gui();
+        // console.log('0')
         let from = other ? roledata['from'] : "神帝宇";
         let main = document.getElementById('main');
         let ok = document.getElementById('start');
@@ -103,6 +125,7 @@ export const Finish = {
     },
 
     MMD: async () => {
+        let roledata = await ReadJson(dataurl, id, 0, false, true)
         let vmddata = await ReadJson('vmd/data.json', vmd, 0, false, true);
         let total = localStorage.onload;
         if (total != 3) {
@@ -136,9 +159,9 @@ function gui() {
     document.getElementById('progress0').style.width = "100%";
     document.getElementById('VMDList').style.left = "0px";
     document.getElementById('three').style.top = "-60px";
-    if (roledata['name'] == '可可利亚BOSS') {
-        document.getElementById('VMDList').innerHTML = null;
-    }
+    // if (roledata['name'] == '可可利亚BOSS') {
+    //     document.getElementById('VMDList').innerHTML = null;
+    // }
 }
 
 function Poop(color, text, time) {

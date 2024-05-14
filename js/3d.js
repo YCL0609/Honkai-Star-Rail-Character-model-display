@@ -19,9 +19,12 @@ let urlroot = "models";
 export let other = getUrlParams('other');
 export let vmd = getUrlParams('vmd');
 export let id = getUrlParams('id');
-export let dataurl = other ? "data2.json" : "data.json";
+export let dataurl = other ? "data2.json" : "lang/zh/data.json";
 export let roledata = await ReadJson(dataurl, id, 0, false, true);
 try { UI.Init() } catch (e) { UI.Error(0, e) };
+
+let tmp1 = other ? "data2.json" : "data.json"
+let tmp = await ReadJson(tmp1, id, 0, false, true)
 
 // 主函数
 try {
@@ -52,7 +55,6 @@ function init() {
   scene.add(directionalLight);
   // let directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1, 0xff0000);
   // scene.add(directionalLightHelper);
-
   // 渲染器
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -74,10 +76,10 @@ function init() {
     UI.Finish.Skybox();
   });
   // 模型所在文件夹名称
-  let name = roledata['name'];
-  if (other) { let name = roledata['folder']; }
-  if (roledata['name'] == "开拓者") { let name = (getUrlParams('isman') == "1") ? "男主" : "女主"; }
-  if (roledata['name'] == "黄泉") { let name = (getUrlParams('iswhite') == "1") ? "黄泉2" : "黄泉"; };
+  var name = roledata['name'];
+  if (other) { var name = roledata['folder']; }
+  if (roledata['name'] == "开拓者") { var name = (getUrlParams('isman') == "1") ? "男主" : "女主"; }
+  if (roledata['name'] == "黄泉") { var name = (getUrlParams('iswhite') == "1") ? "黄泉2" : "黄泉"; };
   let pmxfile = `${urlroot}/${name}/index.pmx`;
   UI.Progress.main(3);
   if (!vmd) {
@@ -100,7 +102,7 @@ function init() {
           mesh.position.z = modelParams.z;
         });
         // 提示信息
-        UI.Finish.Model('text1', 'module', '主模型:');
+        UI.Finish.Model('text1', 'module', '主模型:',name);
       },
       (xhr) => {
         UI.Progress.Model(1, xhr, '主模型:');
@@ -109,7 +111,9 @@ function init() {
         UI.Error(4, err)
       }
     );
-    weapons(loader, name, roledata['weapons'], gui); // 武器模型
+    console.log(roledata)
+    console.log(tmp)
+    weapons(loader, name, tmp['weapons'], gui); // 武器模型
   } else {
     MMDload(loader, pmxfile, gui);
   }
@@ -172,6 +176,8 @@ function animate() {
 }
 
 function weapons(loader, name, number, gui) {
+  console.log('vvvvvvvvvvv')
+  console.log(number)
   let x = [0, -15, +20, +10, -10, -20, 0, +20];
   let z = [0, 0, 0, -15, -15, -15, -15, -15];
   // 素裳(大赤鸢模型太大)
@@ -180,7 +186,9 @@ function weapons(loader, name, number, gui) {
     z = [0, 0, 0, -20, -20];
   }
   for (let i = 1; i <= number; i++) {
+    console.log('ok?')
     UI.Start.Weapon(i);
+    console.log('0')
     loader.load(
       `${urlroot}/${name}/${i}.pmx`,
       (mesh) => {

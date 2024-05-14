@@ -21,10 +21,18 @@
   <div id="main" class="box" style="display: none;">
     <h2 id="text1">《崩坏:星穹铁道》角色立绘及3D模型展示</h2>
     <div class="info">
-      <div class="lang"><a href="?lang=zh">中文</a></div>
-      <div class="lang" onclick="alert('More languages will be released in V2.6')"><a href="?lang=en">English</a></div>
-      <div class="lang" onclick="alert('V2.6ではさらに多くの言語がリリースされる予定です')"><a href="?lang=jp">日本語</a></div>
-      <div class="lang" onclick="alert('V2.6에서는 더 많은 언어가 출시될 예정입니다.')"><a href="?lang=ko">한국어</a></div><br><br>
+      <div class="lang" onclick="ChangeText('zh')">中文</div>
+      <div class="lang" onclick="ChangeText('en')">English</div>
+      <div class="lang" onclick="ChangeText('jp')">日本語</div>
+      <div class="lang" onclick="ChangeText('ko')">한국어</div><br><br>
+      <div class="warnA">
+        <div></div>
+        <a>当前版本为测试版如遇bug请在Github上提交.<br>剩余翻译工作会在后续陆续完成.<br> The current version is a beta version, please report on Github if there have a bug. <br>The rest of the translation work will be completed in the future.</a>
+      </div><br>
+      <div class="warn" style="display: none">
+        <div id="bar"></div>
+        <a id="warn">注:如果遇到与中文意思不同的地方请以中文为主,如您想更改请在Github上提交.</a>
+      </div><br>
       <button onclick="location.href = 'https://www.ycl.cool/blog/index.php/archives/17'">
         <img src="https://www.ycl.cool/media/icon.ico" height="16" width="16">
         <a id="text2">介绍页面</a>
@@ -266,12 +274,18 @@
       </tbody>
     </table>
     <div class="note-div">
-    </div>
-    <h5>
-      <a id="text9">程序版本:</a>
-      <a id="text10">数据库版本:</a>
-      <a href="https://ycl.cool/blog/index.php/archives/17/" style="color: deepskyblue"><u id="text11">更新日志</u></a>
-      <a id="text0">校对:<a style='color:#3391ff'>YCL</a></a>
+      注释:<br>
+      <a id="note1">(1) 此角色没有官方公布的人物介绍立绘, 使用大招立绘代替;</a><br>
+      <a id="note2">(2) 此角色没有官方公布的3D模型;</a><br>
+      <a id="note3">(3) 此列为<a style="font-weight: bolder">官方</a>公布的无法分类的人物模型;</a><br>
+      <a id="note4">(4) 此列为<a style="font-weight: bolder">非官方</a>公布的无法分类的人物模型, 模型来源于网络;</a><br>
+      <a id="note5">(5) 此列为<a style="font-weight: bolder">非官方</a>公布的无法分类的其他模型, 模型来源于网络。</a><br>
+    </div><br>
+    <div class="footer">
+      <div id="ver"><a id="text9">程序版本:</a></div>
+      <div id="ver2"><a id="text10">数据库版本:</a></div>
+      <div href="https://ycl.cool/blog/index.php/archives/17/" style="color: deepskyblue"><u id="text11">更新日志</u></div>
+      <div id="text0">校对:<a style='color:#3391ff'>YCL</a></div>
       <script>
         document.addEventListener("DOMContentLoaded", async () => {
           // 版本
@@ -282,14 +296,14 @@
           a.style.color = "#3391ff"
           a2.innerText = ver['version2'];
           a2.style.color = "#3391ff"
-          document.getElementById('text9').appendChild(a)
-          document.getElementById('text10').appendChild(a2)
+          document.getElementById('ver').appendChild(a)
+          document.getElementById('ver2').appendChild(a2)
         });
       </script>
-    </h5>
+    </div><br>
   </div>
   <div id="picture" style="display: none;">
-    <a id="back" style="color: #b3ccff;cursor: pointer;" onclick="Change('main')" id="text12">◀返回</a>
+    <a id="text12" style="color: #b3ccff;cursor: pointer;" onclick="Change('main')">◀返回</a>
     <table style=" border-collapse: collapse">
       <thead>
         <td colspan="6" style="background-color: #2e2e2e;color: white;" id="text13">角色立绘展示</td>
@@ -310,17 +324,17 @@
           <td id="firstup"></td>
           <td id="showmodel"></td>
           <td id="download">
-            <button id="btn" onclick="window.open(document.getElementById('img1').src, '_blank')"  id="text20">下载</button>
+            <button id="text20" onclick="window.open(document.getElementById('img1').src, '_blank')">下载</button>
           </td>
         </tr>
       </tbody>
     </table>
-    <h3 id="picloading" style="line-height: 0cm;" id="text21">加载图片中...</h3>
+    <h3 id="text21" style="line-height: 0cm;">加载图片中...</h3>
     <div id="imgdiv">
       <img id="img1" src="https://patchwiki.biligame.com/images/sr/a/a9/iz7lu3jtjitew6an9kyiijagnwrfilc.png">
       <script>
         document.getElementById('img1').onload = () => {
-          document.getElementById('picloading').style.display = "none";
+          document.getElementById('text21').style.display = "none";
         }
       </script>
     </div>
