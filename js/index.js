@@ -1,26 +1,22 @@
-(async () => {
-  const cfg = JSON.stringify(await ReadJson('data.json', null, null, true));
-  const cfg2 = JSON.stringify(await ReadJson('data2.json', null, null, true));
-  localStorage.setItem('data', cfg);
-  localStorage.setItem('data2', cfg2);
-})();
+const textcn = await ReadJson(`lang/zh/data.json`, null, null, true);
+
+
 let onload = 0;
-let lang = "zh";
-// const data = JSON.parse(localStorage.data);
-// const data2 = JSON.parse(localStorage.data2);
+const data = await ReadJson('data.json', null, null, true)
+const data2 = await ReadJson('data2.json', null, null, true)
 const nopic = [4, 12, 17, 45, 53]; // 无介绍立绘id
 
-WriteTable();
+// 默认中文
+const text = await ReadJson(`lang/zh/text.json`, null, null, true);
+localStorage.setItem('text', JSON.stringify(text));
+WriteTable('zh'); 
 
-async function WriteTable() {
-  const data = JSON.parse(localStorage.data);
-  const data2 = JSON.parse(localStorage.data2);
+async function WriteTable(lang) {
   // 获取所选语言配置
   const name = await ReadJson(`lang/${lang}/data.json`, null, null, true);
   const name2 = await ReadJson(`lang/${lang}/data2.json`, null, null, true);
-  const cfg = JSON.stringify(await ReadJson(`lang/${lang}/text.json`, null, null, true))
-  localStorage.setItem('text', cfg);
   localStorage.setItem('name', JSON.stringify(name));
+  localStorage.setItem('name2', JSON.stringify(name2));
   // 主表格
   JsonToTable(name, data, 'table', true, 'table2');
   // 附表格
@@ -62,7 +58,7 @@ function JsonToTable(name, data, tablename, main) {
       a.addEventListener('click', e => {
         e.preventDefault();
         document.getElementById('text21').style.display = null;
-        Change('picture');
+        ChangeCard('picture');
         ShowPicture(i);
       })
       // 无模型
@@ -94,8 +90,8 @@ function JsonToTable(name, data, tablename, main) {
       for (let e = 5; e <= 7; e++) {
         let td = document.getElementById(`table-${i}${e}`);
         let td2 = document.getElementById(`table2-${i}${e}`);
-        td.style.display = "none";
-        td2.innerHTML = td.innerHTML
+        td2.innerHTML = td.innerHTML;
+        td.style.display = "none"
       }
     }
   }
@@ -109,9 +105,7 @@ function JsonToTable(name, data, tablename, main) {
   document.getElementById('main').style.display = null;
 }
 
-async function ShowPicture(id) {
-  const data = JSON.parse(localStorage.data);
-  // const data2 = JSON.parse(localStorage.data2);
+function ShowPicture(id) {
   const linedata = JSON.parse(localStorage.text)['linedata'];
   const listdata = JSON.parse(localStorage.text)['listdata'];
   const name = JSON.parse(localStorage.name);
@@ -121,12 +115,9 @@ async function ShowPicture(id) {
   let parts = data[id]['data'].split(",");
   let line = parts[0];
   let list = parts[1];
-  // 命途
-  document.getElementById('line').innerText = linedata[line - 1];
-  // 战斗属性
-  document.getElementById('list').innerText = listdata[list - 1];
-  // 实装版本
-  document.getElementById('firstup').innerText = data[id]['firstup']
+  document.getElementById('line').innerText = linedata[line - 1]; // 命途
+  document.getElementById('list').innerText = listdata[list - 1]; // 战斗属性
+  document.getElementById('firstup').innerText = data[id]['firstup']; // 实装版本
   // 模型
   let model = document.getElementById('showmodel');
   let btn = document.createElement('button');
@@ -156,15 +147,16 @@ async function ShowPicture(id) {
     model.appendChild(btn2);
   }
   // 立绘
-  let picurl_root = name[id]['urlroot'] ? "https://patchwiki.biligame.com/images/sr" : "https://upload-bbs.miyoushe.com/upload";
-  document.getElementById('img1').src = picurl_root + name[id]['picurl'];
+  console.log(textcn)
+  let picurl_root = textcn[id]['urlroot'] ? "https://patchwiki.biligame.com/images/sr" : "https://upload-bbs.miyoushe.com/upload";
+  document.getElementById('img1').src = picurl_root + textcn[id]['picurl'];
   if (id == 4 || id == 45 || id == 53) { // 开拓者
     let download2 = document.createElement('button');
     let imgdiv = document.getElementById('imgdiv');
     let img2 = document.createElement('img');
     img2.id = "img2";
     img2.style.width = "48%";
-    img2.src = "https://patchwiki.biligame.com/images/sr" + name[id]['picurl2'];
+    img2.src = "https://patchwiki.biligame.com/images/sr" + textcn[id]['picurl2'];
     download2.innerText = "女主";
     download2.onclick = () => { window.open(document.getElementById('img2').src, '_blank'); };
     document.getElementById('download').appendChild(download2);
@@ -177,7 +169,7 @@ async function ShowPicture(id) {
   }
 }
 
-function Change(card) {
+window.ChangeCard = (card) => {
   const main = document.getElementById('main');
   const picture = document.getElementById('picture');
   if (card === "picture") {
@@ -189,42 +181,49 @@ function Change(card) {
   }
 }
 
-async function ChangeText(lang) {
-  let warn = document.getElementById('warn')
+window.ChangeText = async (lang) => {
+  let warn = document.getElementsByClassName('warn')[0];
+  let bar = document.getElementById('bar');
   let text = await ReadJson(`lang/${lang}/text.json`, null, null, true);
-  console.log(text['listdata'])
-  warn.innerText = text['warn'];
+  localStorage.setItem('text', JSON.stringify(text));
+  document.getElementById('warn').innerText = text['warn'];
   if (lang === 'zh') {
-    document.getElementsByClassName('warn')[0].style.display = 'none'
+    warn.style.display = 'none'
   } else {
-    document.getElementsByClassName('warn')[0].style.display = null
+    warn.style.display = null
   }
   if (lang === 'ko') {
-    document.getElementsByClassName('warn')[0].style.backgroundColor = "#ff000035";
-    document.getElementById('bar').style.backgroundColor = "red";
+    warn.style.backgroundColor = "#ff000035";
+    bar.style.backgroundColor = "red";
   } else {
-    document.getElementsByClassName('warn')[0].style.backgroundColor = "#ffff0035";
-    document.getElementById('bar').style.backgroundColor = "yellow";
+    warn.style.backgroundColor = "#ffff0035";
+    bar.style.backgroundColor = "yellow";
   }
+  // 更换UI语言
   for (let i = 0; i <= 21; i++) {
     document.getElementById(`text${i}`).innerHTML = text[i];
   }
+  // 更换注释语言
   fetch(`lang/${lang}/note.html`)
     .then(response => response.text())
     .then(text => {
       document.getElementsByClassName('note-div')[0].innerHTML = text;
     });
+  // 清除表格
+  [[11, 17], [21, 27], [31, 37], [41, 47], [51, 57], [61, 67], [71, 77]]
+    .map(([start, end]) => {
+      for (let i = start; i <= end; i++) {
+        document.getElementById(`table-${i}`).innerHTML = null;
+      }
+    });
+  if (isMobile()) {
+    [[15, 17], [25, 27], [35, 37], [45, 47], [55, 57], [65, 67], [75, 77]]
+      .map(([start, end]) => {
+        for (let i = start; i <= end; i++) {
+          document.getElementById(`table2-${i}`).innerHTML = null;
+        }
+      });
+  }
+  document.getElementById('unknow').innerHTML = null;
+  WriteTable(lang); // 填入表格
 }
-
-
-console.log(`
-
-
-
-+-----------------------------+
-|  当前为测试版本可能会出bug!  |
-+-----------------------------+
-
-
-
-`)

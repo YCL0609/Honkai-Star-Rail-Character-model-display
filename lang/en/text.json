@@ -1,5 +1,23 @@
 {
     "warn": "Note: If you encounter something different from Chinese, please use Chinese as the main one, if you want to change it, please submit it on Github.",
+    "listdata": [
+        "Physical",
+        "Fire",
+        "Ice",
+        "Lightning",
+        "Wind",
+        "Quantum",
+        "Imaginary"
+    ],
+    "linedata": [
+        "Destruction",
+        "The Hunt",
+        "Erudition",
+        "Harmony",
+        "Nihility",
+        "Preservation",
+        "Abundance"
+    ],
     "0": "Proofread:<a style='color:#3391ff'>徐老师</a>", 
     "1": "<i>Honkai:Star-Rail</i> Character illustration and 3D model showcase",
     "2": "Introductory page",
