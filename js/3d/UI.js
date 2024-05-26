@@ -15,27 +15,37 @@ console.log(`
 
 
 export async function Init() {
-    localStorage.setItem('onload', 0);
-    localStorage.setItem('onload_bg', 0);
-    Progress.main(2);
-    document.getElementById('skybox').style.display = null;
-    document.getElementById('module').style = null;
-    document.getElementById('background').style = null;
-
-    let total = await ReadJson(dataurl, 0, 'total');
-    const tmp = parseInt(id);
-    if (isNaN(tmp) || tmp < 1 || tmp > total) { Error(1) }
+    try {
+        localStorage.setItem('onload', 0);
+        localStorage.setItem('onload_bg', 0);
+        Progress.main(2);
+        document.getElementById('skybox').style.display = null;
+        document.getElementById('module').style = null;
+        document.getElementById('background').style = null;
+        let total = await ReadJson(dataurl, 0, 'total');
+        const tmp = parseInt(id);
+        if (isNaN(tmp) || tmp < 1 || tmp > total) { Error(1,'The parameter is invalid') }
+    } catch (e) {
+        Error(0, e)
+    }
 }
 
 export function Error(code, error) {
-    const Info = [];
-    Info[0] = "UI初始化错误";
-    Info[1] = "URL参数错误: 参数'id'不是数字或在可接受范围外";
-    Info[2] = "three.js初始化错误";
-    Info[3] = "主模型加载错误"
-    console.error(Info[code] + error);
-    // Poop()
-    /********!!!!!!unfinish!!!!*****/
+    const Info = [
+        "UI初始化错误",
+        "URL参数错误: 参数'id'不是数字或在可接受范围外",
+        "three.js初始化错误",
+        "主模型加载错误"
+    ];
+    const PoopDiv = document.createElement('div');
+    const b = document.createElement('b');
+    PoopDiv.classList = "poop";
+    PoopDiv.style.backgroundColor = "#f00000e0";
+    b.innerHTML = Info[code] + " - " + error;
+    PoopDiv.appendChild(b);
+    // setTimeout(() => { PoopDiv.style.display = "none" }, 5000);
+    document.getElementById('error').append(PoopDiv);
+    // document.getElementById('error').append(document.createElement('br'));
 }
 
 export const Start = {
@@ -96,7 +106,7 @@ export const Finish = {
             console.log(total)
             console.log(total != (2 + roledata['weapons']))
             return;
-        }; 
+        };
         // console.log('1')
         gui();
         // console.log('0')
@@ -162,15 +172,4 @@ function gui() {
     // if (roledata['name'] == '可可利亚BOSS') {
     //     document.getElementById('VMDList').innerHTML = null;
     // }
-}
-
-function Poop(color, text, time) {
-    const PoopDiv = document.createElement('div');
-    PoopDiv.classList = "poop";
-    PoopDiv.style.backgroundColor = color;
-    PoopDiv.innerText = "错误: " + text;
-    document.body.append(PoopDiv)
-    setTimeout(() => {
-        PoopDiv.style.top = "-100px"
-    }, time * 1000)
 }

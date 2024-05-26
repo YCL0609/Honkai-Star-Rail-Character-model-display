@@ -1,4 +1,8 @@
 {
+    "0": {
+        "urlroot1": "https://patchwiki.biligame.com/images/sr",
+        "urlroot2": "https://upload-bbs.miyoushe.com/upload"
+    },
     "1": {
         "name": "艾丝妲",
         "picurl": "/f/fb/t3l8ksl1j60xbi9zpfdhj8w2wb5hibh.png",
@@ -17,6 +21,7 @@
     "4": {
         "name": "开拓者",
         "urlroot": true,
+        "special":["女主","男主"],
         "picurl": "/5/51/a8tjm9d781ac6tw2vyhg5q8ss058415.png",
         "picurl2": "/5/58/2dishd6nydg68hp6ay0wjtpgjgjbmfz.png"
     },
@@ -222,49 +227,52 @@
     },
     "45": {
         "name": "开拓者",
-        "urlroot": true,
+        "special":["女主","男主"],
         "picurl": "/2/24/g3gk5z35af2xbrhdm6jwrvdlx71lo0p.png",
-        "picurl2": "/c/ca/4pvz8amab0bem4vazg00blxhr7xnaau.png"
+        "picurl2": "/c/ca/4pvz8amab0bem4vazg00blxhr7xnaau.png",
+        "urlroot": true
     },
     "46": {
         "name": "黄泉",
-        "urlroot": true,
-        "picurl": "/0/09/tbsyww1cmlr4k5sulsqo2pstfhk80t6.png"
+        "special":["正常","大招"],
+        "picurl": "/0/09/tbsyww1cmlr4k5sulsqo2pstfhk80t6.png",
+        "urlroot": true
     },
     "47": {
         "name": "砂金",
-        "urlroot": true,
-        "picurl": "/0/0a/m0e6yjlx97gmtazwe619jamcrt3w6sm.png"
+        "picurl": "/0/0a/m0e6yjlx97gmtazwe619jamcrt3w6sm.png",
+        "urlroot": true
     },
     "48": {
         "name": "加拉赫",
-        "urlroot": true,
-        "picurl": "/e/ea/lpb0ppfr6k6d2bkogqjupxsb5qoirxz.png"
+        "picurl": "/e/ea/lpb0ppfr6k6d2bkogqjupxsb5qoirxz.png",
+        "urlroot": true
     },
     "49": {
         "name": "知更鸟",
-        "urlroot": true,
-        "picurl": "/d/db/au23wjkibt90fxug7ney502r5z6tx50.png"
+        "picurl": "/d/db/au23wjkibt90fxug7ney502r5z6tx50.png",
+        "urlroot": true
     },
     "50": {
         "name": "波提欧",
-        "urlroot": true,
-        "picurl": "/a/ad/huilqas2k0y697l8s6e0k1e1ctuzmdr.png"
+        "picurl": "/a/ad/huilqas2k0y697l8s6e0k1e1ctuzmdr.png",
+        "urlroot": true
     },
     "51": {
         "name": "流萤",
-        "urlroot": true,
-        "picurl": "/5/51/gpth5r6kd96nmu5goer4wv3i6kojxqc.png"
+        "picurl": "/5/51/gpth5r6kd96nmu5goer4wv3i6kojxqc.png",
+        "urlroot": true
     },
     "52": {
         "name": "翡翠",
-        "urlroot": true,
-        "picurl": "/0/08/7rhdzzkpa040vu46q9kjvpvv2bqeocn.png"
+        "picurl": "/0/08/7rhdzzkpa040vu46q9kjvpvv2bqeocn.png",
+        "urlroot": true
     },
     "53": {
         "name": "开拓者",
-        "urlroot": true,
+        "special":["女主","男主"],
         "picurl": "/3/32/nbzcnzhhmb7oqen7v5047ypdp8rz5q0.png",
-        "picurl2": "/0/0a/jvjpaipod5gi9f554nv6h27t6wtmle5.png"
+        "picurl2": "/0/0a/jvjpaipod5gi9f554nv6h27t6wtmle5.png",
+        "urlroot": true
     }
 }

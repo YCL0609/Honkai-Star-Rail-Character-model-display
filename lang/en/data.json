@@ -1,217 +1,274 @@
 {
+    "0": {
+        "urlroot1": "https://static.wikia.nocookie.net/houkai-star-rail/images",
+        "urlroot2": "https://upload-bbs.miyoushe.com/upload"
+    },
     "1": {
         "name": "Asta",
-        "picurl": "/f/fb/t3l8ksl1j60xbi9zpfdhj8w2wb5hibh.png"
+        "picurl": "/6/64/Asta_Character_Introduction_Details_1.png",
+        "urlroot": true
     },
     "2": {
         "name": "Herta",
-        "picurl": "/f/f7/7prg1ft3buafziroyspnnutke4yvotw.png"
+        "picurl": "/6/6c/Character_Herta_Introduction.jpg",
+        "urlroot": true
     },
     "3": {
         "name": "Arlan",
-        "picurl": "/3/34/0jz91oea8wwcx537p4cyy5c73nu0cj0.png"
+        "picurl": "/9/91/Character_Arlan_Introduction.png",
+        "urlroot": true
     },
     "4": {
         "name": "Trailblazer",
-        "picurl": "/5/51/a8tjm9d781ac6tw2vyhg5q8ss058415.png",
-        "picurl2": "/5/58/2dishd6nydg68hp6ay0wjtpgjgjbmfz.png"
+        "picurl": "/1/12/Character_Trailblazer_%28M%29_Destruction_Splash_Art.png",
+        "picurl2": "/6/6f/Character_Trailblazer_%28F%29_Destruction_Splash_Art.png",
+        "urlroot": true
     },
     "5": {
         "name": "March 7th",
-        "picurl": "/e/e8/1q46duvfdnp2bpd67qfaa1dsbycrijj.png"
+        "picurl": "/5/54/Character_March_7th_Introduction.png",
+        "urlroot": true
     },
     "6": {
         "name": "Dan Heng",
-        "picurl": "/3/34/hf2o5suregc5fswecw8o5x7oki5229a.png"
+        "picurl": "/9/99/Character_Dan_Heng_Introduction.png",
+        "urlroot": true
     },
     "7": {
-        "name": "Klmbibitor Lunae",
-        "picurl": "/0/04/43nk7fcvbcmeflbxziccsra8havwu5u.png"
+        "name": "Imbibitor Lunae",
+        "picurl": "/b/b3/Character_Dan_Heng_%E2%80%A2_Imbibitor_Lunae_Introduction.png",
+        "urlroot": true
     },
     "8": {
         "name": "Himeko",
-        "picurl": "/0/05/af9uyqk356aa8q4n27lw7wn12j1t7we.png"
+        "picurl": "/a/a1/Character_Himeko_Introduction.png",
+        "urlroot": true
     },
     "9": {
         "name": "Welt",
-        "picurl": "/c/cf/pbqb1ox5vizg3klavrd41fdtawx2tk3.jpg"
+        "picurl": "/2023/04/17/288909600/b5d6803f37d3ee04bba7e0ff39e75e1a_1747769809863372236.jpg",
+        "urlroot": false
     },
     "10": {
         "name": "Bronya",
-        "picurl": "/f/f8/k08zmgcxrh26gso7z8w4afpcj8n3sov.png"
+        "picurl": "/2023/04/28/288909600/7ac9d1602d7b4751456630a7f48c209e_1112751855575848137.jpg",
+        "urlroot": false
     },
     "11": {
         "name": "Gepard",
-        "picurl": "/b/b5/58je6egugnhlr7mwsjjkc3a58o08fgl.png"
+        "picurl": "/2023/04/15/288909600/c59712b0c526cc279703769895f48e66_7393820439633097941.jpg",
+        "urlroot": false
     },
     "12": {
         "name": "Serval",
-        "picurl": "/c/cf/l5kq8zxopx7wfs9jjjm0zm2bvnufju6.png"
+        "picurl": "/5/5d/Serval_Character_Introduction_Details_1.png",
+        "urlroot": true
     },
     "13": {
         "name": "Pela",
-        "picurl": "/e/ec/s2ttvcyq91wjmherjpwisxl3gutkqat.png"
+        "picurl": "/4/42/Pela_Character_Introduction_Details_1.png",
+        "urlroot": true
     },
     "14": {
         "name": "Sampo",
-        "picurl": "/e/e8/23cwpt0m7yk0tkxh8h59mwipcwq1grk.png"
+        "picurl": "/c/c0/Sampo_Character_Introduction_Details_1.png",
+        "urlroot": true
     },
     "15": {
         "name": "Hook",
-        "picurl": "/7/78/4c8wt8eejiudj1s5a97kih5epfrj8pc.png"
+        "picurl": "/9/9d/Character_Hook_Introduction.jpg",
+        "urlroot": true
     },
     "16": {
         "name": "Lynx",
-        "picurl": "/1/10/1h9lkavk03ztppspdyhjkltrs2py6a2.png"
+        "picurl": "/9/98/Character_Lynx_Introduction.png",
+        "urlroot": true
     },
     "17": {
         "name": "Natasha",
-        "picurl": "/c/c7/ou11kkss3vmr44v7iosik4uyrrof3vr.png"
+        "picurl": "/7/7e/Character_Natasha_Splash_Art.png",
+        "urlroot": false
     },
     "18": {
         "name": "Clara",
-        "picurl": "/9/9e/fb0howtu57fgb0ccm4qegqbtc4zvt6p.png"
+        "picurl": "/e/ef/Clara_Character_Introduction_Details_1.jpg",
+        "urlroot": true
     },
     "19": {
         "name": "Seele",
-        "picurl": "/9/92/jxsxrkyhkjyoyp39gvjw8b6i98u4gam.jpg"
+        "picurl": "/d/d5/Character_Seele_HoYoLAB_Introduction.png",
+        "urlroot": true
     },
     "20": {
         "name": "Luka",
-        "picurl": "/f/fc/b7aquclnjlgarcnjzu0pbiegxoplirv.png"
+        "picurl": "/2/29/Character_Luka_Introduction.png",
+        "urlroot": true
     },
     "21": {
         "name": "Jing Yuan",
-        "picurl": "/2/21/7cdhu682y5kup1lcp06ve2cncp4kz2g.png"
+        "picurl": "/1/16/Character_Jing_Yuan_Introduction.png",
+        "urlroot": true
     },
     "22": {
         "name": "Bailu",
-        "picurl": "/d/dc/20tvbl6dxcecm6rn2imnzlemhh3ffr0.png"
+        "picurl": "/6/6b/Character_Bailu_Introduction.png",
+        "urlroot": true
     },
     "23": {
         "name": "Yanqing",
-        "picurl": "/5/50/feltlebdj6273djraeix51z9wrpxf2x.png"
+        "picurl": "/8/88/Character_Yanqing_Introduction.jpg",
+        "urlroot": true
     },
     "24": {
         "name": "Yukong",
-        "picurl": "/7/72/k3jp2bsclezw6h7gqq61uw6qvsecjox.png"
+        "picurl": "/3/3c/Character_Yukong_Introduction.png",
+        "urlroot": true
     },
     "25": {
         "name": "Tingyun",
-        "picurl": "/9/92/5em7gpwscup6ag18wf46qduk5uilv5t.png"
+        "picurl": "/f/f9/Character_Tingyun_Introduction.jpg",
+        "urlroot": true
     },
     "26": {
         "name": "Qingque",
-        "picurl": "/9/9d/f1l3bb3agxofvt78pagrikgyiitcq7a.png"
+        "picurl": "/8/85/Character_Qingque_Introduction.png",
+        "urlroot": true
     },
     "27": {
         "name": "Sushang",
-        "picurl": "/6/62/03l6560bveh17pigs9jxsrg9jjk1qlk.png"
+        "picurl": "/8/8a/Character_Sushang_Introduction.png",
+        "urlroot": true
     },
     "28": {
         "name": "Fu Xuan",
-        "picurl": "/2/2e/4xjrcxr90bt7o2u2964twkd4vli0q4m.png"
+        "picurl": "/1/14/Character_Fu_Xuan_Introduction.png",
+        "urlroot": true
     },
     "29": {
         "name": "Jingliu",
-        "picurl": "/b/b9/b1v5kx6pyxkq288telfdwdik5qiyw64.png"
+        "picurl": "/f/f4/Character_Jingliu_Introduction.png",
+        "urlroot": true
     },
     "30": {
         "name": "Xueyi",
-        "picurl": "/a/ab/0oy5nb9sqvjyff89j1jsq6vkran5a82.png"
+        "picurl": "/4/4b/Character_Xueyi_Introduction.png",
+        "urlroot": true
     },
     "31": {
         "name": "Huohuo",
-        "picurl": "/8/8f/27x77fecakgcazi7cih58zro9ulleyn.png"
+        "picurl": "/4/4b/Character_Xueyi_Introduction.png",
+        "urlroot": true
     },
     "32": {
         "name": "Guinaifen",
-        "picurl": "/5/5b/3yl1xu5msuci9000oxbuoc4m8gez8ky.png"
+        "picurl": "/9/9e/Character_Guinaifen_Introduction.png",
+        "urlroot": true
     },
     "44": {
         "name": "Hanya",
-        "picurl": "/d/df/bla69hsv1inbrflt70o1s9t5xby1res.png"
+        "picurl": "/3/3b/Character_Hanya_Introduction.png",
+        "urlroot": true
     },
     "33": {
         "name": "Kafka",
-        "picurl": "/4/4d/nknfqbj6ig88564ivr3q079qh960c1b.png"
+        "picurl": "/f/f0/Character_Kafka_Introduction_2.png",
+        "urlroot": true
     },
     "34": {
         "name": "Blade",
-        "picurl": "/3/36/10dqd1wzjx1xoppxz46ygeqmbxf6rpt.png"
+        "picurl": "/f/f3/Character_Blade_HoYoLAB_Introduction.png",
+        "urlroot": true
     },
     "35": {
         "name": "Luocha",
-        "picurl": "/e/e4/snkt80kmu6qjcfbo4mchcdcolnerx0t.png"
+        "picurl": "/b/b9/Character_Luocha_Introduction_CBT.png",
+        "urlroot": true
     },
     "36": {
         "name": "Silver Wolf",
-        "picurl": "/e/ea/mavqad0rxp6zttalka56tspnd1t9qi8.png"
+        "picurl": "/a/a4/Character_Silver_Wolf_Introduction.png",
+        "urlroot": true
     },
     "37": {
         "name": "Topaz",
-        "picurl": "/9/9b/1tyxty69xim1zpm4gps64ob8b9gygyq.png"
+        "picurl": "/9/97/Character_Topaz_%26_Numby_Introduction.png",
+        "urlroot": true
     },
     "38": {
         "name": "Argenti",
-        "picurl": "/5/57/6s7lzrxg0wwzyueoehyakj4y20vql12.png"
+        "picurl": "/4/42/Character_Argenti_Introduction.png",
+        "urlroot": true
     },
     "39": {
         "name": "Ruan Mei",
-        "picurl": "/f/f3/enc8l44r8z89keumyagi2zkd9zzv72a.png"
+        "picurl": "/9/90/Character_Ruan_Mei_Introduction.png",
+        "urlroot": true
     },
     "40": {
         "name": "Dr. Ratio",
-        "picurl": "/6/68/art8sao8fcbmil27hd874zjb2wlw9wx.png"
+        "picurl": "/8/84/Character_Dr._Ratio_Introduction.png",
+        "urlroot": true
     },
     "41": {
         "name": "Black Swan",
-        "picurl": "/5/55/daz1xi6s2uy8loajbihqas5lrsufrse.png"
+        "picurl": "/5/5e/Character_Black_Swan_Introduction.png",
+        "urlroot": true
     },
     "42": {
         "name": "Sparkle",
-        "picurl": "/e/ee/2e9ryoqq4ux2cw4qamheaere2yblusw.png"
+        "picurl": "/3/32/Character_Sparkle_Introduction.png",
+        "urlroot": true
     },
     "43": {
         "name": "Misha",
-        "picurl": "/1/1c/sv2t0pu837gggdu1uk2khfxlwykrb35.png"
+        "picurl": "/3/32/Character_Sparkle_Introduction.png",
+        "urlroot": true
     },
     "45": {
         "name": "Trailblazer",
-        "picurl": "/2/24/g3gk5z35af2xbrhdm6jwrvdlx71lo0p.png",
-        "picurl2": "/c/ca/4pvz8amab0bem4vazg00blxhr7xnaau.png"
+        "picurl": "/6/63/Character_Trailblazer_%28M%29_Preservation_Splash_Art.png",
+        "picurl2": "/1/17/Character_Trailblazer_%28F%29_Preservation_Splash_Art.png",
+        "urlroot": true
     },
     "46": {
         "name": "Acheron",
-        "picurl": "/0/09/tbsyww1cmlr4k5sulsqo2pstfhk80t6.png"
+        "picurl": "/e/e2/Character_Acheron_Introduction.png",
+        "urlroot": true
     },
     "47": {
         "name": "Aventurine",
-        "picurl": "/0/0a/m0e6yjlx97gmtazwe619jamcrt3w6sm.png"
+        "picurl": "/1/1b/Character_Aventurine_Introduction.png",
+        "urlroot": true
     },
     "48": {
         "name": "Gallagher",
-        "picurl": "/e/ea/lpb0ppfr6k6d2bkogqjupxsb5qoirxz.png"
+        "picurl": "/3/34/Character_Gallagher_Introduction.png",
+        "urlroot": true
     },
     "49": {
         "name": "Robin",
-        "picurl": "/d/db/au23wjkibt90fxug7ney502r5z6tx50.png"
+        "picurl": "/b/ba/Character_Robin_Introduction.png",
+        "urlroot": true
     },
     "50": {
         "name": "Boothill",
-        "picurl": "/a/ad/huilqas2k0y697l8s6e0k1e1ctuzmdr.png"
+        "picurl": "/c/cd/Character_Boothill_Introduction.png",
+        "urlroot": true
     },
     "51": {
         "name": "Firefly",
-        "picurl": "/5/51/gpth5r6kd96nmu5goer4wv3i6kojxqc.png"
+        "picurl": "/e/e4/Character_Firefly_Introduction.png",
+        "urlroot": true
     },
     "52": {
         "name": "Jade",
-        "picurl": "/0/08/7rhdzzkpa040vu46q9kjvpvv2bqeocn.png"
+        "picurl": "/6/6e/Character_Jade_Introduction.png",
+        "urlroot": true
     },
     "53": {
         "name": "Trailblazer",
-        "picurl": "/3/32/nbzcnzhhmb7oqen7v5047ypdp8rz5q0.png",
-        "picurl2": "/0/0a/jvjpaipod5gi9f554nv6h27t6wtmle5.png"
+        "picurl": "/f/f5/Character_Trailblazer_%28M%29_Harmony_Splash_Art.png",
+        "picurl2": "/0/0a/Character_Trailblazer_%28F%29_Harmony_Splash_Art.png",
+        "urlroot": true
     }
 }

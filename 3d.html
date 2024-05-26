@@ -5,12 +5,14 @@
 	<title>3D模型查看</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="preload" as="script" href="js/3d/three.js/libs/ammo.wasm.js">
+	<link rel="preload" as="script" href="js/3d/es-module-shims.js">
 	<link type="text/css" rel="stylesheet" href="css/3d.css">
 	<link href="favicon.ico" rel="shortcut icon">
 	<script src="js/baidu.js"></script>
-	<script async src="js/three.js/es-module-shims.js" defer></script>
-	<script src="js/three.js/libs/ammo.wasm.js" defer></script>
-	<script src="outside/function.js" defer></script>
+	<script rel="preload" src="js/3d/es-module-shims.js" defer></script>
+	<script src="js/3d/three.js/libs/ammo.wasm.js" defer></script>
+	<script src="https://www.ycl.cool/js/function.js" defer></script>
 	<script>
 		function Gotovmd(cho) {
 			let id = getUrlParams('id');
@@ -30,12 +32,12 @@
 <body>
 	<script type="importmap">{
 		"imports": {
-			"WebUI": "./js/UI.js",
-			"three": "./js/three.js/three.module.min.js",
-			"three/": "./js/three.js/"
+			"WebUI": "./js/3d/UI.js",
+			"three": "./js/3d/three.js/three.module.min.js",
+			"three/": "./js/3d/three.js/"
 		}
 	}</script>
-	<script type="module" src="js/3d.js" defer></script>
+	<script type="module" src="js/3d/3d.js" defer></script>
 	<!-- 加载进度 -->
 	<div id="info">
 		<div id="info-main">
@@ -108,6 +110,7 @@
 		</svg>
 		提供CDN加速服务
 	</div>
+	<div id="error"></div>
 </body>
 
 </html>

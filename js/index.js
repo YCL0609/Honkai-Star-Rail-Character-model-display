@@ -1,22 +1,18 @@
-const textcn = await ReadJson(`lang/zh/data.json`, null, null, true);
-
-
-let onload = 0;
-const data = await ReadJson('data.json', null, null, true)
-const data2 = await ReadJson('data2.json', null, null, true)
+const data2 = await ReadJson('data2.json', null, null, true);
+const data = await ReadJson('data.json', null, null, true);
 const nopic = [4, 12, 17, 45, 53]; // 无介绍立绘id
+let onload = 0;
 
 // 默认中文
 const text = await ReadJson(`lang/zh/text.json`, null, null, true);
 localStorage.setItem('text', JSON.stringify(text));
-WriteTable('zh'); 
+WriteTable('zh');
 
 async function WriteTable(lang) {
   // 获取所选语言配置
   const name = await ReadJson(`lang/${lang}/data.json`, null, null, true);
   const name2 = await ReadJson(`lang/${lang}/data2.json`, null, null, true);
   localStorage.setItem('name', JSON.stringify(name));
-  localStorage.setItem('name2', JSON.stringify(name2));
   // 主表格
   JsonToTable(name, data, 'table', true, 'table2');
   // 附表格
@@ -106,8 +102,7 @@ function JsonToTable(name, data, tablename, main) {
 }
 
 function ShowPicture(id) {
-  const linedata = JSON.parse(localStorage.text)['linedata'];
-  const listdata = JSON.parse(localStorage.text)['listdata'];
+  const text = JSON.parse(localStorage.text);
   const name = JSON.parse(localStorage.name);
   // 姓名
   document.getElementById('name').innerHTML = name[id]['name'];
@@ -115,72 +110,58 @@ function ShowPicture(id) {
   let parts = data[id]['data'].split(",");
   let line = parts[0];
   let list = parts[1];
-  document.getElementById('line').innerText = linedata[line - 1]; // 命途
-  document.getElementById('list').innerText = listdata[list - 1]; // 战斗属性
+  document.getElementById('line').innerText = text['linedata'][line - 1]; // 命途
+  document.getElementById('list').innerText = text['listdata'][list - 1]; // 战斗属性
   document.getElementById('firstup').innerText = data[id]['firstup']; // 实装版本
   // 模型
   let model = document.getElementById('showmodel');
-  let btn = document.createElement('button');
   model.innerHTML = null;
-  if (id == 4 || id == 45 || id == 53) { // 开拓者
-    btn.innerText = "男主";
-    btn.onclick = () => { window.location.href = "3d.html?id=4&isman=1" }
-    model.appendChild(btn);
-    let btn2 = document.createElement('button');
-    btn2.innerText = "女主";
-    btn2.onclick = () => { window.location.href = "3d.html?id=4" };
-    model.appendChild(btn2);
-  } else if (data[id]['model']) {
-    btn.innerText = "查看";
-    btn.onclick = () => { window.location.href = "3d.html?id=" + id };
-    model.appendChild(btn);
-  } else {
-    model.innerHTML = "<a style='color:red'>暂缺</a>";
-  }
-  if (id == 46) { // 黄泉
-    btn.innerText = "正常";
-    btn.onclick = () => { window.location.href = "3d.html?id=46" }
-    model.appendChild(btn);
-    let btn2 = document.createElement('button');
-    btn2.innerText = "白发";
-    btn2.onclick = () => { window.location.href = "3d.html?id=46&iswhite=1" };
-    model.appendChild(btn2);
+  switch (id) {
+    case 4: // 开拓者
+    case 45:
+    case 53:
+    case 46: // 黄泉
+      [{ text: name[id]['special'][0], href: `3d.html?id=${id}` },
+      { text: name[id]['special'][1], href: `3d.html?id=${id}&${data[id]['special']}=1` }]
+        .forEach(cfg => {
+          const btn = document.createElement('button');
+          btn.innerText = cfg.text;
+          btn.onclick = () => { window.location.href = cfg.href };
+          model.appendChild(btn);
+        });
+      break;
+    default:
+      if (data[id]['model']) { // 正常
+        const btn = document.createElement('button');
+        btn.innerText = text['model'][0];
+        btn.onclick = () => { window.location.href = "3d.html?id=" + id };
+        model.appendChild(btn);
+      } else { // 无模型
+        model.innerHTML = `<a style='color:red'>${text['model'][1]}</a>`;
+      }
+      break;
   }
   // 立绘
-  console.log(textcn)
-  let picurl_root = textcn[id]['urlroot'] ? "https://patchwiki.biligame.com/images/sr" : "https://upload-bbs.miyoushe.com/upload";
-  document.getElementById('img1').src = picurl_root + textcn[id]['picurl'];
-  if (id == 4 || id == 45 || id == 53) { // 开拓者
+  let picurl_root = name[id]['urlroot'] ? name[0]['urlroot1'] : name[0]['urlroot2']
+  document.getElementById('img1').src = picurl_root + name[id]['picurl'];
+  if ([4, 45, 53].includes(id)) { // 开拓者
     let download2 = document.createElement('button');
     let imgdiv = document.getElementById('imgdiv');
     let img2 = document.createElement('img');
     img2.id = "img2";
     img2.style.width = "48%";
-    img2.src = "https://patchwiki.biligame.com/images/sr" + textcn[id]['picurl2'];
+    img2.src = "https://patchwiki.biligame.com/images/sr" + name[id]['picurl2'];
     download2.innerText = "女主";
     download2.onclick = () => { window.open(document.getElementById('img2').src, '_blank'); };
     document.getElementById('download').appendChild(download2);
     document.getElementById('text20').innerText = "男主";
     document.getElementById('img1').style.width = "48%";
     imgdiv.appendChild(img2);
-    console.log(img2)
-    console.log(imgdiv)
-    document.getElementById('back').onclick = () => { location.reload() }
+    document.getElementById('text12').onclick = () => { location.reload() }
   }
 }
 
-window.ChangeCard = (card) => {
-  const main = document.getElementById('main');
-  const picture = document.getElementById('picture');
-  if (card === "picture") {
-    main.style.display = "none";
-    picture.style.display = null;
-  } else if (card === "main") {
-    picture.style.display = "none";
-    main.style.display = null;
-  }
-}
-
+// 语言切换函数
 window.ChangeText = async (lang) => {
   let warn = document.getElementsByClassName('warn')[0];
   let bar = document.getElementById('bar');
@@ -226,4 +207,16 @@ window.ChangeText = async (lang) => {
   }
   document.getElementById('unknow').innerHTML = null;
   WriteTable(lang); // 填入表格
+}
+
+window.ChangeCard = (card) => {
+  const main = document.getElementById('main');
+  const picture = document.getElementById('picture');
+  if (card === "picture") {
+    main.style.display = "none";
+    picture.style.display = null;
+  } else if (card === "main") {
+    picture.style.display = "none";
+    main.style.display = null;
+  }
 }
