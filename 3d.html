@@ -17,9 +17,6 @@
 		function Gotovmd(cho) {
 			let id = getUrlParams('id');
 			let other = getUrlParams('other');
-			if (typeof id === 'undefined') {
-				id = 1
-			}
 			if (!other) {
 				window.location.href = "3d.html?id=" + id + "&vmd=" + cho;
 			} else {
@@ -42,26 +39,33 @@
 	<div id="info">
 		<div id="info-main">
 			<div id="main">
-				<h4 id="main-h4" style="margin-left: 12%;text-align: left;">主进度:<a id="text0"
-						class="text">(1/4)加载three.js...</a></h4>
+				<h4 id="main-h4" style="margin-left: 12%;text-align: left;">主进度:
+					<a id="text0" class="text">(1/4)加载three.js...</a>
+				</h4>
+				<h4 id="maine-h4" style="margin-left: 12%;text-align: left;">Main process:
+					<a id="texte0" class="text">(1/4)Loading three.js...</a>
+				</h4>
 				<div class="progress">
 					<div id="progress0" class="progress-inside" style="width: 0%"></div>
 				</div>
 			</div>
 			<div id="module" style="display: none">
 				<h4><a id="text1" class="text">主模型:</a></h4>
+				<h4><a id="texte1" class="text">Character model:</a></h4>
 				<div class="progress">
 					<div id="progress1" class="progress-inside" style="width: 0%"></div>
 				</div>
 			</div>
 			<div id="background" style="display: none">
 				<h4>场景模型:<a id="text2" class="text"></a></h4>
+				<h4>Scene model:<a id="texte2" class="text"></a></h4>
 				<div class="progress">
 					<div id="progress2" class="progress-inside" style="width: 0%"></div>
 				</div>
 			</div>
 			<div id="skybox" style="display: none">
 				<h4>天空盒:<a id="text3" class="text">加载材质...</a></h4>
+				<h4>Skybox:<a id="texte3" class="text">Loading texture...</a></h4>
 				<div class="progress">
 					<div id="progress3" class="progress-inside" style="width: 0%"></div>
 				</div>
@@ -71,7 +75,7 @@
 				// 判断是否为Webkit用户
 				let isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 				if (isSafari) {
-					alert('!!!注意!!!\n由于Webkit内核对于WebGL兼容性有限, 页面可能出现未知渲染问题。\n若可能请更换非Webkit内核浏览器访问。')
+					alert('由于Webkit内核对于WebGL兼容性有限, 页面可能出现未知渲染问题。\n若可能请更换非Webkit内核浏览器访问。 \nDue to the limited compatibility of the Webkit kernel for WebGL, pages may have unknown rendering issues. \nIf possible, please change to a non-Webkit kernel browser access.')
 				}
 			</script>
 		</div>

@@ -1,51 +1,47 @@
-import { dataurl, other, vmd, id } from './3d.js';
+let data, vmd, id, text
+let lang = getUrlParams('lang'); // 语言文件
+lang = (typeof lang === 'undefined') ? 'zh' : lang;
+try { text = await ReadJson(`lang/${lang}/text.json`, null, null, true) } catch (e) { Error(0, e) }
+if (lang == 'zh') { Changelang(text) }
+let other = getUrlParams('other'); // 模型数据
+const dataurl = other ? "data2.json" : "data.json";
+try { data = await ReadJson(dataurl, null, null, true) } catch (e) { Error(0, e) }
+const total = data[0]['total'];
+console.log('UI version: 2.0.0527')
+console.log(`language setting: ${lang}`)
 
-console.log(`
-
-
-
-+-----------------------------+
-|  当前为测试版本可能会出bug!  |
-+-----------------------------+
-
-
-
-`)
-
-
-
-export async function Init() {
+export async function Init(callback) {
     try {
+        vmd = getUrlParams('vmd');
+        vmd = vmd ? vmd : 0;
+        id = getUrlParams('id');
+        Progress.main(2);
         localStorage.setItem('onload', 0);
         localStorage.setItem('onload_bg', 0);
-        Progress.main(2);
         document.getElementById('skybox').style.display = null;
         document.getElementById('module').style = null;
         document.getElementById('background').style = null;
-        let total = await ReadJson(dataurl, 0, 'total');
-        const tmp = parseInt(id);
-        if (isNaN(tmp) || tmp < 1 || tmp > total) { Error(1,'The parameter is invalid') }
+        const idisnum = parseInt(id);
+        if (isNaN(idisnum) || idisnum < 1 || idisnum > total) { Error(1, 'The parameter is invalid', ":参数'id'不是数字或在可接受范围外") }
+        const roledata = data[id]
+        let name = other ? roledata['folder'] : id;
+        if (roledata['special']) { name = roledata['folder'] + (getUrlParams(roledata['special']) ? `_${roledata['special']}` : '') }
+        if (isNaN(parseInt(vmd)) || vmd < 0 || vmd > 3) { Error(3, 'The parameter is invalid', ":参数'vmd'不是数字或在可接受范围外") };
+        callback([name, vmd, id, other, roledata['weapons']]);
     } catch (e) {
         Error(0, e)
     }
 }
 
-export function Error(code, error) {
-    const Info = [
-        "UI初始化错误",
-        "URL参数错误: 参数'id'不是数字或在可接受范围外",
-        "three.js初始化错误",
-        "主模型加载错误"
-    ];
+export function Error(code, error, errtext = '') {
+    const Info = text['errorinfo'];
     const PoopDiv = document.createElement('div');
     const b = document.createElement('b');
     PoopDiv.classList = "poop";
     PoopDiv.style.backgroundColor = "#f00000e0";
-    b.innerHTML = Info[code] + " - " + error;
+    b.innerHTML = `${Info[code]}${errtext} - ${error}`;
     PoopDiv.appendChild(b);
-    // setTimeout(() => { PoopDiv.style.display = "none" }, 5000);
     document.getElementById('error').append(PoopDiv);
-    // document.getElementById('error').append(document.createElement('br'));
 }
 
 export const Start = {
@@ -58,7 +54,7 @@ export const Start = {
           </div>`;
         document.getElementById('info-main').appendChild(info);
     },
-    Weapon: i => {
+    Weapon: (i) => {
         let info = document.createElement('div');
         info.id = `weapon${i}`;
         info.innerHTML = `<h4>武器模型${i}:<a id="text-w${i}" class="text"></a></h4>
@@ -78,9 +74,8 @@ export const Progress = {
         document.getElementById('progress0').style.width = `${num * 25}%`;
     },
 
-    Model: (id, xhr, text) => {
-        let info = (text === undefined) ? '' : text;
-        document.getElementById(`text${id}`).innerText = info + "(" + (xhr.loaded / 1024).toFixed(0) + " KB/" + (xhr.total / 1024).toFixed(0) + " KB)";
+    Model: (id, xhr, text = '') => {
+        document.getElementById(`text${id}`).innerText = text + "(" + (xhr.loaded / 1024).toFixed(0) + " KB/" + (xhr.total / 1024).toFixed(0) + " KB)";
         document.getElementById(`progress${id}`).style.width = (xhr.loaded / xhr.total * 100) + "%";
     }
 }
@@ -103,13 +98,9 @@ export const Finish = {
         if (total != (2 + roledata['weapons'])) {
             total++;
             localStorage.setItem('onload', total);
-            console.log(total)
-            console.log(total != (2 + roledata['weapons']))
             return;
         };
-        // console.log('1')
         gui();
-        // console.log('0')
         let from = other ? roledata['from'] : "神帝宇";
         let main = document.getElementById('main');
         let ok = document.getElementById('start');
@@ -122,7 +113,7 @@ export const Finish = {
         main.appendChild(br);
         main.appendChild(h4);
         setTimeout(() => { document.getElementById('info').style.display = "none" }, 2000)
-        console.log("Model:\n ID:" + id + " Name:" + roledata['name'] + " From:" + from + " Weapons:" + roledata['weapons']);
+        console.log("Model:\n ID:" + id + " From:" + from + " Weapons:" + roledata['weapons']);
     },
 
     Model: (id1, id2, text) => {
@@ -156,7 +147,7 @@ export const Finish = {
             main.appendChild(h4)
         });
         document.getElementById('start').style = null;
-        console.log("Model:\n ID:" + id + " Name:" + roledata['name'] + " From:" + from + "\nAnimation:\n ID:" + vmd + " Name:" + vmddata['name'] + " From:" + vmddata['from']);
+        console.log("Model:\n ID:" + id + " From:" + from + "\nAnimation:\n ID:" + vmd + " Name:" + vmddata['name'] + " From:" + vmddata['from']);
     }
 }
 
@@ -166,10 +157,15 @@ function gui() {
         title[i].click();
     }
     document.getElementById('text0').innerText = "加载完成, 请等待材质下载.";
+    document.getElementById('texte0').innerText = "Finish, please wait for the material.";
     document.getElementById('progress0').style.width = "100%";
     document.getElementById('VMDList').style.left = "0px";
     document.getElementById('three').style.top = "-60px";
     // if (roledata['name'] == '可可利亚BOSS') {
     //     document.getElementById('VMDList').innerHTML = null;
     // }
+}
+
+function Changelang(text) {
+    document
 }

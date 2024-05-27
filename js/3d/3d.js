@@ -10,30 +10,21 @@ console.log('three.js version: ' + THREE.REVISION);
 
 let stats;
 let helper, mesh;
+let name, vmd, id, other, weapon;
 let camera, scene, renderer, effect;
 const clock = new THREE.Clock();
 const gui = new GUI();
-// let urlroot = "https://model.ycl.cool/";
+// let urlroot = "https://model.ycl.cool";
 let urlroot = "models";
 
 // 初始化
-export let other = getUrlParams('other');
-export let vmd = getUrlParams('vmd');
-export let id = getUrlParams('id');
-export let dataurl = other ? "data2.json" : "data.json";
-export let roledata = await ReadJson(dataurl, id, 0, false, true);
-console.log(roledata)
-UI.Init()
-
-// 模型所在文件夹名称
-let name = other ? roledata['folder'] : id
-if ([4, 45, 53].includes(id)) { name = (getUrlParams('isman') == "1") ? "男主" : "女主"; }
-// if (roledata['name'] == "黄泉") { name = (getUrlParams('iswhite') == "1") ? "黄泉2" : "黄泉"; };
-
-let pmxfile = `${urlroot}/${name}/index.pmx`;
-
-let tmp1 = other ? "data2.json" : "data.json"
-let tmp = await ReadJson(tmp1, id, 0, false, true)
+UI.Init((params) => {
+  name = params[0];
+  vmd = params[1];
+  id = params[2];
+  other = params[3];
+  weapon = params[4];
+});
 
 // 主函数
 try {
@@ -57,10 +48,24 @@ function init() {
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0x151515);
   // 光照
-  const directionalLight = new THREE.DirectionalLight(0xf4e7e1, 2);
-  directionalLight.position.y = 20
-  directionalLight.castShadow = true
-  scene.add(directionalLight);
+  const Light1 = new THREE.DirectionalLight(0xf4e7e1, 1.5);
+  const Light2 = new THREE.DirectionalLight(0xf4e7e1, 0.5);
+  Light1.position.y = 20;
+  Light2.position.y = -20;
+  Light1.castShadow = true;
+  Light2.castShadow = true;
+  scene.add(Light1);
+  scene.add(Light2);
+  const lightFolder = gui.addFolder('光照');
+  const lightParams = { color: '0xf4e7e1', intensity: 1 }
+  lightFolder.addColor(lightParams, 'color').onChange(() => {
+    Light1.Color.set(lightParams.color);
+    Light2.Color.set(lightParams.color);
+  }).name('颜色');
+  lightFolder.add(lightParams, 'intensity', 0, 4).onChange(() => {
+    Light1.intensity = lightParams.intensity + 0.5;
+    Light2.intensity = lightParams.intensity - 0.5;
+  }).name('强度');
   // 渲染器
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -70,54 +75,44 @@ function init() {
   // 模型加载器
   const loader = new MMDLoader();
   helper = new MMDAnimationHelper();
-  // 帧数显示(左上角)
+  // 帧数显示
   stats = new Stats();
   container.appendChild(stats.dom);
   // 天空盒
-  const SkyLoader = new THREE.CubeTextureLoader();
-  SkyLoader.setPath('img/skybox/');
-  const SkyBox = SkyLoader.load(['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg',], () => {
-    // 添加到屏幕
-    scene.background = SkyBox;
-    UI.Finish.Skybox();
-  });
+  const skybox = new THREE.CubeTextureLoader();
+  skybox.setPath('img/skybox/');
+  skybox.load(['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg',], (mesh) => {
+    scene.background = mesh;
+    UI.Finish.Skybox()
+  }, null, (e) => { UI.Error(3, e) })
   UI.Progress.main(3);
-  if (!vmd) {
-    loader.load(
-      pmxfile,
-      (mesh) => {
-        // 添加到屏幕( X:0 y:-10 Z:0)
-        mesh.position.y = -10;
-        mesh.material.castShadow = true;
-        mesh.castShadow = true;
-        mesh.material.receiveShadow = true;
-        mesh.receiveShadow = true;
-        scene.add(mesh);
-        const modelFolder = gui.addFolder('人物');
-        const modelParams = { x: 0, z: 0 }
-        modelFolder.add(modelParams, 'x', -200, 200).onChange(() => {
-          mesh.position.x = modelParams.x;
-        });
-        modelFolder.add(modelParams, 'z', -200, 200).onChange(() => {
-          mesh.position.z = modelParams.z;
-        });
-        // 提示信息
-        UI.Finish.Model('text1', 'module', '主模型:', name);
-      },
-      (xhr) => {
-        UI.Progress.Model(1, xhr, '主模型:');
-      },
-      (err) => {
-        UI.Error(3, err)
-      }
-    );
-    console.log(roledata)
-    console.log(tmp)
-    weapons(loader, name, tmp['weapons'], gui); // 武器模型
-  } else {
-    MMDload(loader, pmxfile, gui);
-  }
-
+  const text = (vmd == 0) ? '模型和动作文件:' : '模型文件:'
+  loader.loadWithAnimation(
+    `${urlroot}/${name}/index.pmx`,
+    `./vmd/${vmd}/index.vmd`,
+    (mmd) => {
+      // 添加到屏幕( X:0 y:-10 Z:0)
+      mesh = mmd.mesh;
+      mesh.position.y = -10;
+      scene.add(mesh);
+      const modelFolder = gui.addFolder('人物');
+      const modelParams = { x: 0, z: 0 }
+      modelFolder.add(modelParams, 'x', -200, 200).onChange(() => {
+        mesh.position.x = modelParams.x;
+      });
+      modelFolder.add(modelParams, 'z', -200, 200).onChange(() => {
+        mesh.position.z = modelParams.z;
+      });
+      (vmd == 0) ? Weapons(null, true) : MMDload();
+    },
+    (xhr) => {
+      UI.Progress.Model(1, xhr, text);
+    },
+    (err) => {
+      UI.Error(5, err)
+    }
+  );
+  (vmd == 0) ? Weapons(loader) : null;
   // 场景模型
   loader.load(
     `${urlroot}/background/index.pmx`,
@@ -137,13 +132,13 @@ function init() {
       modelFolder.add(modelParams, 'z', -500, 500).onChange(() => {
         mesh.position.z = modelParams.z;
       });
-      UI.Finish.Model('text2', 'background');
+      UI.Finish.Model('text2', 'background')
     },
     (xhr) => {
-      UI.Progress.Model(2, xhr);
+      UI.Progress.Model(2, xhr)
     },
     (err) => {
-      console.error(err);
+      UI.Error(4, err)
     }
   );
 
@@ -160,7 +155,8 @@ function init() {
   });
 
   function updateLight() {
-    directionalLight.target.updateMatrixWorld();
+    Light1.target.updateMatrixWorld();
+    Light2.target.updateMatrixWorld();
     helper.update();
   }
   updateLight();
@@ -175,20 +171,23 @@ function animate() {
   stats.end();
 }
 
-function weapons(loader, name, number, gui) {
-  console.log('vvvvvvvvvvv')
-  console.log(number)
+function Weapons(loader, finish) {
+  if (finish) {
+    document.getElementById(`text1`).innerText = "加载完成, 等待材质下载.";
+    setTimeout(() => {
+      document.getElementById('module').style.display = "none";
+      UI.Finish.Auto();
+    }, 2000)
+    return
+  }
   let x = [0, -15, +20, +10, -10, -20, 0, +20];
   let z = [0, 0, 0, -15, -15, -15, -15, -15];
-  // 素裳(大赤鸢模型太大)
-  if (name == "素裳") {
+  if (name == 27) { // 素裳(大赤鸢模型太大)
     x = [0, -15, +20, +10, -10];
     z = [0, 0, 0, -20, -20];
   }
-  for (let i = 1; i <= number; i++) {
-    console.log('ok?')
+  for (let i = 1; i <= weapon; i++) {
     UI.Start.Weapon(i);
-    console.log('0')
     loader.load(
       `${urlroot}/${name}/${i}.pmx`,
       (mesh) => {
@@ -211,80 +210,55 @@ function weapons(loader, name, number, gui) {
         UI.Progress.Model(`-w${i}`, xhr);
       },
       (err) => {
-        console.error(err);
+        UI.Error(6, err);
       });
   }
 }
 
-function MMDload(loader, pmxfile, gui) {
-  UI.Start.Music();
-  loader.loadWithAnimation(
-    pmxfile,
-    `./vmd/${vmd}/index.vmd`,
-    (mmd) => {
-      // 添加到屏幕( X:0 y:-10 Z:0)
-      mesh = mmd.mesh;
-      mesh.position.y = -10;
-      scene.add(mesh);
-      const modelFolder = gui.addFolder('人物');
-      const modelParams = { x: 0, z: 0 }
-      modelFolder.add(modelParams, 'x', -200, 200).onChange(() => {
-        mesh.position.x = modelParams.x;
-      });
-      modelFolder.add(modelParams, 'z', -200, 200).onChange(() => {
-        mesh.position.z = modelParams.z;
-      });
-      document.getElementById(`text1`).innerText = "加载完成, 等待材质下载.";
-      setTimeout(() => {
-        document.getElementById('module').style.display = "none";
-        UI.Finish.MMD();
-      }, 2000)
-      // 监听
-      const audioListener = new THREE.AudioListener();
-      camera.add(audioListener);
-      // 音频对象
-      const oceanAmbientSound = new THREE.Audio(audioListener);
-      scene.add(oceanAmbientSound);
-      // 加载音频资源
-      const loader2 = new THREE.AudioLoader();
-      loader2.load(
-        `./vmd/${vmd}/index.mp3`,
-        (audioBuffer) => {
-          oceanAmbientSound.setBuffer(audioBuffer);
-          document.getElementById('text4').innerText = "加载完成.";
-          document.getElementById('music').style.display = "none";
-          setTimeout(() => {
-            UI.Finish.MMD();
-            let ok = document.getElementById('start');
-            ok.innerText = "开始";
-            ok.onclick = () => {
-              oceanAmbientSound.setLoop(true);//设置音频循环
-              oceanAmbientSound.play();// 播放音频
-              document.getElementById('info').style.display = "none";
-              // 开始动画
-              helper.add(mesh, {
-                animation: mmd.animation,
-                physics: true,
-              });
-            }
-          }, 2000);
 
-        },
-        // 声音回调函数
-        (xhr) => {
-          UI.Progress.Model(4, xhr);
-        },
-        (err) => {
-          console.error(err);
+function MMDload() {
+  UI.Start.Music();
+  document.getElementById(`text1`).innerText = "加载完成, 等待材质下载.";
+  setTimeout(() => {
+    document.getElementById('module').style.display = "none";
+    UI.Finish.MMD();
+  }, 2000)
+  // 监听
+  const audioListener = new THREE.AudioListener();
+  camera.add(audioListener);
+  // 音频对象
+  const oceanAmbientSound = new THREE.Audio(audioListener);
+  scene.add(oceanAmbientSound);
+  // 加载音频资源
+  const loader2 = new THREE.AudioLoader();
+  loader2.load(
+    `./vmd/${vmd}/index.mp3`,
+    (audioBuffer) => {
+      oceanAmbientSound.setBuffer(audioBuffer);
+      document.getElementById('text4').innerText = "加载完成.";
+      document.getElementById('music').style.display = "none";
+      setTimeout(() => {
+        UI.Finish.MMD();
+        let ok = document.getElementById('start');
+        ok.innerText = "开始";
+        ok.onclick = () => {
+          oceanAmbientSound.setLoop(true);//设置音频循环
+          oceanAmbientSound.play();// 播放音频
+          document.getElementById('info').style.display = "none";
+          // 开始动画
+          helper.add(mesh, {
+            animation: mmd.animation,
+            physics: true,
+          });
         }
-      );
+      }, 2000);
     },
-    // 模型和动作回调函数
+    // 声音回调函数
     (xhr) => {
-      UI.Progress.Model(1, xhr, '模型和动作文件:');
+      UI.Progress.Model(4, xhr);
     },
     (err) => {
-      console.error(err);
+      UI.Error(7, err)
     }
   );
 }

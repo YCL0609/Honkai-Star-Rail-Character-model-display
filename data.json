@@ -26,8 +26,9 @@
         "data": "1,1",
         "firstup": "V1.0",
         "special":"isman",
+        "folder": 4,
         "model": true,
-        "weapons": 2
+        "weapons": 3
     },
     "5": {
         "data": "6,3",
@@ -273,13 +274,15 @@
         "data": "6,2",
         "firstup": "V1.0",
         "special":"isman",
+        "folder": 4,
         "model": true,
-        "weapons": 2
+        "weapons": 3
     },
     "46": {
         "data": "5,4",
         "firstup": "V2.1",
         "special":"iswhite",
+        "folder": 46,
         "model": true,
         "weapons": 1
     },
@@ -323,7 +326,8 @@
         "data": "3,7",
         "firstup": "V2.2",
         "special":"isman",
+        "folder": 4,
         "model": true,
-        "weapons": 2
+        "weapons": 3
     }
 }

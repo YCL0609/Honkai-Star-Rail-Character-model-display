@@ -6,6 +6,7 @@ let onload = 0;
 // 默认中文
 const text = await ReadJson(`lang/zh/text.json`, null, null, true);
 localStorage.setItem('text', JSON.stringify(text));
+localStorage.setItem('lang', 'zh');
 WriteTable('zh');
 
 async function WriteTable(lang) {
@@ -72,7 +73,7 @@ function JsonToTable(name, data, tablename, main) {
         }
       });
     } else {
-      a.href = `3d.html?id=${i}&other=1`;
+      a.href = `3d.html?id=${i}&other&lang=${localStorage.lang}`;
     }
     // 添加到页面
     cell.appendChild(a);
@@ -121,8 +122,8 @@ function ShowPicture(id) {
     case 45:
     case 53:
     case 46: // 黄泉
-      [{ text: name[id]['special'][0], href: `3d.html?id=${id}` },
-      { text: name[id]['special'][1], href: `3d.html?id=${id}&${data[id]['special']}=1` }]
+      [{ text: name[id]['special'][0], href: `3d.html?id=${id}&lang=${localStorage.lang}` },
+      { text: name[id]['special'][1], href: `3d.html?id=${id}&${data[id]['special']}&lang=${localStorage.lang}` }]
         .forEach(cfg => {
           const btn = document.createElement('button');
           btn.innerText = cfg.text;
@@ -134,14 +135,14 @@ function ShowPicture(id) {
       if (data[id]['model']) { // 正常
         const btn = document.createElement('button');
         btn.innerText = text['model'][0];
-        btn.onclick = () => { window.location.href = "3d.html?id=" + id };
+        btn.onclick = () => { window.location.href = `3d.html?id=${id}&lang=${localStorage.lang}` };
         model.appendChild(btn);
       } else { // 无模型
         model.innerHTML = `<a style='color:red'>${text['model'][1]}</a>`;
       }
       break;
   }
-  // 立绘
+  // 立绘/***************************************** */
   let picurl_root = name[id]['urlroot'] ? name[0]['urlroot1'] : name[0]['urlroot2']
   document.getElementById('img1').src = picurl_root + name[id]['picurl'];
   if ([4, 45, 53].includes(id)) { // 开拓者
@@ -159,7 +160,7 @@ function ShowPicture(id) {
     imgdiv.appendChild(img2);
     document.getElementById('text12').onclick = () => { location.reload() }
   }
-}
+}/****************************** */
 
 // 语言切换函数
 window.ChangeText = async (lang) => {
@@ -167,6 +168,7 @@ window.ChangeText = async (lang) => {
   let bar = document.getElementById('bar');
   let text = await ReadJson(`lang/${lang}/text.json`, null, null, true);
   localStorage.setItem('text', JSON.stringify(text));
+  localStorage.setItem('lang', lang);
   document.getElementById('warn').innerText = text['warn'];
   if (lang === 'zh') {
     warn.style.display = 'none'
