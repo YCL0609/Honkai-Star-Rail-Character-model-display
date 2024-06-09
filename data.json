@@ -1,8 +1,8 @@
 {
     "0": {
-        "total": 53,
-        "version": "V2.6 Preview 4",
-        "version2": "2024-05-08"
+        "total": 56,
+        "version": "V2.6 Preview 5",
+        "version2": "2024-06-09"
     },
     "1": {
         "data": "4,2",
@@ -25,7 +25,7 @@
     "4": {
         "data": "1,1",
         "firstup": "V1.0",
-        "special":"isman",
+        "special": "isman",
         "folder": 4,
         "model": true,
         "weapons": 3
@@ -273,7 +273,7 @@
     "45": {
         "data": "6,2",
         "firstup": "V1.0",
-        "special":"isman",
+        "special": "isman",
         "folder": 4,
         "model": true,
         "weapons": 3
@@ -281,7 +281,7 @@
     "46": {
         "data": "5,4",
         "firstup": "V2.1",
-        "special":"iswhite",
+        "special": "iswhite",
         "folder": 46,
         "model": true,
         "weapons": 1
@@ -325,9 +325,27 @@
     "53": {
         "data": "3,7",
         "firstup": "V2.2",
-        "special":"isman",
+        "special": "isman",
         "folder": 4,
         "model": true,
         "weapons": 3
+    },
+    "54": {
+        "data": "1,1",
+        "firstup": "V2.4",
+        "model": false,
+        "weapons": 0
+    },
+    "55": {
+        "data": "5,2",
+        "firstup": "V2.4",
+        "model": false,
+        "weapons": 0
+    },
+    "56": {
+        "data": "2,7",
+        "firstup": "",
+        "model": false,
+        "weapons": 0
     }
 }

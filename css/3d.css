@@ -9,27 +9,6 @@ body {
 	overflow: hidden;
 }
 
-.poop {
-	margin-top: 10px;
-	padding-left: 10px;
-	padding-right: 10px;
-	box-sizing: border-box;
-	transition: 1.5s;
-	border-radius: 5px;
-	word-wrap: break-word;
-	min-width: 100px;
-}
-
-#error {
-	color: #000;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	position: absolute;
-	width: 100%;
-	z-index: 10002
-}
-
 #info {
 	display: flex;
 	justify-content: center;
@@ -47,33 +26,14 @@ body {
 	transition: 1.5s;
 }
 
-#info-main {
-	width: 400px;
-	background-color: rgb(0, 126, 126);
-	padding: 20px 0;
+#info-main div {
+	margin-top: 2px;
+	line-height: 15px;
 }
 
-#info-main h4 {
-	/* line-height: 0px; */
-	margin-left: 12%;
-}
-
-#main h4 {
-	margin-top: 0px;
-	margin-left: 0px;
-	text-align: center;
-}
-
-.progress {
-	width: 75%;
-	height: 10px;
-	background-color: #fff;
+#start {
+	display: block;
 	margin: 0 auto;
-}
-
-.progress-inside {
-	height: 100%;
-	background-color: greenyellow;
 }
 
 #three {
@@ -91,12 +51,44 @@ body {
 	text-align: center;
 	margin-top: 50px;
 	left: -100px;
-	width: 90px;
-	z-index: 0;
+	width: 100px;
 	transition: 1.5s;
+	border-radius: 5px;
+	background-color: #000000aa;
 }
 
-#start {
-	display: block;
+#VMDList a {
+	color: aqua;
+}
+
+#error {
+	color: #000;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	position: absolute;
+	width: 100%;
+	z-index: 10002
+}
+
+.progress {
+	height: 10px;
+	background-color: #fff;
 	margin: 0 auto;
+}
+
+.progress-inside {
+	height: 100%;
+	background-color: greenyellow;
+}
+
+.poop {
+	margin-top: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	box-sizing: border-box;
+	transition: 1.5s;
+	border-radius: 5px;
+	word-wrap: break-word;
+	min-width: 100px;
 }

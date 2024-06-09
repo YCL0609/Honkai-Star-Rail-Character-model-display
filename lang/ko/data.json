@@ -1,217 +1,305 @@
 {
+    "0": {
+        "urlroot1": "https://patchwiki.biligame.com/images/sr",
+        "urlroot2": "https://upload-bbs.miyoushe.com/upload"
+    },
     "1": {
         "name": "아스타",
-        "picurl": "/f/fb/t3l8ksl1j60xbi9zpfdhj8w2wb5hibh.png"
+        "picurl": "/f/fb/t3l8ksl1j60xbi9zpfdhj8w2wb5hibh.png",
+        "urlroot": true
     },
     "2": {
         "name": "헤르타",
-        "picurl": "/f/f7/7prg1ft3buafziroyspnnutke4yvotw.png"
+        "picurl": "/f/f7/7prg1ft3buafziroyspnnutke4yvotw.png",
+        "urlroot": true
     },
     "3": {
         "name": "아를란",
-        "picurl": "/3/34/0jz91oea8wwcx537p4cyy5c73nu0cj0.png"
+        "picurl": "/3/34/0jz91oea8wwcx537p4cyy5c73nu0cj0.png",
+        "urlroot": true
     },
     "4": {
         "name": "개척자",
+        "urlroot": true,
+        "special": [
+            "여성",
+            "남성"
+        ],
         "picurl": "/5/51/a8tjm9d781ac6tw2vyhg5q8ss058415.png",
         "picurl2": "/5/58/2dishd6nydg68hp6ay0wjtpgjgjbmfz.png"
     },
     "5": {
         "name": "Mar. 7th",
-        "picurl": "/e/e8/1q46duvfdnp2bpd67qfaa1dsbycrijj.png"
+        "picurl": "/e/e8/1q46duvfdnp2bpd67qfaa1dsbycrijj.png",
+        "urlroot": true
     },
     "6": {
         "name": "단항",
-        "picurl": "/3/34/hf2o5suregc5fswecw8o5x7oki5229a.png"
+        "picurl": "/3/34/hf2o5suregc5fswecw8o5x7oki5229a.png",
+        "urlroot": true
     },
     "7": {
         "name": "음월",
-        "picurl": "/0/04/43nk7fcvbcmeflbxziccsra8havwu5u.png"
+        "picurl": "/0/04/43nk7fcvbcmeflbxziccsra8havwu5u.png",
+        "urlroot": true
     },
     "8": {
         "name": "히메코",
-        "picurl": "/0/05/af9uyqk356aa8q4n27lw7wn12j1t7we.png"
+        "picurl": "/0/05/af9uyqk356aa8q4n27lw7wn12j1t7we.png",
+        "urlroot": true
     },
     "9": {
         "name": "웰트",
-        "picurl": "/c/cf/pbqb1ox5vizg3klavrd41fdtawx2tk3.jpg"
+        "picurl": "/c/cf/pbqb1ox5vizg3klavrd41fdtawx2tk3.jpg",
+        "urlroot": true
     },
     "10": {
         "name": "브로냐",
-        "picurl": "/f/f8/k08zmgcxrh26gso7z8w4afpcj8n3sov.png"
+        "picurl": "/f/f8/k08zmgcxrh26gso7z8w4afpcj8n3sov.png",
+        "urlroot": true
     },
     "11": {
         "name": "게파드",
-        "picurl": "/b/b5/58je6egugnhlr7mwsjjkc3a58o08fgl.png"
+        "picurl": "/b/b5/58je6egugnhlr7mwsjjkc3a58o08fgl.png",
+        "urlroot": true
     },
     "12": {
         "name": "서벌",
-        "picurl": "/c/cf/l5kq8zxopx7wfs9jjjm0zm2bvnufju6.png"
+        "picurl": "/c/cf/l5kq8zxopx7wfs9jjjm0zm2bvnufju6.png",
+        "urlroot": true
     },
     "13": {
         "name": "페라",
-        "picurl": "/e/ec/s2ttvcyq91wjmherjpwisxl3gutkqat.png"
+        "picurl": "/e/ec/s2ttvcyq91wjmherjpwisxl3gutkqat.png",
+        "urlroot": true
     },
     "14": {
         "name": "삼포",
-        "picurl": "/e/e8/23cwpt0m7yk0tkxh8h59mwipcwq1grk.png"
+        "picurl": "/e/e8/23cwpt0m7yk0tkxh8h59mwipcwq1grk.png",
+        "urlroot": true
     },
     "15": {
         "name": "후크",
-        "picurl": "/7/78/4c8wt8eejiudj1s5a97kih5epfrj8pc.png"
+        "picurl": "/7/78/4c8wt8eejiudj1s5a97kih5epfrj8pc.png",
+        "urlroot": true
     },
     "16": {
         "name": "링스",
-        "picurl": "/1/10/1h9lkavk03ztppspdyhjkltrs2py6a2.png"
+        "picurl": "/1/10/1h9lkavk03ztppspdyhjkltrs2py6a2.png",
+        "urlroot": true
     },
     "17": {
         "name": "나타샤",
-        "picurl": "/c/c7/ou11kkss3vmr44v7iosik4uyrrof3vr.png"
+        "picurl": "/c/c7/ou11kkss3vmr44v7iosik4uyrrof3vr.png",
+        "urlroot": true
     },
     "18": {
         "name": "클라라",
-        "picurl": "/9/9e/fb0howtu57fgb0ccm4qegqbtc4zvt6p.png"
+        "picurl": "/9/9e/fb0howtu57fgb0ccm4qegqbtc4zvt6p.png",
+        "urlroot": true
     },
     "19": {
         "name": "제레",
-        "picurl": "/9/92/jxsxrkyhkjyoyp39gvjw8b6i98u4gam.jpg"
+        "picurl": "/9/92/jxsxrkyhkjyoyp39gvjw8b6i98u4gam.jpg",
+        "urlroot": true
     },
     "20": {
         "name": "루카",
-        "picurl": "/f/fc/b7aquclnjlgarcnjzu0pbiegxoplirv.png"
+        "picurl": "/f/fc/b7aquclnjlgarcnjzu0pbiegxoplirv.png",
+        "urlroot": true
     },
     "21": {
         "name": "경원",
-        "picurl": "/2/21/7cdhu682y5kup1lcp06ve2cncp4kz2g.png"
+        "picurl": "/2/21/7cdhu682y5kup1lcp06ve2cncp4kz2g.png",
+        "urlroot": true
     },
     "22": {
         "name": "백로",
-        "picurl": "/d/dc/20tvbl6dxcecm6rn2imnzlemhh3ffr0.png"
+        "picurl": "/d/dc/20tvbl6dxcecm6rn2imnzlemhh3ffr0.png",
+        "urlroot": true
     },
     "23": {
         "name": "연경",
-        "picurl": "/5/50/feltlebdj6273djraeix51z9wrpxf2x.png"
+        "picurl": "/5/50/feltlebdj6273djraeix51z9wrpxf2x.png",
+        "urlroot": true
     },
     "24": {
         "name": "어공",
-        "picurl": "/7/72/k3jp2bsclezw6h7gqq61uw6qvsecjox.png"
+        "picurl": "/7/72/k3jp2bsclezw6h7gqq61uw6qvsecjox.png",
+        "urlroot": true
     },
     "25": {
         "name": "정운",
-        "picurl": "/9/92/5em7gpwscup6ag18wf46qduk5uilv5t.png"
+        "picurl": "/9/92/5em7gpwscup6ag18wf46qduk5uilv5t.png",
+        "urlroot": true
     },
     "26": {
         "name": "청작",
-        "picurl": "/9/9d/f1l3bb3agxofvt78pagrikgyiitcq7a.png"
+        "picurl": "/9/9d/f1l3bb3agxofvt78pagrikgyiitcq7a.png",
+        "urlroot": true
     },
     "27": {
         "name": "소상",
-        "picurl": "/6/62/03l6560bveh17pigs9jxsrg9jjk1qlk.png"
+        "picurl": "/6/62/03l6560bveh17pigs9jxsrg9jjk1qlk.png",
+        "urlroot": true
     },
     "28": {
         "name": "부현",
-        "picurl": "/2/2e/4xjrcxr90bt7o2u2964twkd4vli0q4m.png"
+        "picurl": "/2/2e/4xjrcxr90bt7o2u2964twkd4vli0q4m.png",
+        "urlroot": true
     },
     "29": {
         "name": "경류",
-        "picurl": "/b/b9/b1v5kx6pyxkq288telfdwdik5qiyw64.png"
+        "picurl": "/b/b9/b1v5kx6pyxkq288telfdwdik5qiyw64.png",
+        "urlroot": true
     },
     "30": {
         "name": "설의",
-        "picurl": "/a/ab/0oy5nb9sqvjyff89j1jsq6vkran5a82.png"
+        "picurl": "/a/ab/0oy5nb9sqvjyff89j1jsq6vkran5a82.png",
+        "urlroot": true
     },
     "31": {
         "name": "곽향",
-        "picurl": "/8/8f/27x77fecakgcazi7cih58zro9ulleyn.png"
+        "picurl": "/8/8f/27x77fecakgcazi7cih58zro9ulleyn.png",
+        "urlroot": true
     },
     "32": {
         "name": "계네빈",
-        "picurl": "/5/5b/3yl1xu5msuci9000oxbuoc4m8gez8ky.png"
-    },
-    "44": {
-        "name": "한아",
-        "picurl": "/d/df/bla69hsv1inbrflt70o1s9t5xby1res.png"
+        "picurl": "/5/5b/3yl1xu5msuci9000oxbuoc4m8gez8ky.png",
+        "urlroot": true
     },
     "33": {
         "name": "카프카",
-        "picurl": "/4/4d/nknfqbj6ig88564ivr3q079qh960c1b.png"
+        "picurl": "/4/4d/nknfqbj6ig88564ivr3q079qh960c1b.png",
+        "urlroot": true
     },
     "34": {
         "name": "블레이드",
-        "picurl": "/3/36/10dqd1wzjx1xoppxz46ygeqmbxf6rpt.png"
+        "picurl": "/3/36/10dqd1wzjx1xoppxz46ygeqmbxf6rpt.png",
+        "urlroot": true
     },
     "35": {
         "name": "나찰",
-        "picurl": "/e/e4/snkt80kmu6qjcfbo4mchcdcolnerx0t.png"
+        "picurl": "/e/e4/snkt80kmu6qjcfbo4mchcdcolnerx0t.png",
+        "urlroot": true
     },
     "36": {
         "name": "은랑",
-        "picurl": "/e/ea/mavqad0rxp6zttalka56tspnd1t9qi8.png"
+        "picurl": "/e/ea/mavqad0rxp6zttalka56tspnd1t9qi8.png",
+        "urlroot": true
     },
     "37": {
         "name": "토파즈",
-        "picurl": "/9/9b/1tyxty69xim1zpm4gps64ob8b9gygyq.png"
+        "picurl": "/9/9b/1tyxty69xim1zpm4gps64ob8b9gygyq.png",
+        "urlroot": true
     },
     "38": {
         "name": "아젠티",
-        "picurl": "/5/57/6s7lzrxg0wwzyueoehyakj4y20vql12.png"
+        "picurl": "/5/57/6s7lzrxg0wwzyueoehyakj4y20vql12.png",
+        "urlroot": true
     },
     "39": {
         "name": "완•매",
-        "picurl": "/f/f3/enc8l44r8z89keumyagi2zkd9zzv72a.png"
+        "picurl": "/f/f3/enc8l44r8z89keumyagi2zkd9zzv72a.png",
+        "urlroot": true
     },
     "40": {
         "name": "Dr. 레이시오",
-        "picurl": "/6/68/art8sao8fcbmil27hd874zjb2wlw9wx.png"
+        "picurl": "/6/68/art8sao8fcbmil27hd874zjb2wlw9wx.png",
+        "urlroot": true
     },
     "41": {
         "name": "블랙 스완",
-        "picurl": "/5/55/daz1xi6s2uy8loajbihqas5lrsufrse.png"
+        "picurl": "/5/55/daz1xi6s2uy8loajbihqas5lrsufrse.png",
+        "urlroot": true
     },
     "42": {
         "name": "스파클",
-        "picurl": "/e/ee/2e9ryoqq4ux2cw4qamheaere2yblusw.png"
+        "picurl": "/e/ee/2e9ryoqq4ux2cw4qamheaere2yblusw.png",
+        "urlroot": true
     },
     "43": {
         "name": "미샤",
-        "picurl": "/1/1c/sv2t0pu837gggdu1uk2khfxlwykrb35.png"
+        "picurl": "/1/1c/sv2t0pu837gggdu1uk2khfxlwykrb35.png",
+        "urlroot": true
+    },
+    "44": {
+        "name": "한아",
+        "picurl": "/d/df/bla69hsv1inbrflt70o1s9t5xby1res.png",
+        "urlroot": true
     },
     "45": {
         "name": "개척자",
+        "special": [
+            "여성",
+            "남성"
+        ],
         "picurl": "/2/24/g3gk5z35af2xbrhdm6jwrvdlx71lo0p.png",
-        "picurl2": "/c/ca/4pvz8amab0bem4vazg00blxhr7xnaau.png"
+        "picurl2": "/c/ca/4pvz8amab0bem4vazg00blxhr7xnaau.png",
+        "urlroot": true
     },
     "46": {
         "name": "아케론",
-        "picurl": "/0/09/tbsyww1cmlr4k5sulsqo2pstfhk80t6.png"
+        "special": [
+            "보통",
+            "궁극기"
+        ],
+        "picurl": "/0/09/tbsyww1cmlr4k5sulsqo2pstfhk80t6.png",
+        "urlroot": true
     },
     "47": {
         "name": "어벤츄린",
-        "picurl": "/0/0a/m0e6yjlx97gmtazwe619jamcrt3w6sm.png"
+        "picurl": "/0/0a/m0e6yjlx97gmtazwe619jamcrt3w6sm.png",
+        "urlroot": true
     },
     "48": {
         "name": "갤러거",
-        "picurl": "/e/ea/lpb0ppfr6k6d2bkogqjupxsb5qoirxz.png"
+        "picurl": "/e/ea/lpb0ppfr6k6d2bkogqjupxsb5qoirxz.png",
+        "urlroot": true
     },
     "49": {
         "name": "로빈",
-        "picurl": "/d/db/au23wjkibt90fxug7ney502r5z6tx50.png"
+        "picurl": "/d/db/au23wjkibt90fxug7ney502r5z6tx50.png",
+        "urlroot": true
     },
     "50": {
         "name": "부트힐",
-        "picurl": "/a/ad/huilqas2k0y697l8s6e0k1e1ctuzmdr.png"
+        "picurl": "/a/ad/huilqas2k0y697l8s6e0k1e1ctuzmdr.png",
+        "urlroot": true
     },
     "51": {
         "name": "반디",
-        "picurl": "/5/51/gpth5r6kd96nmu5goer4wv3i6kojxqc.png"
+        "picurl": "/5/51/gpth5r6kd96nmu5goer4wv3i6kojxqc.png",
+        "urlroot": true
     },
     "52": {
         "name": "제이드",
-        "picurl": "/0/08/7rhdzzkpa040vu46q9kjvpvv2bqeocn.png"
+        "picurl": "/0/08/7rhdzzkpa040vu46q9kjvpvv2bqeocn.png",
+        "urlroot": true
     },
     "53": {
         "name": "개척자",
-        "picurl": "/3/32/nbzcnzhhmb7oqen7v5047ypdp8rz5q0.png",
-        "picurl2": "/0/0a/jvjpaipod5gi9f554nv6h27t6wtmle5.png"
+        "special": [
+            "여성",
+            "남성"
+        ],
+        "picurl": "/2/24/g3gk5z35af2xbrhdm6jwrvdlx71lo0p.png",
+        "picurl2": "/c/ca/4pvz8amab0bem4vazg00blxhr7xnaau.png",
+        "urlroot": true
+    },
+    "54": {
+        "name": "운리",
+        "picurl": "/a/a7/2bgqmjydahl3gfrvfezehh9q7ek1mrw.png",
+        "urlroot": true
+    },
+    "55":{
+        "name":"초구",
+        "picurl":"/c/c7/5ut9rf5rt68epcaoxcu4hfm57e2b7dv.png",
+        "urlroot":true
+    },
+    "56": {
+        "name": "Mar. 7th",
+        "picurl": "/7/7e/8smetx3znnjg826cr0l3gjshmghthip.png",
+        "urlroot": true
     }
 }

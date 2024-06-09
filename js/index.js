@@ -113,7 +113,8 @@ function ShowPicture(id) {
   let list = parts[1];
   document.getElementById('line').innerText = text['linedata'][line - 1]; // 命途
   document.getElementById('list').innerText = text['listdata'][list - 1]; // 战斗属性
-  document.getElementById('firstup').innerText = data[id]['firstup']; // 实装版本
+  // 实装版本
+  document.getElementById('firstup').innerText = data[id]['firstup']; 
   // 模型
   let model = document.getElementById('showmodel');
   model.innerHTML = null;

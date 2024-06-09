@@ -1,14 +1,9 @@
-let data, vmd, id, text
-let lang = getUrlParams('lang'); // 语言文件
-lang = (typeof lang === 'undefined') ? 'zh' : lang;
-try { text = await ReadJson(`lang/${lang}/text.json`, null, null, true) } catch (e) { Error(0, e) }
-if (lang == 'zh') { Changelang(text) }
+let data, vmd, id
 let other = getUrlParams('other'); // 模型数据
 const dataurl = other ? "data2.json" : "data.json";
 try { data = await ReadJson(dataurl, null, null, true) } catch (e) { Error(0, e) }
 const total = data[0]['total'];
-console.log('UI version: 2.0.0527')
-console.log(`language setting: ${lang}`)
+console.log('UI version: 2.1.0527');
 
 export async function Init(callback) {
     try {
@@ -26,7 +21,7 @@ export async function Init(callback) {
         const roledata = data[id]
         let name = other ? roledata['folder'] : id;
         if (roledata['special']) { name = roledata['folder'] + (getUrlParams(roledata['special']) ? `_${roledata['special']}` : '') }
-        if (isNaN(parseInt(vmd)) || vmd < 0 || vmd > 3) { Error(3, 'The parameter is invalid', ":参数'vmd'不是数字或在可接受范围外") };
+        if (isNaN(parseInt(vmd)) || vmd < 0 || vmd > 3) { Error(2, 'The parameter is invalid', ":参数'vmd'不是数字或在可接受范围外") };
         callback([name, vmd, id, other, roledata['weapons']]);
     } catch (e) {
         Error(0, e)
@@ -34,7 +29,16 @@ export async function Init(callback) {
 }
 
 export function Error(code, error, errtext = '') {
-    const Info = text['errorinfo'];
+    const Info = [
+        "初始化错误",
+        "URL参数错误",
+        "three.js初始化错误",
+        "天空盒加载错误",
+        "场景模型加载错误",
+        "人物模型加载错误",
+        "武器模型加载错误",
+        "MMD声音文件加载错误"
+    ]
     const PoopDiv = document.createElement('div');
     const b = document.createElement('b');
     PoopDiv.classList = "poop";
@@ -44,38 +48,34 @@ export function Error(code, error, errtext = '') {
     document.getElementById('error').append(PoopDiv);
 }
 
-export const Start = {
-    Music: () => {
-        let info = document.createElement('div');
-        info.id = `music`;
-        info.innerHTML = `<h4>音乐文件:<a id="text4" class="text">等待启动...</a></h4>
-          <div class="progress">
-            <div id="progress4" class="progress-inside" style="width: 0%"></div>
-          </div>`;
-        document.getElementById('info-main').appendChild(info);
-    },
-    Weapon: (i) => {
-        let info = document.createElement('div');
-        info.id = `weapon${i}`;
-        info.innerHTML = `<h4>武器模型${i}:<a id="text-w${i}" class="text"></a></h4>
-        <div class="progress">
-          <div id="progress-w${i}" class="progress-inside" style="width: 0%"></div>
-        </div>`;
-        document.getElementById('info-main').appendChild(info);
-    }
+export function Start(divid, id, cn, en) {
+    let info = document.createElement('div');
+    info.id = divid;
+    info.innerHTML = `
+    <a>${cn}</a><a id="text${id}" class="text">等待启动...</a><br>
+    <a>${en}</a><a id="texte${id}" class="text">Waiting for the start...</a>
+    <div class="progress">
+      <div id="progress${id}" class="progress-inside" style="width: 0%"></div>
+    </div>`;
+    document.getElementById('info-main').appendChild(info);
 }
+
 
 export const Progress = {
     main: (num) => {
-        let info = [];
+        let info = [], infoe = []
         info[2] = "初始化加载器..."
+        infoe[2] = "Initialize the loader..."
         info[3] = "等待响应..."
+        infoe[3] = "Waiting for a response..."
         document.getElementById('text0').innerText = `(${num}/4)${info[num]}`;
+        document.getElementById('texte0').innerText = `(${num}/4)${infoe[num]}`;
         document.getElementById('progress0').style.width = `${num * 25}%`;
     },
 
-    Model: (id, xhr, text = '') => {
+    Model: (id, xhr, text = '', texten = '') => {
         document.getElementById(`text${id}`).innerText = text + "(" + (xhr.loaded / 1024).toFixed(0) + " KB/" + (xhr.total / 1024).toFixed(0) + " KB)";
+        document.getElementById(`texte${id}`).innerText = texten + "(" + (xhr.loaded / 1024).toFixed(0) + " KB/" + (xhr.total / 1024).toFixed(0) + " KB)";
         document.getElementById(`progress${id}`).style.width = (xhr.loaded / xhr.total * 100) + "%";
     }
 }
@@ -83,6 +83,7 @@ export const Progress = {
 export const Finish = {
     Skybox: () => {
         document.getElementById('text3').innerText = "天空盒加载完成.";
+        document.getElementById('texte3').innerText = "Skybox loading finish.";
         document.getElementById('progress3').style.width = "100%";
         setTimeout(() => {
             document.getElementById('skybox').style.display = "none";
@@ -94,7 +95,6 @@ export const Finish = {
         let dataurl = other ? "data2.json" : "data.json";
         let roledata = await ReadJson(dataurl, id, 0, false, true)
         let total = localStorage.onload;
-        // console.log(roledata)
         if (total != (2 + roledata['weapons'])) {
             total++;
             localStorage.setItem('onload', total);
@@ -104,21 +104,21 @@ export const Finish = {
         let from = other ? roledata['from'] : "神帝宇";
         let main = document.getElementById('main');
         let ok = document.getElementById('start');
-        let h4 = document.createElement('h4');
-        let br = document.createElement('br');
+        let a = document.createElement('h4');
         ok.onclick = () => { document.getElementById('info').style.display = "none"; };
         document.getElementById('text0').innerText = "加载完成, 请等待材质下载.";
+        document.getElementById('texte0').innerText = "Loading finish, please wait for the material download.";
         document.getElementById('progress0').style.width = "100%";
-        h4.innerHTML = `模型来源: ${from}`;
-        main.appendChild(br);
-        main.appendChild(h4);
+        a.innerHTML = `模型来源: ${from}<br><br>Model from: ${from}`;
+        a.style.textAlign = "center"
+        main.appendChild(a);
         setTimeout(() => { document.getElementById('info').style.display = "none" }, 2000)
         console.log("Model:\n ID:" + id + " From:" + from + " Weapons:" + roledata['weapons']);
     },
 
-    Model: (id1, id2, text) => {
-        let info = (text === undefined) ? '' : text;
-        document.getElementById(id1).innerText = info + "加载完成, 请等待材质下载.";
+    Model: (id1, id1en, id2, text = '') => {
+        document.getElementById(id1).innerText = text + "加载完成, 请等待材质下载.";
+        document.getElementById(id1en).innerText = text + "Loading finish, please wait for the material download.";
         setTimeout(() => {
             document.getElementById(id2).style.display = "none";
             if (vmd) { Finish.MMD(); } else { Finish.Auto(); }
@@ -136,15 +136,20 @@ export const Finish = {
         }; gui();
         const from = other ? roledata['from'] : "神帝宇";
         const main = document.getElementById('main');
-        [``,
-            `模型来源: ${from}`,
-            `动作来源: ${vmddata['from']}`,
-            `背景音乐: ${vmddata['name']}`,
-            `制作软件: three.js`,
+        [`<br>`,
+            `模型来源: ${from}<br>`,
+            `Model source: ${from}<br><br>`,
+            `动作来源: ${vmddata['from']}<br>`,
+            `Action source: ${vmddata['from']}<br><br>`,
+            `背景音乐: ${vmddata['name']}<br>`,
+            `Background music: ${vmddata['name']}<br><br>`,
+            `制作软件: three.js<br>`,
+            `Make software: three.js<br><br>`
         ].map((text) => {
-            const h4 = document.createElement('h4');
-            h4.innerHTML = text;
-            main.appendChild(h4)
+            const a = document.createElement('a');
+            a.style.margin = "0 auto"
+            a.innerHTML = text;
+            main.appendChild(a)
         });
         document.getElementById('start').style = null;
         console.log("Model:\n ID:" + id + " From:" + from + "\nAnimation:\n ID:" + vmd + " Name:" + vmddata['name'] + " From:" + vmddata['from']);
@@ -157,15 +162,11 @@ function gui() {
         title[i].click();
     }
     document.getElementById('text0').innerText = "加载完成, 请等待材质下载.";
-    document.getElementById('texte0').innerText = "Finish, please wait for the material.";
+    document.getElementById('texte0').innerText = "Loading finish, please wait for the material download.";
     document.getElementById('progress0').style.width = "100%";
     document.getElementById('VMDList').style.left = "0px";
     document.getElementById('three').style.top = "-60px";
     // if (roledata['name'] == '可可利亚BOSS') {
     //     document.getElementById('VMDList').innerHTML = null;
     // }
-}
-
-function Changelang(text) {
-    document
 }

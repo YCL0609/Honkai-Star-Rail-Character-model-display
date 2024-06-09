@@ -61,11 +61,11 @@ function init() {
   lightFolder.addColor(lightParams, 'color').onChange(() => {
     Light1.Color.set(lightParams.color);
     Light2.Color.set(lightParams.color);
-  }).name('颜色');
+  })
   lightFolder.add(lightParams, 'intensity', 0, 4).onChange(() => {
     Light1.intensity = lightParams.intensity + 0.5;
     Light2.intensity = lightParams.intensity - 0.5;
-  }).name('强度');
+  })
   // 渲染器
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -86,7 +86,8 @@ function init() {
     UI.Finish.Skybox()
   }, null, (e) => { UI.Error(3, e) })
   UI.Progress.main(3);
-  const text = (vmd == 0) ? '模型和动作文件:' : '模型文件:'
+  const text = (vmd == 0) ? '模型文件:' : '模型和动作文件:'
+  const texten = (vmd == 0) ? 'Model Files:' : 'Model and Action Files:'
   loader.loadWithAnimation(
     `${urlroot}/${name}/index.pmx`,
     `./vmd/${vmd}/index.vmd`,
@@ -103,10 +104,11 @@ function init() {
       modelFolder.add(modelParams, 'z', -200, 200).onChange(() => {
         mesh.position.z = modelParams.z;
       });
-      (vmd == 0) ? Weapons(null, true) : MMDload();
+      UI.Finish.Model('text1', 'texte1', 'module')
+      if (vmd !== 0) { MMDload(mmd) }
     },
     (xhr) => {
-      UI.Progress.Model(1, xhr, text);
+      UI.Progress.Model(1, xhr, text, texten);
     },
     (err) => {
       UI.Error(5, err)
@@ -132,7 +134,7 @@ function init() {
       modelFolder.add(modelParams, 'z', -500, 500).onChange(() => {
         mesh.position.z = modelParams.z;
       });
-      UI.Finish.Model('text2', 'background')
+      UI.Finish.Model('text2', 'texte2', 'background')
     },
     (xhr) => {
       UI.Progress.Model(2, xhr)
@@ -171,15 +173,7 @@ function animate() {
   stats.end();
 }
 
-function Weapons(loader, finish) {
-  if (finish) {
-    document.getElementById(`text1`).innerText = "加载完成, 等待材质下载.";
-    setTimeout(() => {
-      document.getElementById('module').style.display = "none";
-      UI.Finish.Auto();
-    }, 2000)
-    return
-  }
+function Weapons(loader) {
   let x = [0, -15, +20, +10, -10, -20, 0, +20];
   let z = [0, 0, 0, -15, -15, -15, -15, -15];
   if (name == 27) { // 素裳(大赤鸢模型太大)
@@ -187,7 +181,7 @@ function Weapons(loader, finish) {
     z = [0, 0, 0, -20, -20];
   }
   for (let i = 1; i <= weapon; i++) {
-    UI.Start.Weapon(i);
+    UI.Start(`weapon${i}`, `-w${i}`, `武器模型${i}:`, `Weapon model${i}:`);
     loader.load(
       `${urlroot}/${name}/${i}.pmx`,
       (mesh) => {
@@ -204,7 +198,7 @@ function Weapons(loader, finish) {
           mesh.position.z = modelParams.z;
         });
         scene.add(mesh);
-        UI.Finish.Model(`text-w${i}`, `weapon${i}`);
+        UI.Finish.Model(`text-w${i}`, `texte-w${i}`, `weapon${i}`);
       },
       (xhr) => {
         UI.Progress.Model(`-w${i}`, xhr);
@@ -215,14 +209,8 @@ function Weapons(loader, finish) {
   }
 }
 
-
-function MMDload() {
-  UI.Start.Music();
-  document.getElementById(`text1`).innerText = "加载完成, 等待材质下载.";
-  setTimeout(() => {
-    document.getElementById('module').style.display = "none";
-    UI.Finish.MMD();
-  }, 2000)
+function MMDload(mmd) {
+  UI.Start('music', 4, '音乐文件:', 'Music file:');
   // 监听
   const audioListener = new THREE.AudioListener();
   camera.add(audioListener);
@@ -235,25 +223,24 @@ function MMDload() {
     `./vmd/${vmd}/index.mp3`,
     (audioBuffer) => {
       oceanAmbientSound.setBuffer(audioBuffer);
+      oceanAmbientSound.setLoop(true);//设置音频循环
       document.getElementById('text4').innerText = "加载完成.";
       document.getElementById('music').style.display = "none";
       setTimeout(() => {
         UI.Finish.MMD();
         let ok = document.getElementById('start');
-        ok.innerText = "开始";
+        ok.innerText = "开始(Start)";
         ok.onclick = () => {
-          oceanAmbientSound.setLoop(true);//设置音频循环
           oceanAmbientSound.play();// 播放音频
           document.getElementById('info').style.display = "none";
           // 开始动画
           helper.add(mesh, {
             animation: mmd.animation,
-            physics: true,
+            physics: true
           });
         }
       }, 2000);
     },
-    // 声音回调函数
     (xhr) => {
       UI.Progress.Model(4, xhr);
     },

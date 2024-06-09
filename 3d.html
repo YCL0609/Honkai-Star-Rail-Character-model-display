@@ -14,6 +14,12 @@
 	<script src="js/3d/three.js/libs/ammo.wasm.js" defer></script>
 	<script src="https://www.ycl.cool/js/function.js" defer></script>
 	<script>
+		// 判断是否为Webkit用户
+		let isSafari = /WebKit/i.test(navigator.userAgent) && !/(Chrome|android)/i.test(navigator.userAgent);
+		if (isSafari) {
+			alert('由于Webkit内核对于WebGL兼容性有限, 页面可能出现未知渲染问题。\nDue to the limited compatibility of the Webkit kernel for WebGL, pages may have unknown rendering issues.')
+		}
+
 		function Gotovmd(cho) {
 			let id = getUrlParams('id');
 			let other = getUrlParams('other');
@@ -37,65 +43,60 @@
 	<script type="module" src="js/3d/3d.js" defer></script>
 	<!-- 加载进度 -->
 	<div id="info">
-		<div id="info-main">
+		<b id="info-main" style="width: 350px">
 			<div id="main">
-				<h4 id="main-h4" style="margin-left: 12%;text-align: left;">主进度:
-					<a id="text0" class="text">(1/4)加载three.js...</a>
-				</h4>
-				<h4 id="maine-h4" style="margin-left: 12%;text-align: left;">Main process:
-					<a id="texte0" class="text">(1/4)Loading three.js...</a>
-				</h4>
+				<a>主进度:</a>
+				<a id="text0" class="text">(1/4)加载three.js...</a><br>
+				<a>Main process:</a>
+				<a id="texte0" class="text">(1/4)Loading three.js...</a>
 				<div class="progress">
 					<div id="progress0" class="progress-inside" style="width: 0%"></div>
 				</div>
 			</div>
 			<div id="module" style="display: none">
-				<h4><a id="text1" class="text">主模型:</a></h4>
-				<h4><a id="texte1" class="text">Character model:</a></h4>
+				<a id="text1" class="text">主模型:</a><br>
+				<a id="texte1" class="text">Character model:</a>
 				<div class="progress">
 					<div id="progress1" class="progress-inside" style="width: 0%"></div>
 				</div>
 			</div>
 			<div id="background" style="display: none">
-				<h4>场景模型:<a id="text2" class="text"></a></h4>
-				<h4>Scene model:<a id="texte2" class="text"></a></h4>
+				<a>场景模型:</a>
+				<a id="text2" class="text"></a><br>
+				<a>Scene model:</a>
+				<a id="texte2" class="text"></a>
 				<div class="progress">
 					<div id="progress2" class="progress-inside" style="width: 0%"></div>
 				</div>
 			</div>
-			<div id="skybox" style="display: none">
-				<h4>天空盒:<a id="text3" class="text">加载材质...</a></h4>
-				<h4>Skybox:<a id="texte3" class="text">Loading texture...</a></h4>
+			<div id="skybox" style="display: none;margin-bottom: 10px;">
+				<a>天空盒:</a>
+				<a id="text3" class="text">加载材质...</a><br>
+				<a>Skybox:</a>
+				<a id="texte3" class="text">Loading texture...</a>
 				<div class="progress">
 					<div id="progress3" class="progress-inside" style="width: 0%"></div>
 				</div>
 			</div>
 			<button id="start" style="display: none;"></button>
-			<script>
-				// 判断是否为Webkit用户
-				let isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-				if (isSafari) {
-					alert('由于Webkit内核对于WebGL兼容性有限, 页面可能出现未知渲染问题。\n若可能请更换非Webkit内核浏览器访问。 \nDue to the limited compatibility of the Webkit kernel for WebGL, pages may have unknown rendering issues. \nIf possible, please change to a non-Webkit kernel browser access.')
-				}
-			</script>
-		</div>
+		</b>
 	</div>
 	<!-- vmd动作选择 -->
 	<div id="VMDList">
-		<a style="color: #ffffff">可用动作列表</a>
-		<br>
-		<a href="#" onclick="Gotovmd(1)">极乐净土</a><br>
-		<a href="#" onclick="Gotovmd(2)">彩虹节拍</a><br>
-		<a href="#" onclick="Gotovmd(3)">Good Time</a>
+		<a style="color: #fff">可用动作列表</a>
+		<a style="color: #fff;font-size: 10px">Available actions</a>
 		<hr>
-		<button onclick="document.getElementById('VMDList').style.left='-100px'">关闭</button>
+		<a style="cursor: pointer;text-decoration: underline" onclick="Gotovmd(1)">极乐净土</a><br>
+		<a style="cursor: pointer;text-decoration: underline" onclick="Gotovmd(2)">彩虹节拍</a><br>
+		<a style="cursor: pointera;text-decoration: underline" onclick="Gotovmd(3)">Good Time</a><br>
+		<hr>
+		<button onclick="document.getElementById('VMDList').style.left='-100px'">关闭(Close)</button>
 	</div>
 	<!-- three.js -->
-	<div id="three">
-		此页使用<a href="https://threejs.org/">three.js</a>作为webgl渲染引擎<br>
-		<svg xmlns="http://www.w3.org/2000/svg" fill="#fffff" viewBox="0 0 204 30"
-			style="width:150px;height:30px;background-color:#ffffff">
-			<g clip-path="url(#a)">
+	<b id="three">
+		此页使用<a href="https://threejs.org/" style="color: aqua;">three.js</a>作为webgl渲染引擎<br>
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 204 30" style="width:150px;height:30px">
+			<g>
 				<path fill="#FBAD41"
 					d="M52.688 13.028c-.22 0-.437.008-.654.015a.297.297 0 0 0-.102.024.365.365 0 0 0-.236.255l-.93 3.249c-.401 1.397-.252 2.687.422 3.634.618.876 1.646 1.39 2.894 1.45l5.045.306c.15.008.28.08.359.199a.492.492 0 0 1 .051.434.64.64 0 0 1-.547.426l-5.242.306c-2.848.132-5.912 2.456-6.987 5.29l-.378 1a.28.28 0 0 0 .248.382h18.054a.48.48 0 0 0 .464-.35 13.12 13.12 0 0 0 .48-3.54c0-7.22-5.789-13.072-12.933-13.072">
 				</path>
@@ -113,7 +114,7 @@
 			</defs>
 		</svg>
 		提供CDN加速服务
-	</div>
+	</b>
 	<div id="error"></div>
 </body>
 

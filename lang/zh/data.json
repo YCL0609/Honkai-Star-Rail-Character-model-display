@@ -21,7 +21,10 @@
     "4": {
         "name": "开拓者",
         "urlroot": true,
-        "special":["女主","男主"],
+        "special": [
+            "女主",
+            "男主"
+        ],
         "picurl": "/5/51/a8tjm9d781ac6tw2vyhg5q8ss058415.png",
         "picurl2": "/5/58/2dishd6nydg68hp6ay0wjtpgjgjbmfz.png"
     },
@@ -227,14 +230,20 @@
     },
     "45": {
         "name": "开拓者",
-        "special":["女主","男主"],
+        "special": [
+            "女主",
+            "男主"
+        ],
         "picurl": "/2/24/g3gk5z35af2xbrhdm6jwrvdlx71lo0p.png",
         "picurl2": "/c/ca/4pvz8amab0bem4vazg00blxhr7xnaau.png",
         "urlroot": true
     },
     "46": {
         "name": "黄泉",
-        "special":["正常","大招"],
+        "special": [
+            "正常",
+            "大招"
+        ],
         "picurl": "/0/09/tbsyww1cmlr4k5sulsqo2pstfhk80t6.png",
         "urlroot": true
     },
@@ -270,9 +279,27 @@
     },
     "53": {
         "name": "开拓者",
-        "special":["女主","男主"],
+        "special": [
+            "女主",
+            "男主"
+        ],
         "picurl": "/3/32/nbzcnzhhmb7oqen7v5047ypdp8rz5q0.png",
         "picurl2": "/0/0a/jvjpaipod5gi9f554nv6h27t6wtmle5.png",
+        "urlroot": true
+    },
+    "54": {
+        "name": "云璃",
+        "picurl": "/a/a7/2bgqmjydahl3gfrvfezehh9q7ek1mrw.png",
+        "urlroot": true
+    },
+    "55":{
+        "name":"椒丘",
+        "picurl":"/c/c7/5ut9rf5rt68epcaoxcu4hfm57e2b7dv.png",
+        "urlroot":true
+    },
+    "56": {
+        "name": "三月七",
+        "picurl": "/7/7e/8smetx3znnjg826cr0l3gjshmghthip.png",
         "urlroot": true
     }
 }
