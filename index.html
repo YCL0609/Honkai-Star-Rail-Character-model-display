@@ -13,22 +13,28 @@
   <script src="js/baidu.js"></script>
 </head>
 
-<body> 
+<body>
   <div id="loading" class="box" style="width: auto;">
     <img class="loading" src="img/loading.svg" />
     <span style="font-size:xx-large;">Loading...</span>
   </div>
   <div id="main" class="box" style="display: none;">
     <h2 id="text1">《崩坏:星穹铁道》角色立绘及3D模型展示</h2>
+    <div class="lang-div">
+      <button class="lang" id="zh" onclick="ChangeText('zh')" style="border: solid #0069d2">中文</button>
+      <button class="lang" id="en" onclick="ChangeText('en')">English</button>
+      <button class="lang" id="jp" onclick="ChangeText('jp')">日本語</button>
+      <button class="lang" id="ko" onclick="ChangeText('ko')">한국어</button>
+    </div>
     <div class="info">
-      <div class="lang" onclick="ChangeText('zh')">中文</div>
-      <div class="lang" onclick="ChangeText('en')">English</div>
-      <div class="lang" onclick="ChangeText('jp')">日本語</div>
-      <div class="lang" onclick="ChangeText('ko')">한국어</div><br><br>
-      <div class="warnA">
-        <div></div>
-        <a>当前版本为测试版如遇bug请在Github上提交.<br>剩余翻译工作会在后续陆续完成.<br> The current version is a beta version, please report on
-          Github if there have a bug. <br>The rest of the translation work will be completed in the future.</a>
+      <div class="tip">
+        <div class="tip-bar"></div>
+        <div class="tip-txt">
+          官方模型及立绘素材的权利归米哈游所有, 其他内容的相关权利均归各自所有者享有. 如有侵权, 请向
+          <a style="color: #b3ccff;text-decoration: underline" href="mailto:Star-Rail-model-display@ycl.cool">Star-Rail-model-display@ycl.cool</a>
+          发送邮件.
+          <a style="color:#beb100">(此邮箱不回复邮件, 仅用作隐藏真实邮件地址)</a>
+        </div>
       </div>
       <div class="warn" style="display: none">
         <div id="bar"></div>

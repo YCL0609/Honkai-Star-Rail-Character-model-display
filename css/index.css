@@ -55,12 +55,24 @@ td {
     line-height: 20px;
 }
 
+.lang-div {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .lang {
     display: inline-block;
     font-size: large;
+    font-weight: 600;
     width: 100px;
-    color: aquamarine;
+    background-color: #00000000;
+    border: 0;
     cursor: pointer;
+}
+
+.lang:hover {
+    background-color: #00cece;
 }
 
 .info h3 {
@@ -161,26 +173,27 @@ td {
     background-color: yellow;
 }
 
-.warn a{
+.warn a {
     font-weight: 550;
     margin-left: 10px;
 }
 
-.warnA {
+.tip {
     margin: 0 auto;
     width: 95%;
-    background-color: #ffff0035;
+    background-color: #00ffff35;
     display: flex;
     justify-content: space-evenly;
     text-align: left;
+    margin-top: 10px;
 }
 
-.warnA div {
-    width: 5px;
-    background-color: yellow;
+.tip-bar {
+    width: 10px;
+    background-color:#00ffff;
 }
 
-.warnA a{
+.tip-txt {
     font-weight: 550;
     margin-left: 10px;
 }

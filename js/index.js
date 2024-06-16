@@ -6,7 +6,6 @@ let onload = 0;
 // 默认中文
 const text = await ReadJson(`lang/zh/text.json`, null, null, true);
 localStorage.setItem('text', JSON.stringify(text));
-localStorage.setItem('lang', 'zh');
 WriteTable('zh');
 
 async function WriteTable(lang) {
@@ -73,7 +72,7 @@ function JsonToTable(name, data, tablename, main) {
         }
       });
     } else {
-      a.href = `3d.html?id=${i}&other&lang=${localStorage.lang}`;
+      a.href = `3d.html?id=${i}&other`;
     }
     // 添加到页面
     cell.appendChild(a);
@@ -114,7 +113,7 @@ function ShowPicture(id) {
   document.getElementById('line').innerText = text['linedata'][line - 1]; // 命途
   document.getElementById('list').innerText = text['listdata'][list - 1]; // 战斗属性
   // 实装版本
-  document.getElementById('firstup').innerText = data[id]['firstup']; 
+  document.getElementById('firstup').innerText = data[id]['firstup'];
   // 模型
   let model = document.getElementById('showmodel');
   model.innerHTML = null;
@@ -123,8 +122,8 @@ function ShowPicture(id) {
     case 45:
     case 53:
     case 46: // 黄泉
-      [{ text: name[id]['special'][0], href: `3d.html?id=${id}&lang=${localStorage.lang}` },
-      { text: name[id]['special'][1], href: `3d.html?id=${id}&${data[id]['special']}&lang=${localStorage.lang}` }]
+      [{ text: name[id]['special'][0], href: `3d.html?id=${id}` },
+      { text: name[id]['special'][1], href: `3d.html?id=${id}&${data[id]['special']}` }]
         .forEach(cfg => {
           const btn = document.createElement('button');
           btn.innerText = cfg.text;
@@ -136,15 +135,15 @@ function ShowPicture(id) {
       if (data[id]['model']) { // 正常
         const btn = document.createElement('button');
         btn.innerText = text['model'][0];
-        btn.onclick = () => { window.location.href = `3d.html?id=${id}&lang=${localStorage.lang}` };
+        btn.onclick = () => { window.location.href = `3d.html?id=${id}` };
         model.appendChild(btn);
       } else { // 无模型
         model.innerHTML = `<a style='color:red'>${text['model'][1]}</a>`;
       }
       break;
   }
-  // 立绘/***************************************** */
-  let picurl_root = name[id]['urlroot'] ? name[0]['urlroot1'] : name[0]['urlroot2']
+  // 立绘
+  let picurl_root = name[id]['urlroot'] ? name[0]['urlroot1'] : name[0]['urlroot2']; // 判断立绘图片的所属域名前缀
   document.getElementById('img1').src = picurl_root + name[id]['picurl'];
   if ([4, 45, 53].includes(id)) { // 开拓者
     let download2 = document.createElement('button');
@@ -153,24 +152,31 @@ function ShowPicture(id) {
     img2.id = "img2";
     img2.style.width = "48%";
     img2.src = "https://patchwiki.biligame.com/images/sr" + name[id]['picurl2'];
-    download2.innerText = "女主";
+    download2.innerText = name[id]['special'][0];
     download2.onclick = () => { window.open(document.getElementById('img2').src, '_blank'); };
     document.getElementById('download').appendChild(download2);
-    document.getElementById('text20').innerText = "男主";
+    document.getElementById('text20').innerText = name[id]['special'][1];
     document.getElementById('img1').style.width = "48%";
     imgdiv.appendChild(img2);
     document.getElementById('text12').onclick = () => { location.reload() }
   }
-}/****************************** */
+}
 
 // 语言切换函数
 window.ChangeText = async (lang) => {
+  let divid = ['zh', 'en', 'jp', 'ko']
+  divid.map((e) => {
+    let div = document.getElementById(e)
+    div.style.border = 0;
+    div.style.pointerEvents = "none";
+  })
   let warn = document.getElementsByClassName('warn')[0];
   let bar = document.getElementById('bar');
   let text = await ReadJson(`lang/${lang}/text.json`, null, null, true);
   localStorage.setItem('text', JSON.stringify(text));
   localStorage.setItem('lang', lang);
   document.getElementById('warn').innerText = text['warn'];
+  document.getElementsByClassName('tip-txt')[0].innerHTML = text['tip'];
   if (lang === 'zh') {
     warn.style.display = 'none'
   } else {
@@ -210,6 +216,8 @@ window.ChangeText = async (lang) => {
   }
   document.getElementById('unknow').innerHTML = null;
   WriteTable(lang); // 填入表格
+  divid.map((e) => { document.getElementById(e).style = null })
+  document.getElementById(lang).style.border = "solid #0069d2"
 }
 
 window.ChangeCard = (card) => {
@@ -217,9 +225,9 @@ window.ChangeCard = (card) => {
   const picture = document.getElementById('picture');
   if (card === "picture") {
     main.style.display = "none";
-    picture.style.display = null;
+    picture.style.display = null
   } else if (card === "main") {
     picture.style.display = "none";
-    main.style.display = null;
+    main.style.display = null
   }
 }

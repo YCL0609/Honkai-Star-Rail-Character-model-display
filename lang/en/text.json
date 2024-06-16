@@ -1,4 +1,5 @@
 {
+    "tip": "The rights of the official models and vertical graphics belong to miHoYo, and the related rights of other contents belong to their respective owners. If there is any infringement, please send an email to <a style='color: #b3ccff;text-decoration: underline' href='mailto:Star-Rail-model-display@ycl.cool'>Star-Rail-model-display@ycl.cool</a>.<a style='color:#beb100'>(This email address does not reply to emails, it is only used to hide the real email address)</a>",
     "warn": "Note: If you encounter something different from Chinese, please use Chinese as the main one, if you want to change it, please submit it on Github.",
     "listdata": [
         "Physical",
@@ -22,7 +23,7 @@
         "View",
         "Not available"
     ],
-    "0": "Proofread:<a style='color:#3391ff'>徐老师</a>", 
+    "0": "Proofread:<a style='color:#3391ff'>徐老师</a>",
     "1": "<i>Honkai:Star-Rail</i> Character illustration and 3D model showcase",
     "2": "Introductory page",
     "3": "Classified models",

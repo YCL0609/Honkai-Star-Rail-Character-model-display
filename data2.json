@@ -4,43 +4,43 @@
         "total_line": 8
     },
     "1": {
-        "folder": "帕姆",
+        "folder": "Other1",
         "from": "神帝宇",
         "data": "1,1",
         "weapons": 0
     },
     "2": {
-        "folder": "史瓦罗",
+        "folder": "Other2",
         "from": "神帝宇",
         "data": "2,1",
         "weapons": 0
     },
     "3": {
-        "folder": "三月七2",
+        "folder": "Other3",
         "from": "给你柠檬椰果养乐多你会跟我玩吗",
         "data": "1,2",
         "weapons": 0
     },
     "4": {
-        "folder": "幻胧",
+        "folder": "Other4",
         "from": "隔壁的隔壁老黄",
         "data": "1,3",
         "weapons": 0
     },
     "5": {
-        "folder": "可可利亚",
+        "folder": "Other5",
         "from": "隔壁的隔壁老黄",
         "data": "2,3",
         "weapons": 0
     },
     "6": {
-        "folder": "萨姆",
+        "folder": "Other6",
         "from": "神帝宇",
         "data": "3,1",
         "weapons": 0
     },
     "7": {
-        "folder": "星期日",
+        "folder": "Other7",
         "from": "神帝宇",
         "data": "4,1",
         "weapons": 0
@@ -76,7 +76,7 @@
         "weapons": 0
     },
     "13": {
-        "folder": "诡弈砂金",
+        "folder": "Other8",
         "from": "隔壁的隔壁老黄",
         "data": "3,3",
         "weapons": 0

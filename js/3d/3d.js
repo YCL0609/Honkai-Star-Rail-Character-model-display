@@ -121,10 +121,6 @@ function init() {
     (mesh) => {
       // 添加到屏幕( X:0 y:-11.7 Z:0)
       mesh.position.y = -11.7;
-      mesh.material.castShadow = true;
-      mesh.castShadow = true;
-      mesh.material.receiveShadow = true;
-      mesh.receiveShadow = true;
       scene.add(mesh);
       const modelFolder = gui.addFolder('场景');
       const modelParams = { x: 0, z: 0 }
