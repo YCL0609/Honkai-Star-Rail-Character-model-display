@@ -24,7 +24,7 @@ function isMobile() {
 
 /**
  * 异步加载资源函数
- * @param {URL} url 资源路径
+ * @param {string} url 资源路径
  * @param {string} type 资源类型 (js/css)
  */
 function loadExternalResource(url, type) {
@@ -83,7 +83,7 @@ function getUrlParams(name) {
 
 /**
  * Json处理函数(异步)
- * @param {URL} url Json文件URL路径
+ * @param {string} url Json文件URL路径
  * @param {string} val1 返回Json数据键名
  * @param {string} val2 返回Json数据对象名
  * @param {boolean} all 是否返回全部Json数据
@@ -111,6 +111,32 @@ async function ReadJson(url, val1, val2, all, allkey) {
         throw new Error('Error reading file:' + err);
     }
 }
+
+/**
+ * 最快服务器选择函数
+ * @param {string} TestURL1 第一个服务器地址
+ * @param {string} TestURL2 第二个服务器地址
+ * @return {object} 最快的服务器信息，包含服务器地址和响应时间
+ */
+async function ServerChoose(TestURL1, TestURL2) {
+    async function Timetest(url) {
+      const start = performance.now();
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Fetch error');
+        await response.arrayBuffer();
+        return ({ url, elapsedTime: performance.now() - start });
+      } catch (error) {
+        return ({ url, elapsedTime: performance.now() - start, error });
+      }
+    }
+    const results = await Promise.race([
+      Timetest(TestURL1),
+      Timetest(TestURL2),
+    ]);
+    const fastest = results.reduce((a, b) => a.elapsedTime < b.elapsedTime ? a : b);
+    return fastest;
+  }
 
 // YCL
 console.log(
