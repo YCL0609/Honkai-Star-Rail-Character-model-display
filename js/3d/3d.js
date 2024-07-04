@@ -14,8 +14,7 @@ let name, vmd, id, other, weapon;
 let camera, scene, renderer, effect;
 const clock = new THREE.Clock();
 const gui = new GUI();
-// let urlroot = "https://model.ycl.cool";
-let urlroot = "models";
+let urlroot = isDebug() ? "models" : "https://model.ycl.cool";
 
 // 初始化
 UI.Init((params) => {

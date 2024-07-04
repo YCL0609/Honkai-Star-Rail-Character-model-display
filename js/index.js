@@ -1,17 +1,19 @@
-const data2 = await ReadJson('data2.json', null, null, true);
-const data = await ReadJson('data.json', null, null, true);
+const data2 = ReadJson('data2.json', null, null, true);
+const data = ReadJson('data.json', null, null, true);
 const nopic = [4, 12, 17, 45, 53]; // 无介绍立绘id
-let onload = 0;
+let Finish, lang
+Finish = 0;
 
 // 默认中文
-const text = await ReadJson(`lang/zh/text.json`, null, null, true);
+lang = "zh";
+const text = ReadJson(`lang/zh/text.json`, null, null, true);
 localStorage.setItem('text', JSON.stringify(text));
 WriteTable('zh');
 
 async function WriteTable(lang) {
   // 获取所选语言配置
-  const name = await ReadJson(`lang/${lang}/data.json`, null, null, true);
-  const name2 = await ReadJson(`lang/${lang}/data2.json`, null, null, true);
+  const name = ReadJson(`lang/${lang}/data.json`, null, null, true);
+  const name2 = ReadJson(`lang/${lang}/data2.json`, null, null, true);
   localStorage.setItem('name', JSON.stringify(name));
   // 主表格
   JsonToTable(name, data, 'table', true, 'table2');
@@ -93,15 +95,15 @@ function JsonToTable(name, data, tablename, main) {
   }
 
   // 完成
-  onload++;
-  if (onload != 2) {
+  Finish++;
+  if (Finish != 2) {
     return;
   }
   document.getElementById('loading').style.display = "none";
   document.getElementById('main').style.display = null;
 }
 
-function ShowPicture(id) {
+async function ShowPicture(id) {
   const text = JSON.parse(localStorage.text);
   const name = JSON.parse(localStorage.name);
   // 姓名
@@ -118,9 +120,9 @@ function ShowPicture(id) {
   let model = document.getElementById('showmodel');
   model.innerHTML = null;
   switch (id) {
-    case 4: // 开拓者
-    case 45:
-    case 53:
+    case 4:  // 开拓者 (物主)
+    case 45: // 开拓者 (火主)
+    case 53: // 开拓者 (同谐主)
     case 46: // 黄泉
       [{ text: name[id]['special'][0], href: `3d.html?id=${id}` },
       { text: name[id]['special'][1], href: `3d.html?id=${id}&${data[id]['special']}` }]
@@ -143,19 +145,18 @@ function ShowPicture(id) {
       break;
   }
   // 立绘
-  let picurl_root = name[id]['urlroot'] ? name[0]['urlroot1'] : name[0]['urlroot2']; // 判断立绘图片的所属域名前缀
-  document.getElementById('img1').src = picurl_root + name[id]['picurl'];
+  document.getElementById('img1').src = `https://picture.sr.ycl.cool/AutoShow.php?lang=${lang}&id=${id}`;
   if ([4, 45, 53].includes(id)) { // 开拓者
     let download2 = document.createElement('button');
     let imgdiv = document.getElementById('imgdiv');
     let img2 = document.createElement('img');
     img2.id = "img2";
     img2.style.width = "48%";
-    img2.src = "https://patchwiki.biligame.com/images/sr" + name[id]['picurl2'];
-    download2.innerText = name[id]['special'][0];
+    img2.src = `https://picture.sr.ycl.cool/AutoShow.php?lang=${lang}&id=${id}_isman`;
+    download2.innerText = name[id]['special'][1];
     download2.onclick = () => { window.open(document.getElementById('img2').src, '_blank'); };
     document.getElementById('download').appendChild(download2);
-    document.getElementById('text20').innerText = name[id]['special'][1];
+    document.getElementById('text20').innerText = name[id]['special'][0];
     document.getElementById('img1').style.width = "48%";
     imgdiv.appendChild(img2);
     document.getElementById('text12').onclick = () => { location.reload() }
@@ -163,7 +164,7 @@ function ShowPicture(id) {
 }
 
 // 语言切换函数
-window.ChangeText = async (lang) => {
+window.ChangeText = async (ChangeLang) => {
   let divid = ['zh', 'en', 'jp', 'ko']
   divid.map((e) => {
     let div = document.getElementById(e)
@@ -172,17 +173,17 @@ window.ChangeText = async (lang) => {
   })
   let warn = document.getElementsByClassName('warn')[0];
   let bar = document.getElementById('bar');
-  let text = await ReadJson(`lang/${lang}/text.json`, null, null, true);
+  let text = ReadJson(`lang/${ChangeLang}/text.json`, null, null, true);
   localStorage.setItem('text', JSON.stringify(text));
-  localStorage.setItem('lang', lang);
+  lang = ChangeLang
   document.getElementById('warn').innerText = text['warn'];
   document.getElementsByClassName('tip-txt')[0].innerHTML = text['tip'];
-  if (lang === 'zh') {
+  if (ChangeLang === 'zh') {
     warn.style.display = 'none'
   } else {
     warn.style.display = null
   }
-  if (lang === 'ko') {
+  if (ChangeLang === 'ko') {
     warn.style.backgroundColor = "#ff000035";
     bar.style.backgroundColor = "red";
   } else {
@@ -215,9 +216,9 @@ window.ChangeText = async (lang) => {
       });
   }
   document.getElementById('unknow').innerHTML = null;
-  WriteTable(lang); // 填入表格
+  WriteTable(ChangeLang); // 填入表格
   divid.map((e) => { document.getElementById(e).style = null })
-  document.getElementById(lang).style.border = "solid #0069d2"
+  document.getElementById(ChangeLang).style.border = "solid #0069d2"
 }
 
 window.ChangeCard = (card) => {

@@ -6,7 +6,6 @@ function isMobile() {
     var userAgentInfo = navigator.userAgent;
     var mobileAgents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
     var mobile_flag = false;
-    // 根据userAgent判断是否是手机
     for (var v = 0; v < mobileAgents.length; v++) {
         if (userAgentInfo.indexOf(mobileAgents[v]) > 0) {
             mobile_flag = true;
@@ -15,7 +14,6 @@ function isMobile() {
     }
     var screen_width = window.screen.width;
     var screen_height = window.screen.height;
-    // 根据屏幕分辨率判断是否是手机
     if (screen_width < 500 && screen_height < 800) {
         mobile_flag = true;
     }
@@ -58,14 +56,12 @@ function getUrlParams(name) {
     url = url.split('&');
     var name = name || '';
     var nameres;
-    // 获取全部参数及其值
     for (var i = 0; i < url.length; i++) {
         var info = url[i].split('=');
         var obj = {};
         obj[info[0]] = decodeURI(info[1]);
         url[i] = obj;
     }
-    // 如果传入一个参数名称，就匹配其值
     if (name) {
         for (var i = 0; i < url.length; i++) {
             for (const key in url[i]) {
@@ -77,12 +73,11 @@ function getUrlParams(name) {
     } else {
         nameres = url;
     }
-    // 返回结果
     return nameres;
 }
 
 /**
- * Json处理函数(异步)
+ * Json处理函数
  * @param {string} url Json文件URL路径
  * @param {string} val1 返回Json数据键名
  * @param {string} val2 返回Json数据对象名
@@ -90,16 +85,13 @@ function getUrlParams(name) {
  * @param {boolean} allkey 是否返回选定键值全部数据
  * @returns {string} 返回指定值
  */
-async function ReadJson(url, val1, val2, all, allkey) {
-    try {
-        // 使用fetch API读取JSON文件
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Network Error ' + response.status);
-        }
-        // 将响应解析为JSON
-        const data = await response.json();
-        // 返回数据
+function ReadJson(url, val1, val2, all, allkey) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', url, false);
+    xhr.send();
+
+    if (xhr.status === 200) {
+        const data = JSON.parse(xhr.responseText);
         if (all) {
             return data;
         } else if (allkey) {
@@ -107,40 +99,74 @@ async function ReadJson(url, val1, val2, all, allkey) {
         } else {
             return data[val1][val2];
         }
-    } catch (err) {
-        throw new Error('Error reading file:' + err);
+    } else {
+        throw new Error('Error reading file: ' + xhr.statusText);
     }
 }
 
 /**
- * 最快服务器选择函数
- * @param {string} TestURL1 第一个服务器地址
- * @param {string} TestURL2 第二个服务器地址
- * @return {object} 最快的服务器信息，包含服务器地址和响应时间
+ * 选择最快的服务器
+ * @param {string[]} TestURLs 需要测试的服务器 URL 数组
+ * @param {string[]} [suffixes=[]] 可选的 URL 后缀数组
+ * @returns {Promise<object[]>} 一个对象数组，包含每个服务器的 URL、耗时、是否出错、出错信息、是否最快等信息
+ * @description 该函数会并发地测试每个服务器的响应速度，并返回一个Json对象
  */
-async function ServerChoose(TestURL1, TestURL2) {
-    async function Timetest(url) {
-      const start = performance.now();
-      try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Fetch error');
-        await response.arrayBuffer();
-        return ({ url, elapsedTime: performance.now() - start });
-      } catch (error) {
-        return ({ url, elapsedTime: performance.now() - start, error });
-      }
+async function ServerChoose(TestURLs, suffixes = []) {
+    const results = await Promise.all(
+        TestURLs.map(async (url, index) => {
+            const start = performance.now();
+            try {
+                const response = await fetch(`${url}/test.bin`);
+                if (!response.ok) throw new Error('Fetch error');
+                await response.arrayBuffer();
+                return ({ url: url + (suffixes[index] || ''), elapsedTime: performance.now() - start, index });
+            } catch (error) {
+                return ({ url: url + (suffixes[index] || ''), elapsedTime: performance.now() - start, error, index });
+            }
+        })
+    );
+    const minElapsedTime = Math.min(...results.map(r => r.elapsedTime));
+    return results.map(result => ({
+        url: result.url,
+        elapsedTime: result.elapsedTime,
+        isError: !!result.error,
+        error: result.error,
+        isFastest: result.elapsedTime === minElapsedTime,
+        index: result.index
+    }));
+}
+
+/**
+ * 检查是否处于调试模式
+ * @returns {boolean} 是否处于调试模式
+ */
+function isDebug() {
+    if (location.hostname === '127.0.0.1' || location.hostname === 'localhost') {
+        console.log('%c正在进行本地Debug调试', 'color: aqua');
+        return true
     }
-    const results = await Promise.race([
-      Timetest(TestURL1),
-      Timetest(TestURL2),
-    ]);
-    const fastest = results.reduce((a, b) => a.elapsedTime < b.elapsedTime ? a : b);
-    return fastest;
-  }
+    const DebugURL = 'http://127.0.0.1/Debug/3BBB21576F422600AF35AD902370651D5089F66C00AF7757F0228289630793A9.bin'
+    var xhr = new XMLHttpRequest();
+    try {
+        xhr.open('HEAD', DebugURL, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log('%c正在进行本地Debug调试', 'color: aqua');
+                    return true
+                } else {
+                    console.log('%c未检测到Debug调试环境', 'color: #0f0');
+                    return false
+                }
+            }
+        };
+        xhr.send()
+    } catch (_) { }
+}
 
 // YCL
 console.log(
-`+---------------------------------------------------------+
+    `+---------------------------------------------------------+
 
          o     o          o o o          o
            o o           o               o
