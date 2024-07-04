@@ -145,14 +145,14 @@ async function ShowPicture(id) {
       break;
   }
   // 立绘
-  document.getElementById('img1').src = `https://picture.sr.ycl.cool/AutoShow.php?lang=${lang}&id=${id}`;
+  document.getElementById('img1').src = `img/Picture/AutoShow.php?lang=${lang}&id=${id}`;
   if ([4, 45, 53].includes(id)) { // 开拓者
     let download2 = document.createElement('button');
     let imgdiv = document.getElementById('imgdiv');
     let img2 = document.createElement('img');
     img2.id = "img2";
     img2.style.width = "48%";
-    img2.src = `https://picture.sr.ycl.cool/AutoShow.php?lang=${lang}&id=${id}_isman`;
+    img2.src = `img/Picture/AutoShow.php?lang=${lang}&id=${id}_isman`;
     download2.innerText = name[id]['special'][1];
     download2.onclick = () => { window.open(document.getElementById('img2').src, '_blank'); };
     document.getElementById('download').appendChild(download2);
