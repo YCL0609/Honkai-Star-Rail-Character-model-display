@@ -49,6 +49,8 @@ function init() {
   // 光照
   const Light1 = new THREE.DirectionalLight(0xf4e7e1, 1.5);
   const Light2 = new THREE.DirectionalLight(0xf4e7e1, 0.5);
+  Light1.target.updateMatrixWorld();
+  Light2.target.updateMatrixWorld();
   Light1.position.y = 20;
   Light2.position.y = -20;
   Light1.castShadow = true;
@@ -83,7 +85,7 @@ function init() {
   skybox.load(['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg',], (mesh) => {
     scene.background = mesh;
     UI.Finish.Skybox()
-  }, null, (e) => { UI.Error(3, e) })
+  }, null, () => { UI.Error(3); UI.Finish.Skybox(true) })
   UI.Progress.main(3);
   const text = (vmd == 0) ? '模型文件:' : '模型和动作文件:'
   const texten = (vmd == 0) ? 'Model Files:' : 'Model and Action Files:'
@@ -150,13 +152,6 @@ function init() {
     effect.setSize(window.innerWidth, window.innerHeight);
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
-
-  function updateLight() {
-    Light1.target.updateMatrixWorld();
-    Light2.target.updateMatrixWorld();
-    helper.update();
-  }
-  updateLight();
 }
 
 // 场景渲染和动画

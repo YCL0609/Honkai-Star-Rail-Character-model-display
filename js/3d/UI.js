@@ -3,7 +3,7 @@ let other = getUrlParams('other'); // 模型数据
 const dataurl = other ? "data2.json" : "data.json";
 try { data = await ReadJson(dataurl, null, null, true) } catch (e) { Error(0, e) }
 const total = data[0]['total'];
-console.log('UI version: 2.1.0527');
+console.log('UI.js version: 2.1.0709');
 
 export async function Init(callback) {
     try {
@@ -81,7 +81,10 @@ export const Progress = {
 }
 
 export const Finish = {
-    Skybox: () => {
+    Skybox: (isError) => {
+        if (isError) {
+            document.getElementById('progress3').style.backgroundColor = "red"
+        }
         document.getElementById('text3').innerText = "天空盒加载完成.";
         document.getElementById('texte3').innerText = "Skybox loading finish.";
         document.getElementById('progress3').style.width = "100%";
@@ -166,7 +169,4 @@ function gui() {
     document.getElementById('progress0').style.width = "100%";
     document.getElementById('VMDList').style.left = "0px";
     document.getElementById('three').style.top = "-60px";
-    // if (roledata['name'] == '可可利亚BOSS') {
-    //     document.getElementById('VMDList').innerHTML = null;
-    // }
 }
