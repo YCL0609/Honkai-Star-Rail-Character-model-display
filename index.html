@@ -15,11 +15,7 @@
 </head>
 
 <body>
-  <div id="loading" class="box" style="width: auto;">
-    <img class="loading" src="img/loading.svg" />
-    <span style="font-size:xx-large;">Loading...</span>
-  </div>
-  <div id="main" class="box" style="display: none;">
+  <div id="main" class="box">
     <h2 id="text1">《崩坏:星穹铁道》角色立绘及3D模型展示</h2>
     <div class="lang-div">
       <button class="lang" id="zh" onclick="ChangeText('zh')" style="border: solid #0069d2">中文</button>
@@ -32,9 +28,9 @@
         <div class="tip-bar"></div>
         <div class="tip-txt">
           官方模型及立绘素材的权利归米哈游所有, 其他内容的相关权利均归各自所有者享有. 如有侵权, 请向
-          <a style="color: #b3ccff;text-decoration: underline" href="mailto:Star-Rail-model-display@ycl.cool">Star-Rail-model-display@ycl.cool</a>
+          <a style="color: #b3ccff;text-decoration: underline"
+            href="mailto:Star-Rail-model-display@ycl.cool">Star-Rail-model-display@ycl.cool</a>
           发送邮件.
-          <a style="color:#beb100">(此邮箱不回复邮件, 仅用作隐藏真实邮件地址)</a>
         </div>
       </div>
       <div class="warn" style="display: none">
@@ -43,7 +39,7 @@
       </div>
       <div style="margin-top: 10px;">
         <button onclick="location.href = '//www.ycl.cool/blog/index.php/archives/17'">
-          <img src="//www.ycl.cool/media/icon.ico" height="16" width="16">
+          <img loading="lazy" decoding="async" src="//www.ycl.cool/media/icon.ico" height="16" width="16">
           <a id="text2">介绍页面</a>
         </button>
         <button onclick="location.href = '//github.com/YCL0609/Honkai-Star-Rail-Character-model-display'">
@@ -64,19 +60,19 @@
         <tr class="table-title">
           <td style="min-width: 20px;"></td>
           <!-- 物理  -->
-          <td><img src="img/Physical.png"></td>
+          <td><img loading="lazy" decoding="async" src="img/table/Physical.png"></td>
           <!-- 火  -->
-          <td><img src="img/Fire.png"></td>
+          <td><img loading="lazy" decoding="async" src="img/table/Fire.png"></td>
           <!-- 冰  -->
-          <td><img src="img/Ice.png"></td>
+          <td><img loading="lazy" decoding="async" src="img/table/Ice.png"></td>
           <!-- 雷  -->
-          <td><img src="img/Lightning.png"></td>
+          <td><img loading="lazy" decoding="async" src="img/table/Lightning.png"></td>
           <!-- 风(电脑) -->
-          <td id="table-05"><img src="img/Wind.png"></td>
+          <td id="table-05"><img loading="lazy" decoding="async" src="img/table/Wind.png"></td>
           <!-- 量子(电脑) -->
-          <td id="table-06"><img src="img/Quantum.png"></td>
+          <td id="table-06"><img loading="lazy" decoding="async" src="img/table/Quantum.png"></td>
           <!-- 虚数(电脑) -->
-          <td id="table-07"><img src="img/Imaginary.png"></td>
+          <td id="table-07"><img loading="lazy" decoding="async" src="img/table/Imaginary.png"></td>
         </tr>
       </thead>
       <tbody>
@@ -84,7 +80,7 @@
         <!-- 毁灭  -->
         <tr>
           <td class="table-title">
-            <img src="img/Destruction.png">
+            <img loading="lazy" decoding="async" src="img/table/Destruction.png">
           </td>
           <td id="table-11"></td>
           <td id="table-12"></td>
@@ -97,7 +93,7 @@
         <!-- 巡猎  -->
         <tr>
           <td class="table-title">
-            <img src="img/The Hunt.png">
+            <img loading="lazy" decoding="async" src="img/table/The Hunt.png">
           </td>
           <td id="table-21"></td>
           <td id="table-22"></td>
@@ -110,7 +106,7 @@
         <!-- 智识  -->
         <tr>
           <td class="table-title">
-            <img src="img/Erudition.png">
+            <img loading="lazy" decoding="async" src="img/table/Erudition.png">
           </td>
           <td id="table-31"></td>
           <td id="table-32"></td>
@@ -123,7 +119,7 @@
         <!-- 同谐  -->
         <tr>
           <td class="table-title">
-            <img src="img/Harmony.png">
+            <img loading="lazy" decoding="async" src="img/table/Harmony.png">
           </td>
           <td id="table-41"></td>
           <td id="table-42"></td>
@@ -136,7 +132,7 @@
         <!-- 虚无  -->
         <tr>
           <td class="table-title">
-            <img src="img/Nihility.png">
+            <img loading="lazy" decoding="async" src="img/table/Nihility.png">
           </td>
           <td id="table-51"></td>
           <td id="table-52"></td>
@@ -149,7 +145,7 @@
         <!-- 存护  -->
         <tr>
           <td class="table-title">
-            <img src="img/Preservation.png">
+            <img loading="lazy" decoding="async" src="img/table/Preservation.png">
           </td>
           <td id="table-61"></td>
           <td id="table-62"></td>
@@ -162,7 +158,7 @@
         <!-- 丰饶  -->
         <tr>
           <td class="table-title">
-            <img src="img/Abundance.png">
+            <img loading="lazy" decoding="async" src="img/table/Abundance.png">
           </td>
           <td id="table-71"></td>
           <td id="table-72"></td>
@@ -182,15 +178,15 @@
             <td></td>
             <!-- 风(手机) -->
             <td id="table2-05">
-              <img src="img/Wind.png">
+              <img loading="lazy" decoding="async" src="img/table/Wind.png">
             </td>
             <!-- 量子(手机) -->
             <td id="table2-06">
-              <img src="img/Quantum.png">
+              <img loading="lazy" decoding="async" src="img/table/Quantum.png">
             </td>
             <!-- 虚数(手机) -->
             <td id="table2-07">
-              <img src="img/Imaginary.png">
+              <img loading="lazy" decoding="async" src="img/table/Imaginary.png">
             </td>
           </tr>
         </thead>
@@ -199,7 +195,7 @@
           <!-- 毁灭  -->
           <tr>
             <td class="table-title">
-              <img src="img/Destruction.png">
+              <img loading="lazy" decoding="async" src="img/table/Destruction.png">
             </td>
             <td id="table2-15"></td>
             <td id="table2-16"></td>
@@ -208,7 +204,7 @@
           <!-- 巡猎  -->
           <tr>
             <td class="table-title">
-              <img src="img/The Hunt.png">
+              <img loading="lazy" decoding="async" src="img/table/The Hunt.png">
             </td>
             <td id="table2-25"></td>
             <td id="table2-26"></td>
@@ -217,7 +213,7 @@
           <!-- 智识  -->
           <tr>
             <td class="table-title">
-              <img src="img/Erudition.png">
+              <img loading="lazy" decoding="async" src="img/table/Erudition.png">
             </td>
             <td id="table2-35"></td>
             <td id="table2-36"></td>
@@ -226,7 +222,7 @@
           <!-- 同谐  -->
           <tr>
             <td class="table-title">
-              <img src="img/Harmony.png">
+              <img loading="lazy" decoding="async" src="img/table/Harmony.png">
             </td>
             <td id="table2-45"></td>
             <td id="table2-46"></td>
@@ -235,7 +231,7 @@
           <!-- 虚无  -->
           <tr>
             <td class="table-title">
-              <img src="img/Nihility.png">
+              <img loading="lazy" decoding="async" src="img/table/Nihility.png">
             </td>
             <td id="table2-55"></td>
             <td id="table2-56"></td>
@@ -244,7 +240,7 @@
           <!-- 存护  -->
           <tr>
             <td class="table-title">
-              <img src="img/Preservation.png">
+              <img loading="lazy" decoding="async" src="img/table/Preservation.png">
             </td>
             <td id="table2-65"></td>
             <td id="table2-66"></td>
@@ -253,7 +249,7 @@
           <!-- 丰饶  -->
           <tr>
             <td class="table-title">
-              <img src="img/Abundance.png">
+              <img loading="lazy" decoding="async" src="img/table/Abundance.png">
             </td>
             <td id="table2-75"></td>
             <td id="table2-76"></td>
@@ -296,20 +292,9 @@
       <div id="ver2"><a id="text10">数据库版本:</a></div>
       <div href="//www.ycl.cool/blog/index.php/archives/17/" style="color: deepskyblue"><u id="text11">更新日志</u></div>
       <div id="text0">校对:<a style='color:#3391ff'>YCL</a></div>
-      <script>
-        document.addEventListener("DOMContentLoaded", async () => {
-          // 版本
-          const ver = await ReadJson('data.json', 0, null, false, true);
-          let a = document.createElement('a');
-          let a2 = document.createElement('a');
-          a.innerText = ver['version'];
-          a.style.color = "#3391ff"
-          a2.innerText = ver['version2'];
-          a2.style.color = "#3391ff"
-          document.getElementById('ver').appendChild(a)
-          document.getElementById('ver2').appendChild(a2)
-        });
-      </script>
+      <!-- <script>
+
+      </script> -->
     </div><br>
   </div>
   <div id="picture" style="display: none;">
@@ -341,15 +326,10 @@
     </table>
     <h3 id="text21" style="line-height: 0cm;">加载图片中...</h3>
     <div id="imgdiv">
-      <img id="img1" src="img/Picture/AutoPicture.jpg">
-      <script>
-        document.getElementById('img1').onload = () => {
-          document.getElementById('text21').style.display = "none";
-        }
-      </script>
+      <img loading="lazy" decoding="async" id="img1" src="img/background.jpg" onload="document.getElementById('text21').style.display = 'none'">
     </div>
   </div>
-  <script type="module" src="js/index.js" defer></script>
+  <script src="js/index.js"></script>
 </body>
 
 </html>

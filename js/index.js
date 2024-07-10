@@ -1,82 +1,80 @@
+let rolename, rolename2, text
 const data2 = ReadJson('data2.json', null, null, true);
 const data = ReadJson('data.json', null, null, true);
 const nopic = [4, 12, 17, 45, 53]; // 无介绍立绘id
-let Finish, lang
-Finish = 0;
 
+// 版本信息
+['', '2'].forEach(e => {
+  let a = document.createElement('a');
+  a.innerText = data[0][`version${e}`];
+  a.style.color = "#3391ff";
+  document.getElementById(`ver${e}`).appendChild(a)
+})
 // 默认中文
-lang = "zh";
-const text = ReadJson(`lang/zh/text.json`, null, null, true);
-localStorage.setItem('text', JSON.stringify(text));
+let lang = "zh";
+text = ReadJson(`lang/zh/text.json`, null, null, true);
 WriteTable('zh');
 
-async function WriteTable(lang) {
+function WriteTable(lang) {
   // 获取所选语言配置
-  const name = ReadJson(`lang/${lang}/data.json`, null, null, true);
-  const name2 = ReadJson(`lang/${lang}/data2.json`, null, null, true);
-  localStorage.setItem('name', JSON.stringify(name));
-  // 主表格
-  JsonToTable(name, data, 'table', true, 'table2');
-  // 附表格
-  for (let a = 1; a <= data2[0]['total_line']; a++) {
-    let table = document.getElementById('unknow');
-    let tr = document.createElement('tr');
-    tr.id = `table3-line${a}`;
-    table.appendChild(tr);
-    let tr_ = document.getElementById(`table3-line${a}`);
-    let td1 = document.createElement('td');
-    let td2 = document.createElement('td');
-    let td3 = document.createElement('td');
-    td1.id = `table3-${a}1`;
-    td2.id = `table3-${a}2`;
-    td3.id = `table3-${a}3`;
-    tr_.appendChild(td1);
-    tr_.appendChild(td2);
-    tr_.appendChild(td3);
-  }
-  // 填入数据
-  JsonToTable(name2, data2, 'table3', false);
+  rolename = ReadJson(`lang/${lang}/data.json`, null, null, true);
+  rolename2 = ReadJson(`lang/${lang}/data2.json`, null, null, true);
+  Promise.all([
+    new Promise(() => {// 主表格
+      JsonToTable(rolename, data, 'table', true, 'table2');
+    }),
+    new Promise(() => {// 附表格
+      for (let a = 1; a <= data2[0]['total_line']; a++) {
+        let table = document.getElementById('unknow');
+        let tr = document.createElement('tr');
+        tr.id = `table3-line${a}`;
+        table.appendChild(tr);
+        let tr_ = document.getElementById(`table3-line${a}`);
+        let td1 = document.createElement('td');
+        let td2 = document.createElement('td');
+        let td3 = document.createElement('td');
+        td1.id = `table3-${a}1`;
+        td2.id = `table3-${a}2`;
+        td3.id = `table3-${a}3`;
+        tr_.appendChild(td1);
+        tr_.appendChild(td2);
+        tr_.appendChild(td3);
+      }
+      JsonToTable(rolename2, data2, 'table3', false)
+    })
+  ])
 }
 
 function JsonToTable(name, data, tablename, main) {
   for (let i = 1; i <= data[0]['total']; i++) {
-    let parts = data[i]['data'].split(","); // 获取表格位置
-    let cell = document.getElementById(`${tablename}-${parts[0]}${parts[1]}`);
-    let a = document.createElement('a');
-    let note = document.createElement('a');
-    let br = document.createElement('br');
-    // 设置单元格内容
+    const parts = data[i]['data'].split(",");
+    const cell = document.getElementById(`${tablename}-${parts[0]}${parts[1]}`);
+    const a = document.createElement('a');
+    const note = document.createElement('a');
+    const br = document.createElement('br');
     a.innerText = name[i]['name'];
     note.classList = "note";
-    a.style.userSelect = "none"
-    a.style.cursor = "pointer"
-    // 主表人物标记
+    a.style.userSelect = "none";
+    a.style.cursor = "pointer";
     if (main) {
-      // 跳转
       a.addEventListener('click', e => {
         e.preventDefault();
         document.getElementById('text21').style.display = null;
         ChangeCard('picture');
         ShowPicture(i);
-      })
-      // 无模型
+      });
       if (!data[i]['model']) {
         a.style.color = "aqua";
         note.innerText = "(3)";
         note.href = "#note3";
+      } else if (nopic.includes(i)) {
+        a.style.color = "greenyellow";
+        note.innerText = "(2)";
+        note.href = "#note2";
       }
-      // 无人物介绍立绘
-      nopic.forEach(e => {
-        if (i === e) {
-          a.style.color = "greenyellow";
-          note.innerText = "(2)";
-          note.href = "#note2";
-        }
-      });
     } else {
       a.href = `3d.html?id=${i}&other`;
     }
-    // 添加到页面
     cell.appendChild(a);
     cell.appendChild(note);
     cell.appendChild(br);
@@ -86,142 +84,138 @@ function JsonToTable(name, data, tablename, main) {
     document.getElementById('moble-div').style.display = null;
     for (let i = 0; i <= 7; i++) {
       for (let e = 5; e <= 7; e++) {
-        let td = document.getElementById(`table-${i}${e}`);
-        let td2 = document.getElementById(`table2-${i}${e}`);
+        const td = document.getElementById(`table-${i}${e}`);
+        const td2 = document.getElementById(`table2-${i}${e}`);
         td2.innerHTML = td.innerHTML;
-        td.style.display = "none"
+        td.style.display = "none";
       }
     }
   }
-
-  // 完成
-  Finish++;
-  if (Finish != 2) {
-    return;
-  }
-  document.getElementById('loading').style.display = "none";
-  document.getElementById('main').style.display = null;
 }
 
-async function ShowPicture(id) {
-  const text = JSON.parse(localStorage.text);
-  const name = JSON.parse(localStorage.name);
-  // 姓名
-  document.getElementById('name').innerHTML = name[id]['name'];
-  // 属性
-  let parts = data[id]['data'].split(",");
-  let line = parts[0];
-  let list = parts[1];
-  document.getElementById('line').innerText = text['linedata'][line - 1]; // 命途
-  document.getElementById('list').innerText = text['listdata'][list - 1]; // 战斗属性
-  // 实装版本
-  document.getElementById('firstup').innerText = data[id]['firstup'];
-  // 模型
-  let model = document.getElementById('showmodel');
-  model.innerHTML = null;
-  switch (id) {
-    case 4:  // 开拓者 (物主)
-    case 45: // 开拓者 (火主)
-    case 53: // 开拓者 (同谐主)
-    case 46: // 黄泉
-      [{ text: name[id]['special'][0], href: `3d.html?id=${id}` },
-      { text: name[id]['special'][1], href: `3d.html?id=${id}&${data[id]['special']}` }]
-        .forEach(cfg => {
-          const btn = document.createElement('button');
-          btn.innerText = cfg.text;
-          btn.onclick = () => { window.location.href = cfg.href };
-          model.appendChild(btn);
-        });
-      break;
-    default:
-      if (data[id]['model']) { // 正常
-        const btn = document.createElement('button');
-        btn.innerText = text['model'][0];
-        btn.onclick = () => { window.location.href = `3d.html?id=${id}` };
-        model.appendChild(btn);
-      } else { // 无模型
-        model.innerHTML = `<a style='color:red'>${text['model'][1]}</a>`;
+function ShowPicture(id) {
+  Promise.all([
+    new Promise(() => { // 姓名
+      document.getElementById('name').innerHTML = rolename[id]['name'];
+    }),
+    new Promise(() => { // 属性
+      let parts = data[id]['data'].split(",");
+      let line = parts[0];
+      let list = parts[1];
+      document.getElementById('line').innerText = text['linedata'][line - 1]; // 命途
+      document.getElementById('list').innerText = text['listdata'][list - 1]; // 战斗属性
+    }),
+    new Promise(() => { // 实装版本
+      document.getElementById('firstup').innerText = data[id]['firstup'];
+    }),
+    new Promise(() => { // 模型
+      let model = document.getElementById('showmodel');
+      model.innerHTML = null;
+      switch (id) {
+        case 4:  // 开拓者 (物主)
+        case 45: // 开拓者 (火主)
+        case 53: // 开拓者 (同谐主)
+        case 46: // 黄泉
+          [{ text: rolename[id]['special'][0], href: `3d.html?id=${id}` },
+          { text: rolename[id]['special'][1], href: `3d.html?id=${id}&${data[id]['special']}` }]
+            .forEach(cfg => {
+              const btn = document.createElement('button');
+              btn.innerText = cfg.text;
+              btn.onclick = () => { window.location.href = cfg.href };
+              model.appendChild(btn);
+            });
+          break;
+        default:
+          if (data[id]['model']) { // 正常
+            const btn = document.createElement('button');
+            btn.innerText = text['model'][0];
+            btn.onclick = () => { window.location.href = `3d.html?id=${id}` };
+            model.appendChild(btn);
+          } else { // 无模型
+            model.innerHTML = `<a style='color:red'>${text['model'][1]}</a>`;
+          }
+          break;
       }
-      break;
-  }
-  // 立绘
-  document.getElementById('img1').src = `img/Picture/AutoShow.php?lang=${lang}&id=${id}`;
-  if ([4, 45, 53].includes(id)) { // 开拓者
-    let download2 = document.createElement('button');
-    let imgdiv = document.getElementById('imgdiv');
-    let img2 = document.createElement('img');
-    img2.id = "img2";
-    img2.style.width = "48%";
-    img2.src = `img/Picture/AutoShow.php?lang=${lang}&id=${id}_isman`;
-    download2.innerText = name[id]['special'][1];
-    download2.onclick = () => { window.open(document.getElementById('img2').src, '_blank'); };
-    document.getElementById('download').appendChild(download2);
-    document.getElementById('text20').innerText = name[id]['special'][0];
-    document.getElementById('img1').style.width = "48%";
-    imgdiv.appendChild(img2);
-    document.getElementById('text12').onclick = () => { location.reload() }
-  }
+    }),
+    new Promise(() => { // 立绘
+      document.getElementById('img1').src = `img/character/${lang}/${id}.jpg`;
+      if ([4, 45, 53].includes(id)) { // 开拓者
+        const download2 = document.createElement('button');
+        let imgdiv = document.getElementById('imgdiv');
+        const img2 = document.createElement('img');
+        img2.id = "img2";
+        img2.style.width = "48%";
+        img2.src = `img/character/${lang}/${id}_isman.jpg`;
+        download2.innerText = rolename[id]['special'][1];
+        download2.onclick = () => { window.open(document.getElementById('img2').src, '_blank'); };
+        document.getElementById('download').appendChild(download2);
+        document.getElementById('text20').innerText = rolename[id]['special'][0];
+        document.getElementById('img1').style.width = "48%";
+        imgdiv.appendChild(img2);
+        document.getElementById('text12').onclick = () => { location.reload() }
+      } else {
+        fetch(`img/character/${lang}/${id}.txt`, { method: 'HEAD' })
+          .then(response => {
+            if (response.ok) {
+              document.getElementById('img1').src = `img/character/zh/${id}.jpg`;
+            }
+          })
+      }
+    })
+  ])
 }
 
 // 语言切换函数
-window.ChangeText = async (ChangeLang) => {
-  let divid = ['zh', 'en', 'jp', 'ko']
-  divid.map((e) => {
-    let div = document.getElementById(e)
-    div.style.border = 0;
-    div.style.pointerEvents = "none";
-  })
-  let warn = document.getElementsByClassName('warn')[0];
-  let bar = document.getElementById('bar');
-  let text = ReadJson(`lang/${ChangeLang}/text.json`, null, null, true);
-  localStorage.setItem('text', JSON.stringify(text));
-  lang = ChangeLang
-  document.getElementById('warn').innerText = text['warn'];
-  document.getElementsByClassName('tip-txt')[0].innerHTML = text['tip'];
-  if (ChangeLang === 'zh') {
-    warn.style.display = 'none'
-  } else {
-    warn.style.display = null
-  }
-  if (ChangeLang === 'ko') {
-    warn.style.backgroundColor = "#ff000035";
-    bar.style.backgroundColor = "red";
-  } else {
-    warn.style.backgroundColor = "#ffff0035";
-    bar.style.backgroundColor = "yellow";
-  }
-  // 更换UI语言
-  for (let i = 0; i <= 21; i++) {
-    document.getElementById(`text${i}`).innerHTML = text[i];
-  }
-  // 更换注释语言
-  fetch(`lang/${lang}/note.html`)
-    .then(response => response.text())
-    .then(text => {
-      document.getElementsByClassName('note-div')[0].innerHTML = text;
-    });
-  // 清除表格
-  [[11, 17], [21, 27], [31, 37], [41, 47], [51, 57], [61, 67], [71, 77]]
-    .map(([start, end]) => {
-      for (let i = start; i <= end; i++) {
-        document.getElementById(`table-${i}`).innerHTML = null;
-      }
-    });
-  if (isMobile()) {
-    [[15, 17], [25, 27], [35, 37], [45, 47], [55, 57], [65, 67], [75, 77]]
-      .map(([start, end]) => {
-        for (let i = start; i <= end; i++) {
-          document.getElementById(`table2-${i}`).innerHTML = null;
-        }
+function ChangeText(ChangeLang) {
+  const warn = document.getElementsByClassName('warn')[0];
+  const bar = document.getElementById('bar');
+  Promise.all([
+    new Promise(() => { // 按钮样式
+      ['zh', 'en', 'jp', 'ko'].forEach(e => {
+        document.getElementById(e).style = null;
       });
-  }
-  document.getElementById('unknow').innerHTML = null;
-  WriteTable(ChangeLang); // 填入表格
-  divid.map((e) => { document.getElementById(e).style = null })
-  document.getElementById(ChangeLang).style.border = "solid #0069d2"
+      document.getElementById(ChangeLang).style.border = "solid #0069d2";
+    }),
+    new Promise(() => { // 提示信息
+      const text = ReadJson(`lang/${ChangeLang}/text.json`, null, null, true)
+      lang = ChangeLang;
+      document.getElementById('warn').innerText = text.warn;
+      document.getElementsByClassName('tip-txt')[0].innerHTML = text.tip;
+      warn.style.display = (ChangeLang === 'zh') ? "none" : null
+      let isko = (ChangeLang === 'ko');
+      warn.style.backgroundColor = isko ? "#ff000035" : "#ffff0035";
+      bar.style.backgroundColor = isko ? "red" : "yellow";
+      for (let i = 0; i <= 21; i++) {
+        document.getElementById(`text${i}`).innerHTML = text[i];
+      }
+    }),
+    new Promise(() => {
+      fetch(`lang/${lang}/note.html`) // 注释
+        .then(response => response.text())
+        .then(text => { document.getElementsByClassName('note-div')[0].innerHTML = text })
+    }),
+    new Promise(() => { // 表格
+      [[11, 17], [21, 27], [31, 37], [41, 47], [51, 57], [61, 67], [71, 77]]
+        .forEach(([start, end]) => {
+          for (let i = start; i <= end; i++) {
+            document.getElementById(`table-${i}`).innerHTML = null;
+          }
+        });
+      if (isMobile()) {
+        [[15, 17], [25, 27], [35, 37], [45, 47], [55, 57], [65, 67], [75, 77]]
+          .forEach(([start, end]) => {
+            for (let i = start; i <= end; i++) {
+              document.getElementById(`table2-${i}`).innerHTML = null;
+            }
+          });
+      }
+      document.getElementById('unknow').innerHTML = null;
+      WriteTable(ChangeLang);
+    })
+  ])
 }
 
-window.ChangeCard = (card) => {
+function ChangeCard(card) {
   const main = document.getElementById('main');
   const picture = document.getElementById('picture');
   if (card === "picture") {

@@ -1,11 +1,3 @@
-* {
-    -webkit-transition: 1s;
-    -moz-transition: 1s;
-    -ms-transition: 1s;
-    -o-transition: 1s;
-    transition: 1s;
-}
-
 body {
     background-Image: url('../img/background.jpg');
     background-repeat: no-repeat;
