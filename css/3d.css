@@ -22,12 +22,9 @@ body {
 	z-index: 10001;
 }
 
-#info * {
-	transition: 1.5s;
-}
-
 #info-main div {
-	margin-top: 2px;
+	width: 350px;
+	font-weight: bold;
 	line-height: 15px;
 }
 
@@ -42,7 +39,7 @@ body {
 	width: 100%;
 	box-sizing: border-box;
 	text-align: center;
-	z-index: 10001;
+	z-index: 10002;
 	transition: 1.5s;
 }
 
@@ -68,7 +65,23 @@ body {
 	justify-content: center;
 	position: absolute;
 	width: 100%;
-	z-index: 10002
+	z-index: 10010
+}
+
+#localVMD {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 10002;
+}
+
+#localVMD-main {
+	width: 300px;
+	height: 150px;
+	background-color: #1f2022;
+	border-radius: 10px;
+	text-align: center;
 }
 
 .progress {
