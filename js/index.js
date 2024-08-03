@@ -1,4 +1,4 @@
-let rolename, rolename2, text
+let rolename, rolename2, text, picroot
 const data2 = ReadJson('data2.json', null, null, true);
 const data = ReadJson('data.json', null, null, true);
 const nopic = [4, 12, 17, 45, 53]; // 无介绍立绘id
@@ -14,6 +14,32 @@ const nopic = [4, 12, 17, 45, 53]; // 无介绍立绘id
 let lang = "zh";
 text = ReadJson(`lang/zh/text.json`, null, null, true);
 WriteTable('zh');
+initServer(); // 服务器初始化
+
+async function initServer() {
+  let serverID = getUrlParams('server') || '-2';
+  const serverList = isDebug() ? ['http://127.0.0.1:8081'] : ['https://139.224.2.122', 'https://globe-res-sr.ycl.cool', 'https://ycl069.github.io'];
+  // 服务器选择
+  if (serverID != 0 || serverID != 1) {
+    const servers = await ServerChoose(serverList);
+    serverID = chooseServer(servers)
+  }
+  picroot = serverList[serverID != -1 ? serverID : 0];
+  if (serverID == -1) {
+    document.getElementById('ServerChoose').style.display = "";
+  }
+}
+
+// 服务器筛选
+function chooseServer(servers) {
+  const validServers = servers.filter(s => !s.isError);
+  if (validServers.length === 0) return -1;
+
+  const fastestServer = validServers.reduce((fastest, current) =>
+    current.elapsedTime < fastest.elapsedTime ? current : fastest
+  );
+  return servers.indexOf(fastestServer);
+}
 
 function WriteTable(lang) {
   // 获取所选语言配置
@@ -138,14 +164,14 @@ function ShowPicture(id) {
       }
     }),
     new Promise(() => { // 立绘
-      document.getElementById('img1').src = `img/character/${lang}/${id}.jpg`;
+      document.getElementById('img1').src = `${picroot}/img/character/${lang}/${id}.jpg`;
       if ([4, 45, 53].includes(id)) { // 开拓者
         const download2 = document.createElement('button');
         let imgdiv = document.getElementById('imgdiv');
         const img2 = document.createElement('img');
         img2.id = "img2";
         img2.style.width = "48%";
-        img2.src = `img/character/${lang}/${id}_isman.jpg`;
+        img2.src = `${picroot}/img/character/${lang}/${id}_isman.jpg`;
         download2.innerText = rolename[id]['special'][1];
         download2.onclick = () => { window.open(document.getElementById('img2').src, '_blank'); };
         document.getElementById('download').appendChild(download2);
@@ -157,7 +183,7 @@ function ShowPicture(id) {
         fetch(`img/character/${lang}/${id}.txt`, { method: 'HEAD' })
           .then(response => {
             if (response.ok) {
-              document.getElementById('img1').src = `img/character/zh/${id}.jpg`;
+              document.getElementById('img1').src = `${picroot}/img/character/zh/${id}.jpg`;
             }
           })
       }

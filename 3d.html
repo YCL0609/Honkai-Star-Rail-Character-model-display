@@ -5,53 +5,42 @@
 	<title>3D模型查看</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<link rel="preload" as="script" href="js/3d/three.js/libs/ammo.wasm.js">
-	<link rel="preload" as="script" href="js/3d/es-module-shims.js">
 	<link type="text/css" rel="stylesheet" href="css/3d.css">
 	<link href="favicon.ico" rel="shortcut icon">
 	<script src="js/baidu.js"></script>
-	<!-- <script src="outside/function.js" defer></script> -->
-	<script src="//www.ycl.cool/js/function.js" defer></script>
-	<script rel="preload" src="js/3d/es-module-shims.js" defer></script>
-	<script src="js/3d/three.js/libs/ammo.wasm.js" defer></script>
-	<script>
-		// 判断是否为Webkit用户
-		let isSafari = /WebKit/i.test(navigator.userAgent) && !/(Chrome|android)/i.test(navigator.userAgent);
-		if (isSafari) {
-			alert('由于Webkit内核对于WebGL兼容性有限, 页面可能出现未知渲染问题。\nDue to the limited compatibility of the Webkit kernel for WebGL, pages may have unknown rendering issues.')
-		}
-
-		function Gotovmd(cho) {
-			let id = getUrlParams('id');
-			let other = getUrlParams('other');
-			if (!other) {
-				window.location.href = "3d.html?id=" + id + "&vmd=" + cho;
-			} else {
-				window.location.href = "3d.html?id=" + id + "&other=1" + "&vmd=" + cho;
-			}
-		}
-	</script>
+	<script src="outside/function.js"></script>
+	<!-- <script src="//www.ycl.cool/js/function.js"></script> -->
 </head>
 
 <body>
-	<script type="importmap">{
-		"imports": {
-			"WebUI": "./js/3d/UI.js",
-			"three": "./js/3d/three.js/three.module.min.js",
-			"three/": "./js/3d/three.js/"
-		}
-	}</script>
-	<script type="module" src="js/3d/3d.js"></script>
 	<!-- 加载进度 -->
 	<div id="info">
 		<div id="info-main">
 			<div id="main">
 				<a>主进度:</a>
-				<a id="text0" class="text">(1/4)加载three.js...</a><br>
+				<a id="text0" class="text">(1/5)初始化服务器连接...</a><br>
 				<a>Main process:</a>
-				<a id="texte0" class="text">(1/4)Loading three.js...</a>
+				<a id="texte0" class="text">(1/5)Initialize the server connection...</a>
 				<div class="progress">
 					<div id="progress0" class="progress-inside" style="width: 0%"></div>
+				</div>
+				<div id="ServerChoose" style="margin-top: 10px;display: none;">
+					<b>您可以手动选择服务器以尝试是否可以正常加载</b><br>
+					<b>You can manually select the server to try if it can load properly</b><br>
+					<div style="margin-top: 10px;">
+						<label for="server">服务器(Server): </label>
+						<select id="server">
+							<option style="display: none" selected></option>  
+							<option value="0">国内服务器 - China server</option>
+							<option value="1">国际服务器 - Globe server</option>
+							<option value="2">备用服务器 - Backup server</option>
+						</select>
+						<button onclick="userChooseServer()">OK</button>
+					</div>
+				</div>
+				<div id="jsload" style="display: none;">
+					es-module-shims.js - <a id="jsload1">Loading...</a><br>
+					ammo.wasm.js - <a id="jsload2">Loading...</a>
 				</div>
 			</div>
 			<div id="module" style="display: none">
@@ -83,11 +72,21 @@
 		</div>
 	</div>
 	<!-- 使用本地vmd文件 -->
-	<div id="localVMD">
+	<div id="localVMD" style="display: none;">
 		<div id="localVMD-main">
-			<a style="font-weight: bolder;font-size: large">test</a><br>
-			<input type="file" id="vmdInput" accept=".vmd" />
-			<input type="file" id="mp3Input" accept=".mp3" />
+			<a>选择本地文件</a><br>
+			<a>Select the local file</a>
+			<div>
+				<a>动作文件(Action files):</a>
+				<input type="file" id="vmdInput" accept=".vmd" /><br>
+				<a>音频文件(Audio files):</a>
+				<input type="file" id="mp3Input" accept=".mp3" />
+			</div>
+			<a style="color:yellowgreen">所选文件不会上传服务器,仅在本此会话中可用.</a><br>
+			<a style="color: yellowgreen">The selected file will not be uploaded to the server and will only be
+				available for the current
+				session.</a><br>
+			<button>OK</button>
 		</div>
 	</div>
 	<!-- vmd动作选择 -->
@@ -97,14 +96,15 @@
 		<hr>
 		<a style="cursor: pointer;text-decoration: underline" onclick="Gotovmd(1)">极乐净土</a><br>
 		<a style="cursor: pointer;text-decoration: underline" onclick="Gotovmd(2)">彩虹节拍</a><br>
-		<a style="cursor: pointera;text-decoration: underline" onclick="Gotovmd(3)">Good Time</a><br>
+		<a style="cursor: pointer;text-decoration: underline" onclick="Gotovmd(3)">Good Time</a><br>
+		<a style="cursor: pointer;text-decoration: underline">testetset</a>
 		<hr>
 		<button onclick="document.getElementById('VMDList').style.left='-100px'">关闭(Close)</button>
 	</div>
 	<!-- three.js -->
-	<b id="three">此页使用<a href="https://threejs.org/" style="color: aqua;">three.js</a>作为webgl渲染引擎<br>
-	</b>
+	<b id="three">此页使用<a href="https://threejs.org/" style="color: aqua;">three.js</a>作为webgl渲染引擎<br></b>
 	<div id="error"></div>
+	<script src="js/3d.js"></script>
 </body>
 
 </html>

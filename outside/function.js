@@ -24,8 +24,11 @@ function isMobile() {
  * 异步加载资源函数
  * @param {string} url 资源路径
  * @param {string} type 资源类型 (js/css)
+ * @param {boolean} isModule js资源是否为module
+ * @param {function} callback 可选的回调函数，接收两个参数：(error, url)
+ * @returns {Promise} 返回一个Promise对象
  */
-function loadExternalResource(url, type) {
+function loadExternalResource(url, type, isModule, callback) {
     return new Promise((resolve, reject) => {
         let tag;
         if (type === "css") {
@@ -34,20 +37,32 @@ function loadExternalResource(url, type) {
             tag.href = url;
         } else if (type === "js") {
             tag = document.createElement("script");
+            if (isModule) tag.type = "module";
             tag.src = url;
         }
         if (tag) {
-            tag.onload = () => resolve(url);
-            tag.onerror = () => reject(url);
+            tag.onload = () => {
+                resolve(url);
+                if (typeof callback === 'function') {
+                    callback(null, url);
+                }
+            };
+            tag.onerror = () => {
+                reject(new Error(`Failed to load ${url}`));
+                if (typeof callback === 'function') {
+                    callback(new Error(`Failed to load ${url}`), url);
+                }
+            };
             document.head.appendChild(tag);
         }
     });
 }
 
+
 /**
  * 网页URL参数获取
- *  @param {string} name 不传name返回所有值，传入则返回对应值
- *  @returns {string} 对应参数值
+ *  @param {string} name 不传返回所有值，传入则返回对应值
+ *  @returns {string} 参数值
  */
 function getUrlParams(name) {
     var url = window.location.search;
@@ -107,26 +122,30 @@ function ReadJson(url, val1, val2, all, allkey) {
 /**
  * 选择最快的服务器
  * @param {string[]} TestURLs 需要测试的服务器 URL 数组
- * @param {string[]} [suffixes=[]] 可选的 URL 后缀数组
+ * @param {boolean} [isConsole=false] 是否将结果输出到控制台
  * @returns {Promise<object[]>} 一个对象数组，包含每个服务器的 URL、耗时、是否出错、出错信息、是否最快等信息
  * @description 该函数会并发地测试每个服务器的响应速度，并返回一个Json对象
  */
-async function ServerChoose(TestURLs, suffixes = []) {
+async function ServerChoose(TestURLs, isConsole = false) {
     const results = await Promise.all(
         TestURLs.map(async (url, index) => {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3000);
             const start = performance.now();
             try {
-                const response = await fetch(`${url}/test.bin`);
+                const response = await fetch(`${url}/test.bin`, { signal: controller.signal });
+                clearTimeout(timeoutId);
                 if (!response.ok) throw new Error('Fetch error');
                 await response.arrayBuffer();
-                return ({ url: url + (suffixes[index] || ''), elapsedTime: performance.now() - start, index });
+                return ({ url: url, elapsedTime: performance.now() - start, index });
             } catch (error) {
-                return ({ url: url + (suffixes[index] || ''), elapsedTime: performance.now() - start, error, index });
+                clearTimeout(timeoutId);
+                return ({ url: url, elapsedTime: performance.now() - start, error, index });
             }
         })
     );
     const minElapsedTime = Math.min(...results.map(r => r.elapsedTime));
-    return results.map(result => ({
+    const resultsArray = results.map(result => ({
         url: result.url,
         elapsedTime: result.elapsedTime,
         isError: !!result.error,
@@ -134,6 +153,12 @@ async function ServerChoose(TestURLs, suffixes = []) {
         isFastest: result.elapsedTime === minElapsedTime,
         index: result.index
     }));
+    if (isConsole) {
+        resultsArray.map(e => {
+            console.log(`URL: ${e.url} 响应时间: %c${e.elapsedTime}ms %c出错: %c${e.isError}${e.isError ? `\n${e.error.stack}` : ''}`, `color:${e.isFastest ? '#0ff' : '#fff'}`, 'color:#fff', `color:${e.isError ? '#f00' : '#0f0'}`)
+        })
+    }
+    return resultsArray;
 }
 
 /**
@@ -141,39 +166,22 @@ async function ServerChoose(TestURLs, suffixes = []) {
  * @returns {boolean} 是否处于调试模式
  */
 function isDebug() {
-    if (location.hostname === '127.0.0.1' || location.hostname === 'localhost') {
-        console.log('%c正在进行本地Debug调试', 'color: aqua');
-        return true
-    }
-    const DebugURL = 'http://127.0.0.1/Debug/3BBB21576F422600AF35AD902370651D5089F66C00AF7757F0228289630793A9.bin'
-    var xhr = new XMLHttpRequest();
-    try {
-        xhr.open('HEAD', DebugURL, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    console.log('%c正在进行本地Debug调试', 'color: aqua');
-                    return true
-                } else {
-                    console.log('%c未检测到Debug调试环境', 'color: #0f0');
-                    return false
-                }
-            }
-        };
-        xhr.send()
-    } catch (_) { }
+    const urldebug = getUrlParams('debug');
+    const hostdebug = /^localhost|^127(?:\.0(?:\.0(?:\.0?)?)?\.0?)|(?:0*:)?::1$/i.test(window.location.hostname);
+    return urldebug || hostdebug
 }
 
 // YCL
 console.log(
     `+---------------------------------------------------------+
 
-         o     o          o o o          o
-           o o           o               o
-            o           o                o
-            o            o               o
-            o             o o o          o o o o         
+         %co     o          %co o o          %co
+           %co o           %co               %co
+            %co           %co                %co
+            %co            %co               %co
+            %co             %co o o          %co o o o%c    
             
-+---------------------------------------------------------+
-我们一日日度过的所谓的日常，实际上可能是接连不断的奇迹！--京阿尼《日常》
-`)
++--------------------------------------------------------+
+
+我们一日日度过的所谓的日常，实际上可能是接连不断的奇迹！--京阿尼《日常》`
+    , 'color:#ff0', 'color:#0f0', 'color:#0ff', 'color:#ff0', 'color:#0f0', 'color:#0ff', 'color:#ff0', 'color:#0f0', 'color:#0ff', 'color:#ff0', 'color:#0f0', 'color:#0ff', 'color:#ff0', 'color:#0f0', 'color:#0ff', 'color #fff')

@@ -1,7 +1,7 @@
 let data, vmd, id
 let other = getUrlParams('other'); // 模型数据
 const dataurl = other ? "data2.json" : "data.json";
-try { data = await ReadJson(dataurl, null, null, true) } catch (e) { Error(0, e) }
+try { data = ReadJson(dataurl, null, null, true) } catch (e) { Error(0, e) }
 const total = data[0]['total'];
 console.log('UI.js version: 2.1.0709');
 
@@ -64,12 +64,12 @@ export function Start(divid, id, cn, en) {
 export const Progress = {
     main: (num) => {
         let info = [], infoe = []
-        info[2] = "初始化加载器..."
-        infoe[2] = "Initialize the loader..."
-        info[3] = "等待响应..."
-        infoe[3] = "Waiting for a response..."
-        document.getElementById('text0').innerText = `(${num}/4)${info[num]}`;
-        document.getElementById('texte0').innerText = `(${num}/4)${infoe[num]}`;
+        info[3] = "初始化加载器..."
+        infoe[3] = "Initialize the loader..."
+        info[4] = "等待响应..."
+        infoe[4] = "Waiting for a response..."
+        document.getElementById('text0').innerText = `(${num}/5)${info[num]}`;
+        document.getElementById('texte0').innerText = `(${num}/5)${infoe[num]}`;
         document.getElementById('progress0').style.width = `${num * 25}%`;
     },
 

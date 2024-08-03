@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -292,9 +293,6 @@
       <div id="ver2"><a id="text10">数据库版本:</a></div>
       <div href="//www.ycl.cool/blog/index.php/archives/17/" style="color: deepskyblue"><u id="text11">更新日志</u></div>
       <div id="text0">校对:<a style='color:#3391ff'>YCL</a></div>
-      <!-- <script>
-
-      </script> -->
     </div><br>
   </div>
   <div id="picture" style="display: none;">
@@ -325,11 +323,26 @@
       </tbody>
     </table>
     <h3 id="text21" style="line-height: 0cm;">加载图片中...</h3>
+    <div id="ServerChoose" style="color: red;display: none">
+      <b>服务器连接出现问题! 如果图片未正常加载您可以尝试手动选择服务器加载.</b><br>
+      <b>There is a problem with the server connection! if the image is not loading properly, you can try to manually select the server to load.</b><br>
+      <div style="margin-top: 10px;">
+        <label for="server">服务器(Server): </label>
+        <select id="server">
+          <option style="display: none" selected></option>  
+          <option value="0">国内服务器 - China server</option>
+          <option value="1">国际服务器 - Globe server</option>
+        </select>
+        <button onclick="userChooseServer()">OK</button>
+      </div>
+    </div>
     <div id="imgdiv">
-      <img loading="lazy" decoding="async" id="img1" src="img/background.jpg" onload="document.getElementById('text21').style.display = 'none'">
+      <img loading="lazy" decoding="async" id="img1" src="img/background.jpg"
+        onload="document.getElementById('text21').style.display = 'none'">
     </div>
   </div>
   <script src="js/index.js"></script>
+  </div>
 </body>
 
 </html>

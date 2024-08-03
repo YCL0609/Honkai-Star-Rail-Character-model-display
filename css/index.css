@@ -4,9 +4,6 @@ body {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    display: flex;
-    justify-content: space-between;
-    overflow-x: hidden;
 }
 
 a {
@@ -30,12 +27,37 @@ table {
     border-collapse: collapse;
 }
 
-th,
 td {
     background-color: darkgray;
     border: 1px solid #999;
     text-align: center;
     padding: 5px 0px;
+}
+
+#picture {
+    background-color: #4a4a4ac7;
+    padding: 10px;
+    margin: 0 auto;
+    width: 95%;
+    max-width: 950px;
+}
+
+#picture td {
+    border: 1px solid #999;
+    text-align: center;
+    width: 15%;
+}
+
+#picture img {
+    margin-top: 20px;
+    width: 100%;
+    height: auto;
+}
+
+#picture table {
+    margin-top: 10px;
+    width: 100%;
+    height: 100px;
 }
 
 .info {
@@ -80,19 +102,6 @@ td {
     background-color: #4a4a4ac7;
 }
 
-.loading {
-    vertical-align: middle;
-    height: 60px;
-    width: 60px;
-}
-
-.box span {
-    vertical-align: middle;
-    font-size: large;
-    color: #D8D8D8;
-    padding-right: 5px;
-}
-
 .table-title,
 .table-title td {
     background-color: #2e2e2e;
@@ -109,38 +118,6 @@ td {
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
-}
-
-.note-div iframe {
-    width: 100%;
-    height: 210px;
-    border: none;
-}
-
-#picture {
-    background-color: #4a4a4ac7;
-    padding: 10px;
-    margin: 0 auto;
-    width: 95%;
-    max-width: 950px;
-}
-
-#picture td {
-    border: 1px solid #999;
-    text-align: center;
-    width: 15%;
-}
-
-#picture img {
-    margin-top: 20px;
-    width: 100%;
-    height: auto;
-}
-
-#picture table {
-    margin-top: 10px;
-    width: 100%;
-    height: 100px;
 }
 
 .footer {
@@ -182,7 +159,7 @@ td {
 
 .tip-bar {
     width: 10px;
-    background-color:#00ffff;
+    background-color: #00ffff;
 }
 
 .tip-txt {

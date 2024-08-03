@@ -14,7 +14,6 @@ let name, vmd, id, other, weapon;
 let camera, scene, renderer, effect;
 const clock = new THREE.Clock();
 const gui = new GUI();
-let urlroot = "models";
 
 // 初始化
 UI.Init((params) => {
@@ -38,6 +37,7 @@ try {
 
 // 场景配置
 function init() {
+  UI.Progress.main(3);
   const container = document.createElement('div');
   document.body.appendChild(container);
   // 相机
@@ -81,17 +81,17 @@ function init() {
   container.appendChild(stats.dom);
   // 天空盒
   const skybox = new THREE.CubeTextureLoader();
-  skybox.setPath('img/skybox/');
+  skybox.setPath(`${serverURL}/img/skybox/`);
   skybox.load(['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg',], (mesh) => {
     scene.background = mesh;
     UI.Finish.Skybox()
   }, null, () => { UI.Error(3); UI.Finish.Skybox(true) })
-  UI.Progress.main(3);
+  UI.Progress.main(4)
   const text = (vmd == 0) ? '模型文件:' : '模型和动作文件:'
   const texten = (vmd == 0) ? 'Model Files:' : 'Model and Action Files:'
   loader.loadWithAnimation(
-    `${urlroot}/${name}/index.pmx`,
-    `./vmd/${vmd}/index.vmd`,
+    `${serverURL}/models/${name}/index.pmx`,
+    `${serverURL}/vmd/${vmd}/index.vmd`,
     (mmd) => {
       // 添加到屏幕( X:0 y:-10 Z:0)
       mesh = mmd.mesh;
@@ -118,7 +118,7 @@ function init() {
   (vmd == 0) ? Weapons(loader) : null;
   // 场景模型
   loader.load(
-    `${urlroot}/background/index.pmx`,
+    `${serverURL}/models/background/index.pmx`,
     (mesh) => {
       // 添加到屏幕( X:0 y:-11.7 Z:0)
       mesh.position.y = -11.7;
@@ -173,7 +173,7 @@ function Weapons(loader) {
   for (let i = 1; i <= weapon; i++) {
     UI.Start(`weapon${i}`, `-w${i}`, `武器模型${i}:`, `Weapon model${i}:`);
     loader.load(
-      `${urlroot}/${name}/${i}.pmx`,
+      `${serverURL}/models/${name}/${i}.pmx`,
       (mesh) => {
         // 添加到屏幕(X,Y,Z)
         mesh.position.x = x[i];
@@ -210,7 +210,7 @@ function MMDload(mmd) {
   // 加载音频资源
   const loader2 = new THREE.AudioLoader();
   loader2.load(
-    `./vmd/${vmd}/index.mp3`,
+    `${serverURL}/vmd/${vmd}/index.mp3`,
     (audioBuffer) => {
       oceanAmbientSound.setBuffer(audioBuffer);
       oceanAmbientSound.setLoop(true);//设置音频循环
