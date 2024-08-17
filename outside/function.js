@@ -25,7 +25,7 @@ function isMobile() {
  * @param {string} url 资源路径
  * @param {string} type 资源类型 (js/css)
  * @param {boolean} isModule js资源是否为module
- * @param {function} callback 可选的回调函数，接收两个参数：(error, url)
+ * @param {function} callback 可选的回调函数，当加载出错时调用
  * @returns {Promise} 返回一个Promise对象
  */
 function loadExternalResource(url, type, isModule, callback) {
@@ -39,22 +39,16 @@ function loadExternalResource(url, type, isModule, callback) {
             tag = document.createElement("script");
             if (isModule) tag.type = "module";
             tag.src = url;
+        } else {
+            reject(new Error("参数不合法"))
+            return
         }
-        if (tag) {
-            tag.onload = () => {
-                resolve(url);
-                if (typeof callback === 'function') {
-                    callback(null, url);
-                }
-            };
-            tag.onerror = () => {
-                reject(new Error(`Failed to load ${url}`));
-                if (typeof callback === 'function') {
-                    callback(new Error(`Failed to load ${url}`), url);
-                }
-            };
-            document.head.appendChild(tag);
-        }
+        tag.onload = resolve;
+        tag.onerror = () => {
+            reject(new Error(`Failed to load ${url}`));
+            if (typeof callback === 'function') { callback() }
+        };
+        document.head.appendChild(tag);
     });
 }
 
@@ -170,6 +164,19 @@ function isDebug() {
     const hostdebug = /^localhost|^127(?:\.0(?:\.0(?:\.0?)?)?\.0?)|(?:0*:)?::1$/i.test(window.location.hostname);
     return urldebug || hostdebug
 }
+/**
+* 生成指定长度的随机字符串
+* @param {number} length - 随机字符串的长度, 默认32位
+* @returns {string} 一个长度为 length 的随机字符串
+*/
+function RandomString(length = 32) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}
 
 // YCL
 console.log(
@@ -183,5 +190,10 @@ console.log(
             
 +--------------------------------------------------------+
 
-我们一日日度过的所谓的日常，实际上可能是接连不断的奇迹！--京阿尼《日常》`
-    , 'color:#ff0', 'color:#0f0', 'color:#0ff', 'color:#ff0', 'color:#0f0', 'color:#0ff', 'color:#ff0', 'color:#0f0', 'color:#0ff', 'color:#ff0', 'color:#0f0', 'color:#0ff', 'color:#ff0', 'color:#0f0', 'color:#0ff', 'color #fff')
+我们一日日度过的所谓的日常，实际上可能是接连不断的奇迹！--京阿尼《日常》`,
+    'color:#ff0', 'color:#0f0', 'color:#0ff',
+    'color:#ff0', 'color:#0f0', 'color:#0ff',
+    'color:#ff0', 'color:#0f0', 'color:#0ff',
+    'color:#ff0', 'color:#0f0', 'color:#0ff',
+    'color:#ff0', 'color:#0f0', 'color:#0ff',
+    'color #fff')

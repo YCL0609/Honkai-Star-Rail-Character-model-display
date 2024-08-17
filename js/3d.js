@@ -1,66 +1,39 @@
-let serverURL, vmdfile, mp3file, resLoad = []
-const Debug = getUrlParams('serverdebug') ? false : isDebug();
-const threePath = setupImportMap();
-if (/WebKit/i.test(navigator.userAgent) && !/(Chrome|android)/i.test(navigator.userAgent)) {
-    // Webkit内核判断
-    alert('由于Webkit内核对于WebGL兼容性有限, 页面可能出现未知渲染问题。\nDue to the limited compatibility of the Webkit kernel for WebGL, pages may have unknown rendering issues.')
-}
-initServer();// 服务器初始化
-Promise.all([
-    loadExternalResource(`${threePath}/es-module-shims.js`, 'js', null, () => {/* UI */ }),
-    loadExternalResource(`${threePath}/three.js/libs/ammo.wasm.js`, 'js', null, () => {/* UI */ })
-])
-    .then((huh) => {
-        console.log(huh)
-    })
-    .catch((e) => {
-        console.log(e)
-    })
+const Debug = isDebug()
+initServer() // 服务器初始化
+    .then(serverURL => { // 加载依赖文件
+        document.getElementById('text0').innerText = "(2/5)加载依赖文件...";
+        document.getElementById('texte0').innerText = "(2/5)Load dependency files...";
+        document.getElementById('jsload').style.display = "";
+        Promise.all([
+            loadExternalResource(`${serverURL}/js/es-module-shims.js`, 'js', null, () => {
+                document.getElementById('jsload1').innerHTML = "<b style='color:red'>Error!</b>"
+            }),
+            loadExternalResource(`${serverURL}/js/three.js/libs/ammo.wasm.js`, 'js', null, () => {
+                document.getElementById('jsload1').innerHTML = "<b style='color:red'>Error!</b>"
+            }),
+        ])
+            .then(() => { // 加载three.js文件
+                setupImportMap(serverURL) // 生成ImportMap
+                window.serverURL = serverURL
+                loadExternalResource(`js/3d.module.js`, 'js', true, () => { // 加载主文件
+                    document.getElementById('text0').innerText = "(2/5)加载three.js...";
+                    document.getElementById('texte0').innerText = "(2/5)Loading three.js...";
+                    document.getElementById('jsload').style.display = "none";
+                })
+            })
+            .catch(() => handleServerError('服务器初始化错误:依赖文件加载错误! - Dependency files are not loaded correctly'))
+    }).catch(() => handleServerError('服务器初始化错误:无可用服务器! - All servers have timed out or had an error in their response'));
 
+// 选择服务器
 async function initServer() {
-    let onload = 0
-    let serverID = getUrlParams('server') || '';
-    const serverList = ['//139.224.2.122', '//globe-res-sr.ycl.cool', '//ycl069.github.io'];
-    // 服务器选择
-    if (!isNaN(serverID) || serverID < 0 || serverID > 2) {
-        try {
-            const servers = await ServerChoose(serverList, true);
-            serverID = chooseServer(servers)
-            serverURL = Debug ? "//127.0.0.1:8080" : serverList[serverID]
-        } catch (_) {
-            handleServerError('服务器初始化错误: 无可用服务器! - All servers have timed out or had an error in their response');
-            return;
-        }
-    }
-    // 依赖文件加载
-
-    document.getElementById('text0').innerText = "(2/5)加载依赖文件...";
-    document.getElementById('texte0').innerText = "(2/5)Load dependency files...";
-    document.getElementById('jsload').style.display = "";
-
-    function loadMainJS() {
-        if (onload == 1) {
-            loadExternalResource(`js/3d.module.js`, 'js', true, () => {
-                document.getElementById('text0').innerText = "(2/5)加载three.js...";
-                document.getElementById('texte0').innerText = "(2/5)Loading three.js...";
-                document.getElementById('jsload').style.display = "none";
-            });
-        } else {
-            onload++
-        }
-    }
+    let server = getUrlParams('server'); // 用户服务器选择处理
+    if (server === 1) return Promise.resolve("//139.224.2.122");
+    if (server === 2) return Promise.resolve("//globe-res-sr.ycl.cool");
+    if (Debug) return Promise.resolve("//127.0.0.1:8081");
+    const response = await fetch('?cf_iscn&' + RandomString(64), { method: 'HEAD' });
+    return response.headers.has('iscn') ? "//139.224.2.122" : "//globe-res-sr.ycl.cool";
 }
 
-// 服务器筛选
-function chooseServer(servers) {
-    const validServers = servers.filter(s => !s.isError);
-    if (validServers.length === 0) throw new Error();
-
-    const fastestServer = validServers.reduce((fastest, current) =>
-        current.elapsedTime < fastest.elapsedTime ? current : fastest
-    );
-    return servers.indexOf(fastestServer);
-}
 
 // 服务器错误处理
 function handleServerError(text) {
@@ -78,20 +51,18 @@ function handleServerError(text) {
 }
 
 // 动态生成ImportMap
-function setupImportMap() {
-    const threePath = Debug ? './js/3d' : `${serverURL}/js`;
+function setupImportMap(Path) {
     const importMap = {
         imports: {
             "WebUI": "./js/UI.js",
-            "three": `${threePath}/three.js/three.module.min.js`,
-            "three/": `${threePath}/three.js/`
+            "three": `${Path}/js/three.js/three.module.min.js`,
+            "three/": `${Path}/js/three.js/`
         }
     };
     const importMapElement = document.createElement('script');
     importMapElement.type = 'importmap';
     importMapElement.textContent = JSON.stringify(importMap);
     document.head.appendChild(importMapElement);
-    return threePath
 }
 
 // VMD动作文件

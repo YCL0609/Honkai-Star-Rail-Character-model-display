@@ -7,6 +7,11 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	<link type="text/css" rel="stylesheet" href="css/3d.css">
 	<link href="favicon.ico" rel="shortcut icon">
+	<script>// Webkit内核判断
+		if (/WebKit/i.test(navigator.userAgent) && !/(Chrome|android)/i.test(navigator.userAgent)) {
+			alert('由于Webkit内核对于WebGL兼容性有限, 页面可能出现未知渲染问题。\nDue to the limited compatibility of the Webkit kernel for WebGL, pages may have unknown rendering issues.')
+		}
+	</script>
 	<script src="js/baidu.js"></script>
 	<script src="outside/function.js"></script>
 	<!-- <script src="//www.ycl.cool/js/function.js"></script> -->
@@ -24,23 +29,23 @@
 				<div class="progress">
 					<div id="progress0" class="progress-inside" style="width: 0%"></div>
 				</div>
+				<div id="jsload" style="display: none;">
+					es-module-shims.js - <a id="jsload1">Loading...</a><br>
+					ammo.wasm.js - <a id="jsload2">Loading...</a>
+				</div>
 				<div id="ServerChoose" style="margin-top: 10px;display: none;">
 					<b>您可以手动选择服务器以尝试是否可以正常加载</b><br>
 					<b>You can manually select the server to try if it can load properly</b><br>
 					<div style="margin-top: 10px;">
 						<label for="server">服务器(Server): </label>
 						<select id="server">
-							<option style="display: none" selected></option>  
+							<option style="display: none" selected></option>
 							<option value="0">国内服务器 - China server</option>
 							<option value="1">国际服务器 - Globe server</option>
 							<option value="2">备用服务器 - Backup server</option>
 						</select>
 						<button onclick="userChooseServer()">OK</button>
 					</div>
-				</div>
-				<div id="jsload" style="display: none;">
-					es-module-shims.js - <a id="jsload1">Loading...</a><br>
-					ammo.wasm.js - <a id="jsload2">Loading...</a>
 				</div>
 			</div>
 			<div id="module" style="display: none">

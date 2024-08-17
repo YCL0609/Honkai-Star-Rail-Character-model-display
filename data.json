@@ -1,8 +1,8 @@
 {
     "0": {
         "total": 59,
-        "version": "V2.6.1",
-        "version2": "2024-07-18"
+        "version": "V2.7 Beta",
+        "version2": "2024-08-16"
     },
     "1": {
         "data": "4,2",
@@ -319,8 +319,8 @@
     "52": {
         "data": "3,6",
         "firstup": "V2.3",
-        "model": false,
-        "weapons": 0
+        "model": true,
+        "weapons": 2
     },
     "53": {
         "data": "4,7",
