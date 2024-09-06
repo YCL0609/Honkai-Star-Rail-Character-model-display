@@ -1,7 +1,7 @@
 # 崩坏：星穹铁道角色模型展示
 English version please see [README_EN.md][en]
 ## 前言
-官方模型及立绘素材的权利归米哈游所有, 其他内容的相关权利均归各自所有者享有. 如有侵权, 请向 [Star-Rail-model-display@ycl.cool][0] 发送邮件. (此邮箱不回复邮件, 仅用作隐藏真实邮件地址)
+官方模型及立绘素材的权利归米哈游所有, 其他内容的相关权利均归各自所有者享有. 如有侵权, 请向 [email@ycl.cool][0] 发送邮件.
 ## outsite目录
 目录内为引用的其他网站js文件副本。<br>
 &nbsp;&nbsp;&nbsp;function.js — 此文件为www.ycl.cool主网站及其附属页公用函数库，可按需要删除未用到的函数;<br>
@@ -93,7 +93,7 @@ Animation:
 ![mmd][4]
 
 [en]: README_EN.md
-[0]: mailto:Star-Rail-model-display@ycl.cool
+[0]: mailto:email@ycl.cool
 [1]: https://www.ycl.cool/blog/usr/uploads/2024/06/786176234.jpg
 [2]: https://www.ycl.cool/blog/usr/uploads/2024/06/2019666578.jpg
 [3]: https://www.ycl.cool/blog/usr/uploads/2024/06/3134407100.jpeg
