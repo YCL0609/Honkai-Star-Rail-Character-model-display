@@ -4,7 +4,6 @@ let other = getUrlParams('other'); // 模型数据
 const dataurl = other ? "data2.json" : "data.json";
 try { data = ReadJson(serverURL + dataurl, null, null, true) } catch (e) { Error(0, e) }
 const total = data[0]['total'];
-console.log('UI.js version: 2.1.0709');
 
 export async function Init(callback) {
     try {

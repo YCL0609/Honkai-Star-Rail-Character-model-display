@@ -6,6 +6,7 @@ import { OutlineEffect } from 'three/effects/OutlineEffect.js';
 import { MMDLoader } from 'three/loaders/MMDLoader.js';
 import { MMDAnimationHelper } from 'three/animation/MMDAnimationHelper.js';
 import { GUI } from 'three/lil-gui.module.min.js';
+console.log('3D page version: ' + page_version);
 console.log('three.js version: ' + THREE.REVISION);
 
 let stats;

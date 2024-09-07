@@ -1,4 +1,4 @@
-const Debug = isDebug()
+const Debug = isDebug();
 initServer() // 服务器初始化
     .then(serverURL => { // 加载依赖文件
         document.getElementById('text0').innerText = "(2/5)加载依赖文件...";

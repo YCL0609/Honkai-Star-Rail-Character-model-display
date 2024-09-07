@@ -7,7 +7,9 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	<link type="text/css" rel="stylesheet" href="css/3d.css">
 	<link href="favicon.ico" rel="shortcut icon">
-	<script>// Webkit内核判断
+	<script>
+		const page_version = "2.7.0.0906";
+		// Webkit内核判断
 		if (/WebKit/i.test(navigator.userAgent) && !/(Chrome|android)/i.test(navigator.userAgent)) {
 			alert('由于Webkit内核对于WebGL兼容性有限, 页面可能出现未知渲染问题。\nDue to the limited compatibility of the Webkit kernel for WebGL, pages may have unknown rendering issues.')
 		}
@@ -42,7 +44,7 @@
 							<option style="display: none" selected></option>
 							<option value="0">国内服务器 - China server</option>
 							<option value="1">国际服务器 - Globe server</option>
-							<option value="2">备用服务器 - Backup server</option>
+							<!-- <option value="2">备用服务器 - Backup server</option> -->
 						</select>
 						<button onclick="userChooseServer()">OK</button>
 					</div>
@@ -102,7 +104,7 @@
 		<a style="cursor: pointer;text-decoration: underline" onclick="Gotovmd(1)">极乐净土</a><br>
 		<a style="cursor: pointer;text-decoration: underline" onclick="Gotovmd(2)">彩虹节拍</a><br>
 		<a style="cursor: pointer;text-decoration: underline" onclick="Gotovmd(3)">Good Time</a><br>
-		<a style="cursor: pointer;text-decoration: underline">testetset</a>
+		<!-- <a style="cursor: pointer;text-decoration: underline">testetset</a> -->
 		<hr>
 		<button onclick="document.getElementById('VMDList').style.left='-100px'">关闭(Close)</button>
 	</div>
