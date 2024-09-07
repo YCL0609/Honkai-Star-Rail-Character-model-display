@@ -10,7 +10,7 @@ console.log('three.js version: ' + THREE.REVISION);
 
 let stats;
 let helper, mesh;
-let name, vmd, id, other, weapon;
+let name, vmd, weapon;
 let camera, scene, renderer, effect;
 const clock = new THREE.Clock();
 const gui = new GUI();
@@ -19,9 +19,7 @@ const gui = new GUI();
 UI.Init((params) => {
   name = params[0];
   vmd = params[1];
-  id = params[2];
-  other = params[3];
-  weapon = params[4];
+  weapon = params[2];
 });
 
 // 主函数

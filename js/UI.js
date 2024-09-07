@@ -1,14 +1,14 @@
-let data, vmd, id
+let data, vmd, id;
+const serverURL = window.serverURL + "/";
 let other = getUrlParams('other'); // 模型数据
 const dataurl = other ? "data2.json" : "data.json";
-try { data = ReadJson(dataurl, null, null, true) } catch (e) { Error(0, e) }
+try { data = ReadJson(serverURL + dataurl, null, null, true) } catch (e) { Error(0, e) }
 const total = data[0]['total'];
 console.log('UI.js version: 2.1.0709');
 
 export async function Init(callback) {
     try {
-        vmd = getUrlParams('vmd');
-        vmd = vmd ? vmd : 0;
+        vmd = getUrlParams('vmd') ? vmd : 0;
         id = getUrlParams('id');
         Progress.main(2);
         localStorage.setItem('onload', 0);
@@ -18,11 +18,11 @@ export async function Init(callback) {
         document.getElementById('background').style = null;
         const idisnum = parseInt(id);
         if (isNaN(idisnum) || idisnum < 1 || idisnum > total) { Error(1, 'The parameter is invalid', ":参数'id'不是数字或在可接受范围外") }
-        const roledata = data[id]
+        const roledata = data[id];
         let name = other ? roledata['folder'] : id;
         if (roledata['special']) { name = roledata['folder'] + (getUrlParams(roledata['special']) ? `_${roledata['special']}` : '') }
         if (isNaN(parseInt(vmd)) || vmd < 0 || vmd > 3) { Error(2, 'The parameter is invalid', ":参数'vmd'不是数字或在可接受范围外") };
-        callback([name, vmd, id, other, roledata['weapons']]);
+        callback([name, vmd, roledata['weapons']]);
     } catch (e) {
         Error(0, e)
     }
@@ -96,7 +96,7 @@ export const Finish = {
 
     Auto: async () => {
         let dataurl = other ? "data2.json" : "data.json";
-        let roledata = await ReadJson(dataurl, id, 0, false, true)
+        let roledata = ReadJson(serverURL + dataurl, id, 0, false, true)
         let total = localStorage.onload;
         if (total != (2 + roledata['weapons'])) {
             total++;
@@ -129,8 +129,8 @@ export const Finish = {
     },
 
     MMD: async () => {
-        let roledata = await ReadJson(dataurl, id, 0, false, true)
-        let vmddata = await ReadJson('vmd/data.json', vmd, 0, false, true);
+        let roledata = ReadJson(serverURL + dataurl, id, 0, false, true)
+        let vmddata = ReadJson(serverURL + 'vmd/data.json', vmd, 0, false, true);
         let total = localStorage.onload;
         if (total != 3) {
             total++;

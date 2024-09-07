@@ -5,16 +5,26 @@ initServer() // 服务器初始化
         document.getElementById('texte0').innerText = "(2/5)Load dependency files...";
         document.getElementById('jsload').style.display = "";
         Promise.all([
-            loadExternalResource(`${serverURL}/js/es-module-shims.js`, 'js', null, () => {
-                document.getElementById('jsload1').innerHTML = "<b style='color:red'>Error!</b>"
+            loadExternalResource(`${serverURL}/js/es-module-shims.js`, 'js', null, (e) => {
+                if (e) {
+                    info = "<b style='color:red'>Error!</b>"
+                } else {
+                    info = "<b style='color:#0f0'>Success!</b>"
+                }
+                document.getElementById('jsload1').innerHTML = info
             }),
-            loadExternalResource(`${serverURL}/js/three.js/libs/ammo.wasm.js`, 'js', null, () => {
-                document.getElementById('jsload1').innerHTML = "<b style='color:red'>Error!</b>"
+            loadExternalResource(`${serverURL}/js/three.js/libs/ammo.wasm.js`, 'js', null, (e) => {
+                if (e) {
+                    info = "<b style='color:red'>Error!</b>"
+                } else {
+                    info = "<b style='color:#0f0'>Success!</b>"
+                }
+                document.getElementById('jsload2').innerHTML = info
             }),
         ])
             .then(() => { // 加载three.js文件
                 setupImportMap(serverURL) // 生成ImportMap
-                window.serverURL = serverURL
+                window.serverURL = serverURL;
                 loadExternalResource(`js/3d.module.js`, 'js', true, () => { // 加载主文件
                     document.getElementById('text0').innerText = "(2/5)加载three.js...";
                     document.getElementById('texte0').innerText = "(2/5)Loading three.js...";

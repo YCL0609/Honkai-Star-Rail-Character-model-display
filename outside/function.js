@@ -43,10 +43,14 @@ function loadExternalResource(url, type, isModule, callback) {
             reject(new Error("参数不合法"))
             return
         }
-        tag.onload = resolve;
-        tag.onerror = () => {
-            reject(new Error(`Failed to load ${url}`));
+        tag.onload = () => {
+            resolve();
             if (typeof callback === 'function') { callback() }
+        }
+        tag.onerror = (error) => {
+            console.error(error);
+            reject(new Error(`Failed to load ${url}`));
+            if (typeof callback === 'function') { callback(new Error(`Failed to load ${url}`)); }
         };
         document.head.appendChild(tag);
     });
