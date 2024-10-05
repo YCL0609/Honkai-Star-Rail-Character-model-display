@@ -25,7 +25,7 @@ function isMobile() {
  * @param {string} url 资源路径
  * @param {string} type 资源类型 (js/css)
  * @param {boolean} isModule js资源是否为module
- * @param {function} callback 可选的回调函数，当加载出错时调用
+ * @param {function} callback 可选的回调函数，加载完成后调用如出现错误则传入参数
  * @returns {Promise} 返回一个Promise对象
  */
 function loadExternalResource(url, type, isModule, callback) {

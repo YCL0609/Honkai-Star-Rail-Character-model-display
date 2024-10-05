@@ -1,4 +1,4 @@
-let data, vmd, id;
+let data, vmd, id, islocal;
 const serverURL = window.serverURL + "/";
 let other = getUrlParams('other'); // 模型数据
 const dataurl = other ? "data2.json" : "data.json";
@@ -7,9 +7,15 @@ const total = data[0]['total'];
 
 export async function Init(callback) {
     try {
-        vmd = getUrlParams('vmd') ? vmd : 0;
+        Progress.main(3);
+        document.getElementById('jsload').style.display = "none";
         id = getUrlParams('id');
-        Progress.main(2);
+        // vmd加载相关
+        islocal = getUrlParams('islocal');
+        if (islocal === null || islocal === undefined) {
+            vmd = getUrlParams('vmd');
+            if (vmd === null || vmd === undefined) { vmd = 0 }
+        } else { vmd = -1 }
         localStorage.setItem('onload', 0);
         localStorage.setItem('onload_bg', 0);
         document.getElementById('skybox').style.display = null;
@@ -20,8 +26,8 @@ export async function Init(callback) {
         const roledata = data[id];
         let name = other ? roledata['folder'] : id;
         if (roledata['special']) { name = roledata['folder'] + (getUrlParams(roledata['special']) ? `_${roledata['special']}` : '') }
-        if (isNaN(parseInt(vmd)) || vmd < 0 || vmd > 3) { Error(2, 'The parameter is invalid', ":参数'vmd'不是数字或在可接受范围外") };
-        callback([name, vmd, roledata['weapons']]);
+        if (isNaN(parseInt(vmd)) || vmd < -1 || vmd > 3) { Error(2, 'The parameter is invalid', ":参数'vmd'不是数字或在可接受范围外") };
+        callback([name, vmd, roledata['weapons'], islocal]);
     } catch (e) {
         Error(0, e)
     }
@@ -69,7 +75,7 @@ export const Progress = {
         infoe[4] = "Waiting for a response..."
         document.getElementById('text0').innerText = `(${num}/5)${info[num]}`;
         document.getElementById('texte0').innerText = `(${num}/5)${infoe[num]}`;
-        document.getElementById('progress0').style.width = `${num * 25}%`;
+        document.getElementById('progress0').style.width = `${num * 20}%`;
     },
 
     Model: (id, xhr, text = '', texten = '') => {
@@ -166,6 +172,5 @@ function gui() {
     document.getElementById('text0').innerText = "加载完成, 请等待材质下载.";
     document.getElementById('texte0').innerText = "Loading finish, please wait for the material download.";
     document.getElementById('progress0').style.width = "100%";
-    document.getElementById('VMDList').style.left = "0px";
     document.getElementById('three').style.top = "-60px";
 }

@@ -68,27 +68,33 @@ body {
 	z-index: 10010
 }
 
-#localVMD {
+#useVMD {
 	position: fixed;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	background-color: #000000aa;
 	z-index: 10002;
-}
-
-#localVMD-main {
-	width: 350px;
-	height: 280px;
-	background-color: #1f2022;
 	border-radius: 10px;
 	text-align: center;
 }
 
-#localVMD-main * {
+#VMDlist {
+	padding: 10px;
+	border-radius: 10px;
+}
+
+#VMDlist a {
+	cursor: pointer;
+	text-decoration: underline;
+	color: aqua;
+}
+
+#localVMD * {
 	font-weight: bolder
 }
 
-#localVMD-main div {
+#localVMD div {
 	width: 100%;
 	height: 100px;
 	text-align: left;
@@ -96,10 +102,9 @@ body {
 	border-bottom: 1px solid #ccc;
 }
 
-#localVMD-main div * {
+#localVMD div * {
 	margin-left: 10px;
 }
-
 .progress {
 	height: 10px;
 	background-color: #fff;

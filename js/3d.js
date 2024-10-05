@@ -3,6 +3,7 @@ initServer() // 服务器初始化
     .then(serverURL => { // 加载依赖文件
         document.getElementById('text0').innerText = "(2/5)加载依赖文件...";
         document.getElementById('texte0').innerText = "(2/5)Load dependency files...";
+        document.getElementById('progress0').style.width = `20%`;
         document.getElementById('jsload').style.display = "";
         Promise.all([
             loadExternalResource(`${serverURL}/js/es-module-shims.js`, 'js', null, (e) => {
@@ -25,11 +26,7 @@ initServer() // 服务器初始化
             .then(() => { // 加载three.js文件
                 setupImportMap(serverURL) // 生成ImportMap
                 window.serverURL = serverURL;
-                loadExternalResource(`js/3d.module.js`, 'js', true, () => { // 加载主文件
-                    document.getElementById('text0').innerText = "(2/5)加载three.js...";
-                    document.getElementById('texte0').innerText = "(2/5)Loading three.js...";
-                    document.getElementById('jsload').style.display = "none";
-                })
+                loadExternalResource(`js/3d.module.js`, 'js', true)
             })
             .catch(() => handleServerError('服务器初始化错误:依赖文件加载错误! - Dependency files are not loaded correctly'))
     }).catch(() => handleServerError('服务器初始化错误:无可用服务器! - All servers have timed out or had an error in their response'));
@@ -75,20 +72,66 @@ function setupImportMap(Path) {
     document.head.appendChild(importMapElement);
 }
 
-// VMD动作文件
-function Gotovmd(cho) {
-    let id = getUrlParams('id');
-    let other = getUrlParams('other');
-    if (!other) {
-        window.location.href = "3d.html?id=" + id + "&vmd=" + cho;
-    } else {
-        window.location.href = "3d.html?id=" + id + "&other=1" + "&vmd=" + cho;
-    }
-}
-
 // 用户服务器选择
 function userChooseServer() {
     let url = location.href;
     let txt = (url.substring(url.length - 4) == "html") ? "?" : "&";
     location.href = location.href + txt + "server=" + document.getElementById('server').value;
 }
+
+// VMD文件处理
+function VMD_process(para) {
+    const main = document.getElementById('useVMD');
+    const cho = document.getElementById('VMDchoose');
+    const list = document.getElementById('VMDlist');
+    const local = document.getElementById('localVMD');
+    switch (para) {
+        case 'open':
+            main.style.display = "";
+            cho.style.display = "";
+            list.style.display = "none";
+            local.style.display = "none";
+            break;
+        case 'close':
+            main.style.display = "none";
+            break;
+        case 'list':
+            cho.style.display = "none";
+            list.style.display = "";
+            break;
+        case 'local': // 使用本地文件
+            let islocal = getUrlParams('localvmd');
+            if (islocal === null || islocal === undefined) {
+                location.href = location.href + "&localvmd"
+            } else { location.reload() }
+            break;
+        case 'online':
+            cho.style.display = "none";
+            list.style.display = "";
+            break;
+        case 1: // 使用现有文件
+        case 2:
+        case 3: 
+            let id = getUrlParams('id');
+            let other = getUrlParams('other');
+            if (!other) {
+                window.location.href = "3d.html?id=" + id + "&vmd=" + para;
+            } else {
+                window.location.href = "3d.html?id=" + id + "&other&vmd=" + para;
+            }
+            break;
+        default:
+            main.style.display = "none";
+            cho.style.display = "none";
+            list.style.display = "none";
+            local.style.display = "none";
+            break;
+    }
+}
+
+var fileInput = document.getElementById('vmdInput');
+fileInput.addEventListener('change', () => {
+    console.log(fileInput.files[0]);
+    // let file = fileInput.files[0];
+    // let reader = new FileReader();
+});

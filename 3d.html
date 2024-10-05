@@ -44,7 +44,6 @@
 							<option style="display: none" selected></option>
 							<option value="0">国内服务器 - China server</option>
 							<option value="1">国际服务器 - Globe server</option>
-							<!-- <option value="2">备用服务器 - Backup server</option> -->
 						</select>
 						<button onclick="userChooseServer()">OK</button>
 					</div>
@@ -78,35 +77,49 @@
 			<button id="start" style="display: none"></button>
 		</div>
 	</div>
-	<!-- 使用本地vmd文件 -->
-	<div id="localVMD" style="display: none;">
-		<div id="localVMD-main">
+	<!-- VMD文件 -->
+	<div style="margin-top: 50px;position: fixed;background-color: #000000aa;width: 80px;text-align: center;">
+		<a>动作文件</a><br>
+		<a style="font-size: small;">action files</a>
+		<button onclick="VMD_process('open')">打开列表<br>open list</button>
+	</div>
+	<div id="useVMD" style="display: none;">
+		<div id="VMDchoose" style="padding:10px;">
+			<b>选择方式(Choose way)</b>
+			<hr>
+			<button onclick="VMD_process('local')" style="display: inline-block;">本地文件<br>local file</button>
+			<button onclick="VMD_process('online')" style="display: inline-block;">在线列表<br>online list</button>
+			<hr>
+			<button onclick="VMD_process()">关闭(Close)</button>
+		</div>
+		<!-- 选择vmd动作 -->
+		<div id="VMDlist" style="display: none;">
+			<b>可用动作列表</b><br>
+			<b>Available actions</b>
+			<hr>
+			<a onclick="VMD_process(1)">极乐净土</a>
+			<a onclick="VMD_process(2)">彩虹节拍</a>
+			<a onclick="VMD_process(3)">Good Time</a>
+			<hr>
+			<button onclick="VMD_process('close')">关闭(Close)</button>
+		</div>
+		<!-- 使用本地vmd文件 -->
+		<div id="localVMD" style="display: none;">
 			<a>选择本地文件</a><br>
 			<a>Select the local file</a>
 			<div>
 				<a>动作文件(Action files):</a>
 				<input type="file" id="vmdInput" accept=".vmd" /><br>
-				<a>音频文件(Audio files):</a>
+				<a>*音频文件(Audio files):</a>
 				<input type="file" id="mp3Input" accept=".mp3" />
 			</div>
+			<a style="color: aquamarine;">* 音乐文件是可选的(audio is optional)</a><br>
 			<a style="color:yellowgreen">所选文件不会上传服务器,仅在本此会话中可用.</a><br>
 			<a style="color: yellowgreen">The selected file will not be uploaded to the server and will only be
 				available for the current
 				session.</a><br>
-			<button>OK</button>
+			<button onclick="VMD_process('load')">OK</button>
 		</div>
-	</div>
-	<!-- vmd动作选择 -->
-	<div id="VMDList">
-		<a style="color: #fff">可用动作列表</a>
-		<a style="color: #fff;font-size: 10px">Available actions</a>
-		<hr>
-		<a style="cursor: pointer;text-decoration: underline" onclick="Gotovmd(1)">极乐净土</a><br>
-		<a style="cursor: pointer;text-decoration: underline" onclick="Gotovmd(2)">彩虹节拍</a><br>
-		<a style="cursor: pointer;text-decoration: underline" onclick="Gotovmd(3)">Good Time</a><br>
-		<!-- <a style="cursor: pointer;text-decoration: underline">testetset</a> -->
-		<hr>
-		<button onclick="document.getElementById('VMDList').style.left='-100px'">关闭(Close)</button>
 	</div>
 	<!-- three.js -->
 	<b id="three">此页使用<a href="https://threejs.org/" style="color: aqua;">three.js</a>作为webgl渲染引擎<br></b>

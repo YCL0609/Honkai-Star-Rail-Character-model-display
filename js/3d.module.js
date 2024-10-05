@@ -6,12 +6,11 @@ import { OutlineEffect } from 'three/effects/OutlineEffect.js';
 import { MMDLoader } from 'three/loaders/MMDLoader.js';
 import { MMDAnimationHelper } from 'three/animation/MMDAnimationHelper.js';
 import { GUI } from 'three/lil-gui.module.min.js';
-console.log('3D page version: ' + page_version);
-console.log('three.js version: ' + THREE.REVISION);
+console.log('3D page version: ' + page_version + '\nthree.js version: ' + THREE.REVISION);
 
 let stats;
 let helper, mesh;
-let name, vmd, weapon;
+let name, vmd, weapon, islocal;
 let camera, scene, renderer, effect;
 const clock = new THREE.Clock();
 const gui = new GUI();
@@ -21,6 +20,7 @@ UI.Init((params) => {
   name = params[0];
   vmd = params[1];
   weapon = params[2];
+  islocal = params[3];
 });
 
 // 主函数
@@ -88,6 +88,16 @@ function init() {
   UI.Progress.main(4)
   const text = (vmd == 0) ? '模型文件:' : '模型和动作文件:'
   const texten = (vmd == 0) ? 'Model Files:' : 'Model and Action Files:'
+  if (islocal) {
+    document.getElementById('useVMD').style.display = "";
+    document.getElementById('localVMD').style.display = "";
+    setInterval(() => {
+      if (window.localvmdok){
+        
+      }
+    },1000)
+
+  }
   loader.loadWithAnimation(
     `${serverURL}/models/${name}/index.pmx`,
     `${serverURL}/vmd/${vmd}/index.vmd`,
