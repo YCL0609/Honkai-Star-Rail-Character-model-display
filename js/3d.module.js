@@ -8,7 +8,7 @@ import { MMDAnimationHelper } from 'three/animation/MMDAnimationHelper.js';
 import { GUI } from 'three/lil-gui.module.min.js';
 console.log('3D page version: ' + page_version + '\nthree.js version: ' + THREE.REVISION);
 
-let stats;
+let stats, vmdurl, mp3url;
 let helper, mesh;
 let name, vmd, weapon, islocal;
 let camera, scene, renderer, effect;
@@ -35,7 +35,7 @@ try {
 }
 
 // 场景配置
-function init() {
+async function init() {
   UI.Progress.main(3);
   const container = document.createElement('div');
   document.body.appendChild(container);
@@ -86,45 +86,6 @@ function init() {
     UI.Finish.Skybox()
   }, null, () => { UI.Error(3); UI.Finish.Skybox(true) })
   UI.Progress.main(4)
-  const text = (vmd == 0) ? '模型文件:' : '模型和动作文件:'
-  const texten = (vmd == 0) ? 'Model Files:' : 'Model and Action Files:'
-  if (islocal) {
-    document.getElementById('useVMD').style.display = "";
-    document.getElementById('localVMD').style.display = "";
-    setInterval(() => {
-      if (window.localvmdok){
-        
-      }
-    },1000)
-
-  }
-  loader.loadWithAnimation(
-    `${serverURL}/models/${name}/index.pmx`,
-    `${serverURL}/vmd/${vmd}/index.vmd`,
-    (mmd) => {
-      // 添加到屏幕( X:0 y:-10 Z:0)
-      mesh = mmd.mesh;
-      mesh.position.y = -10;
-      scene.add(mesh);
-      const modelFolder = gui.addFolder('人物');
-      const modelParams = { x: 0, z: 0 }
-      modelFolder.add(modelParams, 'x', -200, 200).onChange(() => {
-        mesh.position.x = modelParams.x;
-      });
-      modelFolder.add(modelParams, 'z', -200, 200).onChange(() => {
-        mesh.position.z = modelParams.z;
-      });
-      UI.Finish.Model('text1', 'texte1', 'module')
-      if (vmd !== 0) { MMDload(mmd) }
-    },
-    (xhr) => {
-      UI.Progress.Model(1, xhr, text, texten);
-    },
-    (err) => {
-      UI.Error(5, err)
-    }
-  );
-  (vmd == 0) ? Weapons(loader) : null;
   // 场景模型
   loader.load(
     `${serverURL}/models/background/index.pmx`,
@@ -142,13 +103,56 @@ function init() {
       });
       UI.Finish.Model('text2', 'texte2', 'background')
     },
+    (xhr) => { UI.Progress.Model(2, xhr) },
+    (err) => { UI.Error(4, err) }
+  );
+  const text = (vmd == 0) ? '模型文件:' : '模型和动作文件:'
+  const texten = (vmd == 0) ? 'Model Files:' : 'Model and Action Files:'
+  if (islocal) {
+    document.getElementById('useVMD').style.display = "";
+    document.getElementById('VMDchoose').style.display = "none";
+    document.getElementById('localVMD').style.display = "";
+    await new Promise((resolve) => {
+      const check_value = setInterval(() => {
+        if (window.loadok) {
+          clearInterval(check_value); // 清除定时器
+          vmdurl = local_mp3blob;
+          mp3url = local_mp3blob;
+          resolve(); // 解析 Promise
+        }
+      }, 1500); // 每1500毫秒检查一次
+    });
+  } else {
+    vmdurl = `${serverURL}/vmd/${vmd}/index.vmd`;
+    mp3url = `${serverURL}/vmd/${vmd}/index.mp3`;
+  }
+  loader.loadWithAnimation(
+    `${serverURL}/models/${name}/index.pmx`,
+    vmdurl,
+    (mmd) => {
+      // 添加到屏幕( X:0 y:-10 Z:0)
+      mesh = mmd.mesh;
+      mesh.position.y = -10;
+      scene.add(mesh);
+      const modelFolder = gui.addFolder('人物');
+      const modelParams = { x: 0, z: 0 }
+      modelFolder.add(modelParams, 'x', -200, 200).onChange(() => {
+        mesh.position.x = modelParams.x;
+      });
+      modelFolder.add(modelParams, 'z', -200, 200).onChange(() => {
+        mesh.position.z = modelParams.z;
+      });
+      UI.Finish.Model('text1', 'texte1', 'module')
+      if (vmd !== 0) { Audioload(mmd) }
+    },
     (xhr) => {
-      UI.Progress.Model(2, xhr)
+      UI.Progress.Model(1, xhr, text, texten);
     },
     (err) => {
-      UI.Error(4, err)
+      UI.Error(5, err)
     }
   );
+  (vmd == 0) ? Weapons(loader) : null;
 
   // 相机
   const controls = new OrbitControls(camera, renderer.domElement);
@@ -208,7 +212,7 @@ function Weapons(loader) {
   }
 }
 
-function MMDload(mmd) {
+function Audioload(mmd) {
   UI.Start('music', 4, '音乐文件:', 'Music file:');
   // 监听
   const audioListener = new THREE.AudioListener();
@@ -219,7 +223,7 @@ function MMDload(mmd) {
   // 加载音频资源
   const loader2 = new THREE.AudioLoader();
   loader2.load(
-    `${serverURL}/vmd/${vmd}/index.mp3`,
+    mp3url,
     (audioBuffer) => {
       oceanAmbientSound.setBuffer(audioBuffer);
       oceanAmbientSound.setLoop(true);//设置音频循环
@@ -240,11 +244,7 @@ function MMDload(mmd) {
         }
       }, 2000);
     },
-    (xhr) => {
-      UI.Progress.Model(4, xhr);
-    },
-    (err) => {
-      UI.Error(7, err)
-    }
+    (xhr) => { UI.Progress.Model(4, xhr); },
+    (err) => { UI.Error(7, err) }
   );
 }

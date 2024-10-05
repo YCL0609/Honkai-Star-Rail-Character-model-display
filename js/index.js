@@ -124,7 +124,7 @@ function JsonToTable(name, data, tablename, main) {
         note.href = "#note2";
       }
     } else {
-      a.href = `3d.html?id=${i}&other`;
+      a.href = `3d.html?id=${i}&other=y`;
     }
 
     cell.append(a, note, br);

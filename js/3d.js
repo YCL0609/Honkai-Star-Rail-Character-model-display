@@ -26,7 +26,7 @@ initServer() // 服务器初始化
             .then(() => { // 加载three.js文件
                 setupImportMap(serverURL) // 生成ImportMap
                 window.serverURL = serverURL;
-                loadExternalResource(`js/3d.module.js`, 'js', true)
+                loadExternalResource(`js/3d.module.js`, 'js', true) // three.js控制文件
             })
             .catch(() => handleServerError('服务器初始化错误:依赖文件加载错误! - Dependency files are not loaded correctly'))
     }).catch(() => handleServerError('服务器初始化错误:无可用服务器! - All servers have timed out or had an error in their response'));
@@ -102,8 +102,11 @@ function VMD_process(para) {
         case 'local': // 使用本地文件
             let islocal = getUrlParams('localvmd');
             if (islocal === null || islocal === undefined) {
-                location.href = location.href + "&localvmd"
+                location.href = location.href + "&localvmd=y"
             } else { location.reload() }
+            break;
+        case 'load':
+            window.loadok = true;
             break;
         case 'online':
             cho.style.display = "none";
@@ -111,13 +114,13 @@ function VMD_process(para) {
             break;
         case 1: // 使用现有文件
         case 2:
-        case 3: 
+        case 3:
             let id = getUrlParams('id');
             let other = getUrlParams('other');
             if (!other) {
                 window.location.href = "3d.html?id=" + id + "&vmd=" + para;
             } else {
-                window.location.href = "3d.html?id=" + id + "&other&vmd=" + para;
+                window.location.href = "3d.html?id=" + id + "&other=y&vmd=" + para;
             }
             break;
         default:
@@ -128,10 +131,28 @@ function VMD_process(para) {
             break;
     }
 }
-
-var fileInput = document.getElementById('vmdInput');
+let local_selent = 0
+let local_vmdblob, local_mp3blob
+const fileInput = document.getElementById('vmdInput');
 fileInput.addEventListener('change', () => {
-    console.log(fileInput.files[0]);
-    // let file = fileInput.files[0];
-    // let reader = new FileReader();
+    let file = fileInput.files[0];
+    let reader = new FileReader();
+    reader.onload = () => {
+        local_vmdblob = new Blob([reader.result], { type: file.type });
+        local_selent++;
+    };
+    reader.onerror = (error) => { alert('读取文件失败:' + error) };
+    reader.readAsArrayBuffer(file);
+});
+
+const mp3Input = document.getElementById('mp3Input');
+mp3Input.addEventListener('change', () => {
+    let file = mp3Input.files[0];
+    let reader = new FileReader();
+    reader.onload = () => {
+        local_mp3blob = new Blob([reader.result], { type: file.type });
+        local_selent++;
+    };
+    reader.onerror = (error) => { alert('读取文件失败:' + error) };
+    reader.readAsArrayBuffer(file);
 });
