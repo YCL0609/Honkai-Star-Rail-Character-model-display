@@ -217,7 +217,7 @@ function ChangeText(ChangeLang) {
       document.getElementById(ChangeLang).style.border = "solid #0069d2";
     }),
     new Promise(() => { // 提示信息
-      const text = ReadJson(`lang/${ChangeLang}/text.json`, null, null, true);
+      const text = ReadJson(`${serverRoot}/lang/${ChangeLang}/text.json`, null, null, true);
       lang = ChangeLang;
       document.getElementById('warn').innerText = text.warn;
       document.getElementsByClassName('tip-txt')[0].innerHTML = text.tip;
@@ -230,7 +230,7 @@ function ChangeText(ChangeLang) {
       }
     }),
     new Promise(() => {
-      fetch(`lang/${lang}/note.html`) // 注释
+      fetch(`${serverRoot}/lang/${lang}/note.html`) // 注释
         .then(response => response.text())
         .then(text => { document.getElementsByClassName('note-div')[0].innerHTML = text })
     }),

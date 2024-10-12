@@ -104,20 +104,17 @@
 			<button onclick="VMD_process('close')">关闭(Close)</button>
 		</div>
 		<!-- 使用本地vmd文件 -->
-		<div id="localVMD" style="display: none;">
+		<div id="localVMD" style="display: none;max-width: 330px;">
 			<a>选择本地文件</a><br>
 			<a>Select the local file</a>
 			<div>
 				<a>动作文件(Action files):</a>
-				<input type="file" id="vmdInput" accept=".vmd" /><br>
+				<input type="url" id="vmdInput" placeholder="https://example.com/action.vmd"><br>
 				<a>*音频文件(Audio files):</a>
-				<input type="file" id="mp3Input" accept=".mp3" />
+				<input type="url" id="mp3Input" placeholder="https://example.com/audio.mp3" />
 			</div>
 			<a style="color: aquamarine;">* 音乐文件是可选的(audio is optional)</a><br>
-			<a style="color:yellowgreen">所选文件不会上传服务器,仅在本此会话中可用.</a><br>
-			<a style="color: yellowgreen">The selected file will not be uploaded to the server and will only be
-				available for the current
-				session.</a><br>
+			<a>请确保输入的网站允许来自sr.ycl.cool的跨域请求</a><br>
 			<button onclick="VMD_process('load')">OK</button>
 		</div>
 	</div>

@@ -131,28 +131,3 @@ function VMD_process(para) {
             break;
     }
 }
-let local_selent = 0
-let local_vmdblob, local_mp3blob
-const fileInput = document.getElementById('vmdInput');
-fileInput.addEventListener('change', () => {
-    let file = fileInput.files[0];
-    let reader = new FileReader();
-    reader.onload = () => {
-        local_vmdblob = new Blob([reader.result], { type: file.type });
-        local_selent++;
-    };
-    reader.onerror = (error) => { alert('读取文件失败:' + error) };
-    reader.readAsArrayBuffer(file);
-});
-
-const mp3Input = document.getElementById('mp3Input');
-mp3Input.addEventListener('change', () => {
-    let file = mp3Input.files[0];
-    let reader = new FileReader();
-    reader.onload = () => {
-        local_mp3blob = new Blob([reader.result], { type: file.type });
-        local_selent++;
-    };
-    reader.onerror = (error) => { alert('读取文件失败:' + error) };
-    reader.readAsArrayBuffer(file);
-});

@@ -12,7 +12,6 @@ export async function Init(callback) {
         id = getUrlParams('id');
         // vmd加载相关
         islocal = getUrlParams('localvmd');
-        console.log("islocal:", islocal);
         if (islocal === null || islocal === undefined) {
             vmd = getUrlParams('vmd');
             if (vmd === null || vmd === undefined) { vmd = 0 }

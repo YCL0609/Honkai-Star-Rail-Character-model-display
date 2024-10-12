@@ -90,8 +90,8 @@ body {
 	color: aqua;
 }
 
-#localVMD * {
-	font-weight: bolder
+#localVMD a {
+	font-weight: bolder;
 }
 
 #localVMD div {
@@ -105,6 +105,12 @@ body {
 #localVMD div * {
 	margin-left: 10px;
 }
+
+#localVMD input {
+	max-width: 300px;
+	width: 40vw;
+}
+
 .progress {
 	height: 10px;
 	background-color: #fff;

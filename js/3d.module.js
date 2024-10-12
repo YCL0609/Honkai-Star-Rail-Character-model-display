@@ -116,8 +116,8 @@ async function init() {
       const check_value = setInterval(() => {
         if (window.loadok) {
           clearInterval(check_value); // 清除定时器
-          vmdurl = local_mp3blob;
-          mp3url = local_mp3blob;
+          vmdurl = document.getElementById('vmdInput').value;
+          mp3url = document.getElementById('mp3Input').value || `${serverURL}/vmd/0/index.mp3`;
           resolve(); // 解析 Promise
         }
       }, 1500); // 每1500毫秒检查一次
@@ -149,6 +149,7 @@ async function init() {
       UI.Progress.Model(1, xhr, text, texten);
     },
     (err) => {
+      console.error(err);
       UI.Error(5, err)
     }
   );
