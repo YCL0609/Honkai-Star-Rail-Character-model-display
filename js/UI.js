@@ -150,10 +150,8 @@ export const Finish = {
             `动作来源: ${vmddata['from']}<br>`,
             `Action source: ${vmddata['from']}<br><br>`,
             `背景音乐: ${vmddata['name']}<br>`,
-            `Background music: ${vmddata['name']}<br><br>`,
-            `制作软件: three.js<br>`,
-            `Make software: three.js<br><br>`
-        ].map((text) => {
+            `Background music: ${vmddata['name']}<br><br>`
+        ].map((text, index) => {
             const a = document.createElement('a');
             a.style.margin = "0 auto"
             a.innerHTML = text;

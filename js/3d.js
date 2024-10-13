@@ -27,6 +27,7 @@ initServer() // 服务器初始化
                 setupImportMap(serverURL) // 生成ImportMap
                 window.serverURL = serverURL;
                 loadExternalResource(`js/3d.module.js`, 'js', true) // three.js控制文件
+                document.getElementById('jsload').innerHTML = "<b>首次或长时间未打开(缓存失效)时加载时间会加长，请耐心等待...</b><br><b>The loading time will be longer when it is not opened for the first time or for a long time (cache invalidation), please be patient...</b>";
             })
             .catch(() => handleServerError('服务器初始化错误:依赖文件加载错误! - Dependency files are not loaded correctly'))
     }).catch(() => handleServerError('服务器初始化错误:无可用服务器! - All servers have timed out or had an error in their response'));
@@ -106,6 +107,7 @@ function VMD_process(para) {
             } else { location.reload() }
             break;
         case 'load':
+            main.style.display = "none";
             window.loadok = true;
             break;
         case 'online':
