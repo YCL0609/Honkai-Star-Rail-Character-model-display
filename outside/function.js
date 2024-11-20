@@ -24,11 +24,11 @@ function isMobile() {
  * 异步加载资源函数
  * @param {string} url 资源路径
  * @param {string} type 资源类型 (js/css)
- * @param {boolean} isModule js资源是否为module
- * @param {function} callback 可选的回调函数，加载完成后调用如出现错误则传入参数
+ * @param {boolean} [isModule=false] js资源是否为module
+ * @param {function} [callback] 可选的回调函数，加载完成后调用如出现错误则传入参数
  * @returns {Promise} 返回一个Promise对象
  */
-function loadExternalResource(url, type, isModule, callback) {
+function loadExternalResource(url, type, isModule = false, callback) {
     return new Promise((resolve, reject) => {
         let tag;
         if (type === "css") {
@@ -40,14 +40,14 @@ function loadExternalResource(url, type, isModule, callback) {
             if (isModule) tag.type = "module";
             tag.src = url;
         } else {
-            reject(new Error("参数不合法"))
-            return
+            reject(new Error("参数不合法"));
+            return;
         }
         tag.onload = () => {
             resolve();
-            if (typeof callback === 'function') { callback() }
-        }
-        tag.onerror = (error) => {
+            if (typeof callback === 'function') { callback(); }
+        };
+        tag.onerror = error => {
             console.error(error);
             reject(new Error(`Failed to load ${url}`));
             if (typeof callback === 'function') { callback(new Error(`Failed to load ${url}`)); }
@@ -56,11 +56,10 @@ function loadExternalResource(url, type, isModule, callback) {
     });
 }
 
-
 /**
  * 网页URL参数获取
- *  @param {string} name 不传返回所有值，传入则返回对应值
- *  @returns {string} 参数值
+ * @param {string} [name] 不传返回所有值，传入则返回对应值
+ * @returns {string|object} 参数值或所有参数对象
  */
 function getUrlParams(name) {
     var url = window.location.search;
@@ -92,17 +91,16 @@ function getUrlParams(name) {
 /**
  * Json处理函数
  * @param {string} url Json文件URL路径
- * @param {string} val1 返回Json数据键名
- * @param {string} val2 返回Json数据对象名
- * @param {boolean} all 是否返回全部Json数据
- * @param {boolean} allkey 是否返回选定键值全部数据
- * @returns {string} 返回指定值
+ * @param {string} [val1] 返回Json数据键名
+ * @param {string} [val2] 返回Json数据对象名
+ * @param {boolean} [all=false] 是否返回全部Json数据
+ * @param {boolean} [allkey=false] 是否返回选定键值全部数据
+ * @returns {string|object} 返回指定值或数据对象
  */
-function ReadJson(url, val1, val2, all, allkey) {
+function ReadJson(url, val1, val2, all = false, allkey = false) {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', url, false);
     xhr.send();
-
     if (xhr.status === 200) {
         const data = JSON.parse(xhr.responseText);
         if (all) {
@@ -153,8 +151,8 @@ async function ServerChoose(TestURLs, isConsole = false) {
     }));
     if (isConsole) {
         resultsArray.map(e => {
-            console.log(`URL: ${e.url} 响应时间: %c${e.elapsedTime}ms %c出错: %c${e.isError}${e.isError ? `\n${e.error.stack}` : ''}`, `color:${e.isFastest ? '#0ff' : '#fff'}`, 'color:#fff', `color:${e.isError ? '#f00' : '#0f0'}`)
-        })
+            console.log(`URL: ${e.url} 响应时间: %c${e.elapsedTime}ms %c出错: %c${e.isError}${e.isError ? `\n${e.error.stack}` : ''}`, `color:${e.isFastest ? '#0ff' : '#fff'}`, 'color:#fff', `color:${e.isError ? '#f00' : '#0f0'}`);
+        });
     }
     return resultsArray;
 }
@@ -166,13 +164,14 @@ async function ServerChoose(TestURLs, isConsole = false) {
 function isDebug() {
     const urldebug = getUrlParams('debug');
     const hostdebug = /^localhost|^127(?:\.0(?:\.0(?:\.0?)?)?\.0?)|(?:0*:)?::1$/i.test(window.location.hostname);
-    return urldebug || hostdebug
+    return urldebug || hostdebug;
 }
+
 /**
-* 生成指定长度的随机字符串
-* @param {number} length - 随机字符串的长度, 默认32位
-* @returns {string} 一个长度为 length 的随机字符串
-*/
+ * 生成指定长度的随机字符串
+ * @param {number} [length=32] - 随机字符串的长度，默认32位
+ * @returns {string} 一个长度为 length 的随机字符串
+ */
 function RandomString(length = 32) {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
@@ -182,16 +181,88 @@ function RandomString(length = 32) {
     return result;
 }
 
+/**
+ * 打开数据库
+ * 如果数据库不存在，会创建一个新的数据库并添加对象存储
+ * @param {string} dbName 数据库名称
+ * @param {string} storeName 对象存储名称
+ * @returns {Promise<IDBDatabase>} 返回一个 Promise 对象，表示数据库打开操作
+ */
+function openDatabase(dbName, storeName) {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open(dbName, 1);
+        request.onupgradeneeded = (event) => {
+            let db = event.target.result;
+            if (!db.objectStoreNames.contains(storeName)) {
+                db.createObjectStore(storeName);
+            }
+        };
+        request.onsuccess = event => resolve(event.target.result);
+        request.onerror = event => reject(event.target.error);
+    });
+}
+
+/**
+ * 将数据存储到 IndexedDB 中
+ * @param {string} dbName 数据库名称
+ * @param {string} storeName 对象存储名称
+ * @param {string} key 数据的键
+ * @param {any} value 数据的值
+ * @returns {Promise} 返回一个 Promise 对象，表示数据存储操作
+ */
+async function saveToIndexedDB(dbName, storeName, key, value) {
+    const db = await openDatabase(dbName, storeName);
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction([storeName], 'readwrite');
+        const store = transaction.objectStore(storeName);
+        const request = store.put(value, key);
+        request.onsuccess = () => resolve();
+        request.onerror = event => reject(event.target.error);
+    });
+}
+
+/**
+ * 从 IndexedDB 中获取数据
+ * @param {string} dbName 数据库名称
+ * @param {string} storeName 对象存储名称
+ * @param {string} key 数据的键
+ * @returns {Promise<any>} 返回一个 Promise 对象，表示数据获取操作
+ */
+async function getFromIndexedDB(dbName, storeName, key) {
+    const db = await openDatabase(dbName, storeName);
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction([storeName], 'readonly');
+        const store = transaction.objectStore(storeName);
+        const request = store.get(key);
+        request.onsuccess = event => resolve(event.target.result);
+        request.onerror = event => reject(event.target.error);
+    });
+}
+
+/**
+ * IndexedDB 控制对象，提供数据库操作方法。
+ * @namespace indexedDBControl
+ * @property {function(string, string): Promise<IDBDatabase>} openDatabase - 打开或创建数据库。
+ * @property {function(string, string, string, any): Promise<void>} saveToIndexedDB - 将数据存储到 IndexedDB 中。
+ * @property {function(string, string, string): Promise<any>} getFromIndexedDB - 从 IndexedDB 中获取数据。
+ */
+const indexedDBControl = {
+    openDatabase,
+    saveToIndexedDB,
+    getFromIndexedDB
+}
+window.indexedDBControl = indexedDBControl
+
 // YCL
-console.log(
-    `+---------------------------------------------------------+
+console.log(`
++---------------------------------------------------------+
 
          %co     o          %co o o          %co
            %co o           %co               %co
             %co           %co                %co
             %co            %co               %co
             %co             %co o o          %co o o o%c    
-            
+     
 +--------------------------------------------------------+
 
 我们一日日度过的所谓的日常，实际上可能是接连不断的奇迹！--京阿尼《日常》`,

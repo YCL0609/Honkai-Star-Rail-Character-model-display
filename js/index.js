@@ -235,7 +235,7 @@ function ChangeText(ChangeLang) {
         .then(text => { document.getElementsByClassName('note-div')[0].innerHTML = text })
     }),
     new Promise(() => { // 表格
-      const ranges = [[11, 17], [21, 27], [31, 37], [41, 47], [51, 57], [61, 67], [71, 77]];
+      const ranges = [[11, 17], [21, 27], [31, 37], [41, 47], [51, 57], [61, 67], [71, 77], [81, 87]];
       ranges.forEach(([start, end]) => {
         for (let i = start; i <= end; i++) {
           document.getElementById(`table-${i}`).innerHTML = null;
