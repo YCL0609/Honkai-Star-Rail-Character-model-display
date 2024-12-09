@@ -181,77 +181,68 @@ function RandomString(length = 32) {
     return result;
 }
 
-/**
- * 打开数据库
- * 如果数据库不存在，会创建一个新的数据库并添加对象存储
- * @param {string} dbName 数据库名称
- * @param {string} storeName 对象存储名称
- * @returns {Promise<IDBDatabase>} 返回一个 Promise 对象，表示数据库打开操作
- */
-function openDatabase(dbName, storeName) {
-    return new Promise((resolve, reject) => {
-        const request = indexedDB.open(dbName, 1);
-        request.onupgradeneeded = (event) => {
-            let db = event.target.result;
-            if (!db.objectStoreNames.contains(storeName)) {
-                db.createObjectStore(storeName);
-            }
-        };
-        request.onsuccess = event => resolve(event.target.result);
-        request.onerror = event => reject(event.target.error);
-    });
-}
 
-/**
- * 将数据存储到 IndexedDB 中
- * @param {string} dbName 数据库名称
- * @param {string} storeName 对象存储名称
- * @param {string} key 数据的键
- * @param {any} value 数据的值
- * @returns {Promise} 返回一个 Promise 对象，表示数据存储操作
- */
-async function saveToIndexedDB(dbName, storeName, key, value) {
-    const db = await openDatabase(dbName, storeName);
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction([storeName], 'readwrite');
-        const store = transaction.objectStore(storeName);
-        const request = store.put(value, key);
-        request.onsuccess = () => resolve();
-        request.onerror = event => reject(event.target.error);
-    });
-}
+// IndexDB数据库操作
+class IndexedDBControl {
+    /**
+     * 打开数据库
+     * 如果数据库不存在，会创建一个新的数据库并添加对象存储
+     * @param {string} dbName 数据库名称
+     * @param {string} storeName 对象存储名称
+     * @returns {Promise<IDBDatabase>} 返回一个 Promise 对象，表示数据库打开操作
+     */
+    static openDatabase(dbName, storeName) {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(dbName, 1);
+            request.onupgradeneeded = (event) => {
+                let db = event.target.result;
+                if (!db.objectStoreNames.contains(storeName)) {
+                    db.createObjectStore(storeName);
+                }
+            };
+            request.onsuccess = event => resolve(event.target.result);
+            request.onerror = event => reject(event.target.error);
+        });
+    }
 
-/**
- * 从 IndexedDB 中获取数据
- * @param {string} dbName 数据库名称
- * @param {string} storeName 对象存储名称
- * @param {string} key 数据的键
- * @returns {Promise<any>} 返回一个 Promise 对象，表示数据获取操作
- */
-async function getFromIndexedDB(dbName, storeName, key) {
-    const db = await openDatabase(dbName, storeName);
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction([storeName], 'readonly');
-        const store = transaction.objectStore(storeName);
-        const request = store.get(key);
-        request.onsuccess = event => resolve(event.target.result);
-        request.onerror = event => reject(event.target.error);
-    });
-}
+    /**
+     * 将数据存储到 IndexedDB 中
+     * @param {string} dbName 数据库名称
+     * @param {string} storeName 对象存储名称
+     * @param {string} key 数据的键
+     * @param {any} value 数据的值
+     * @returns {Promise} 返回一个 Promise 对象，表示数据存储操作
+     */
+    static async saveToIndexedDB(dbName, storeName, key, value) {
+        const db = await this.openDatabase(dbName, storeName);
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([storeName], 'readwrite');
+            const store = transaction.objectStore(storeName);
+            const request = store.put(value, key);
+            request.onsuccess = () => resolve();
+            request.onerror = event => reject(event.target.error);
+        });
+    }
 
-/**
- * IndexedDB 控制对象，提供数据库操作方法。
- * @namespace indexedDBControl
- * @property {function(string, string): Promise<IDBDatabase>} openDatabase - 打开或创建数据库。
- * @property {function(string, string, string, any): Promise<void>} saveToIndexedDB - 将数据存储到 IndexedDB 中。
- * @property {function(string, string, string): Promise<any>} getFromIndexedDB - 从 IndexedDB 中获取数据。
- */
-const indexedDBControl = {
-    openDatabase,
-    saveToIndexedDB,
-    getFromIndexedDB
+    /**
+     * 从 IndexedDB 中获取数据
+     * @param {string} dbName 数据库名称
+     * @param {string} storeName 对象存储名称
+     * @param {string} key 数据的键
+     * @returns {Promise<any>} 返回一个 Promise 对象，表示数据获取操作
+     */
+    static async getFromIndexedDB(dbName, storeName, key) {
+        const db = await this.openDatabase(dbName, storeName);
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([storeName], 'readonly');
+            const store = transaction.objectStore(storeName);
+            const request = store.get(key);
+            request.onsuccess = event => resolve(event.target.result);
+            request.onerror = event => reject(event.target.error);
+        });
+    }
 }
-window.indexedDBControl = indexedDBControl
+window.indexedDBControl = IndexedDBControl;
 
 // YCL
 console.log(`

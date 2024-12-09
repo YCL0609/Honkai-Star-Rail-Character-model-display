@@ -33,6 +33,10 @@
           发送邮件.
         </div>
       </div>
+      <div class="awarn">
+        <!-- <div id="abar"></div>  -->
+        <a>因上游three.js更新和游戏新命途加入, 此项目代码崩溃正在重构中, 当前版本只保留了核心功能可能出现未知问题, 请谅解.<br>Due to the upstream three.js update and the new destiny of the game to join this project code crash is being refactored, the current version only retains the core functions may have unknown problems, please understand.<br>开始于(Start time): 2024-12-08 22:16:30 (UTC-4,大西洋标准时间[AST])</a>
+      </div>
       <div class="warn" style="display: none">
         <div id="bar"></div>
         <a id="warn">注:如果遇到与中文意思不同的地方请以中文为主,如您想更改请在Github上提交.</a>
@@ -54,153 +58,27 @@
     </div>
     <div class="info"></div>
     <h3 id="text3">已分类模型</h3>
-    <table colspan="2">
-      <thead>
-        <!-- 战斗属性  -->
-        <tr class="table-title">
-          <td style="min-width: 20px;"></td>
-          <!-- 物理  -->
-          <td><img loading="lazy" decoding="async" src="img/table/Physical.png"></td>
-          <!-- 火  -->
-          <td><img loading="lazy" decoding="async" src="img/table/Fire.png"></td>
-          <!-- 冰  -->
-          <td><img loading="lazy" decoding="async" src="img/table/Ice.png"></td>
-          <!-- 雷  -->
-          <td><img loading="lazy" decoding="async" src="img/table/Lightning.png"></td>
-          <!-- 风(电脑) -->
-          <td id="table-05"><img loading="lazy" decoding="async" src="img/table/Wind.png"></td>
-          <!-- 量子(电脑) -->
-          <td id="table-06"><img loading="lazy" decoding="async" src="img/table/Quantum.png"></td>
-          <!-- 虚数(电脑) -->
-          <td id="table-07"><img loading="lazy" decoding="async" src="img/table/Imaginary.png"></td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr></tr>
-        <!-- 毁灭  -->
-        <tr>
-          <td class="table-title">
-            <img loading="lazy" decoding="async" src="img/table/Destruction.png">
-          </td>
-          <td id="table-11"></td>
-          <td id="table-12"></td>
-          <td id="table-13"></td>
-          <td id="table-14"></td>
-          <td id="table-15"></td>
-          <td id="table-16"></td>
-          <td id="table-17"></td>
-        </tr>
-        <!-- 巡猎  -->
-        <tr>
-          <td class="table-title">
-            <img loading="lazy" decoding="async" src="img/table/The Hunt.png">
-          </td>
-          <td id="table-21"></td>
-          <td id="table-22"></td>
-          <td id="table-23"></td>
-          <td id="table-24"></td>
-          <td id="table-25"></td>
-          <td id="table-26"></td>
-          <td id="table-27"></td>
-        </tr>
-        <!-- 智识  -->
-        <tr>
-          <td class="table-title">
-            <img loading="lazy" decoding="async" src="img/table/Erudition.png">
-          </td>
-          <td id="table-31"></td>
-          <td id="table-32"></td>
-          <td id="table-33"></td>
-          <td id="table-34"></td>
-          <td id="table-35"></td>
-          <td id="table-36"></td>
-          <td id="table-37"></td>
-        </tr>
-        <!-- 同谐  -->
-        <tr>
-          <td class="table-title">
-            <img loading="lazy" decoding="async" src="img/table/Harmony.png">
-          </td>
-          <td id="table-41"></td>
-          <td id="table-42"></td>
-          <td id="table-43"></td>
-          <td id="table-44"></td>
-          <td id="table-45"></td>
-          <td id="table-46"></td>
-          <td id="table-47"></td>
-        </tr>
-        <!-- 虚无  -->
-        <tr>
-          <td class="table-title">
-            <img loading="lazy" decoding="async" src="img/table/Nihility.png">
-          </td>
-          <td id="table-51"></td>
-          <td id="table-52"></td>
-          <td id="table-53"></td>
-          <td id="table-54"></td>
-          <td id="table-55"></td>
-          <td id="table-56"></td>
-          <td id="table-57"></td>
-        </tr>
-        <!-- 存护  -->
-        <tr>
-          <td class="table-title">
-            <img loading="lazy" decoding="async" src="img/table/Preservation.png">
-          </td>
-          <td id="table-61"></td>
-          <td id="table-62"></td>
-          <td id="table-63"></td>
-          <td id="table-64"></td>
-          <td id="table-65"></td>
-          <td id="table-66"></td>
-          <td id="table-67"></td>
-        </tr>
-        <!-- 丰饶  -->
-        <tr>
-          <td class="table-title">
-            <img loading="lazy" decoding="async" src="img/table/Abundance.png">
-          </td>
-          <td id="table-71"></td>
-          <td id="table-72"></td>
-          <td id="table-73"></td>
-          <td id="table-74"></td>
-          <td id="table-75"></td>
-          <td id="table-76"></td>
-          <td id="table-77"></td>
-        </tr>
-        <!-- 记忆 -->
-        <tr>
-          <td class="table-title">
-            <img loading="lazy" decoding="async" src="img/table/Memory.png"></img>
-          </td>
-          <td id="table2-81"></td>
-          <td id="table2-83"></td>
-          <td id="table2-83"></td>
-          <td id="table2-84"></td>
-          <td id="table2-85"></td>
-          <td id="table2-86"></td>
-          <td id="table2-87"></td>
-        </tr>
-      </tbody>
-    </table>
-    <div id="moble-div" style="display: none">
-      <h5 id="text4">续表</h5>
+    <div class="tmp1">
+      <a style="display: none;" id="tmp1">手机端请横向滑动. <br>Please swipe horizontally on the mobile phone.</a>
       <table colspan="2">
         <thead>
+          <!-- 战斗属性  -->
           <tr class="table-title">
-            <td></td>
-            <!-- 风(手机) -->
-            <td id="table2-05">
-              <img loading="lazy" decoding="async" src="img/table/Wind.png">
-            </td>
-            <!-- 量子(手机) -->
-            <td id="table2-06">
-              <img loading="lazy" decoding="async" src="img/table/Quantum.png">
-            </td>
-            <!-- 虚数(手机) -->
-            <td id="table2-07">
-              <img loading="lazy" decoding="async" src="img/table/Imaginary.png">
-            </td>
+            <td style="min-width: 20px;"></td>
+            <!-- 物理  -->
+            <td><img loading="lazy" decoding="async" src="img/table/Physical.png"></td>
+            <!-- 火  -->
+            <td><img loading="lazy" decoding="async" src="img/table/Fire.png"></td>
+            <!-- 冰  -->
+            <td><img loading="lazy" decoding="async" src="img/table/Ice.png"></td>
+            <!-- 雷  -->
+            <td><img loading="lazy" decoding="async" src="img/table/Lightning.png"></td>
+            <!-- 风(电脑) -->
+            <td id="table-05"><img loading="lazy" decoding="async" src="img/table/Wind.png"></td>
+            <!-- 量子(电脑) -->
+            <td id="table-06"><img loading="lazy" decoding="async" src="img/table/Quantum.png"></td>
+            <!-- 虚数(电脑) -->
+            <td id="table-07"><img loading="lazy" decoding="async" src="img/table/Imaginary.png"></td>
           </tr>
         </thead>
         <tbody>
@@ -210,11 +88,141 @@
             <td class="table-title">
               <img loading="lazy" decoding="async" src="img/table/Destruction.png">
             </td>
+            <td id="table-11"></td>
+            <td id="table-12"></td>
+            <td id="table-13"></td>
+            <td id="table-14"></td>
+            <td id="table-15"></td>
+            <td id="table-16"></td>
+            <td id="table-17"></td>
+          </tr>
+          <!-- 巡猎  -->
+          <tr>
+            <td class="table-title">
+              <img loading="lazy" decoding="async" src="img/table/The Hunt.png">
+            </td>
+            <td id="table-21"></td>
+            <td id="table-22"></td>
+            <td id="table-23"></td>
+            <td id="table-24"></td>
+            <td id="table-25"></td>
+            <td id="table-26"></td>
+            <td id="table-27"></td>
+          </tr>
+          <!-- 智识  -->
+          <tr>
+            <td class="table-title">
+              <img loading="lazy" decoding="async" src="img/table/Erudition.png">
+            </td>
+            <td id="table-31"></td>
+            <td id="table-32"></td>
+            <td id="table-33"></td>
+            <td id="table-34"></td>
+            <td id="table-35"></td>
+            <td id="table-36"></td>
+            <td id="table-37"></td>
+          </tr>
+          <!-- 同谐  -->
+          <tr>
+            <td class="table-title">
+              <img loading="lazy" decoding="async" src="img/table/Harmony.png">
+            </td>
+            <td id="table-41"></td>
+            <td id="table-42"></td>
+            <td id="table-43"></td>
+            <td id="table-44"></td>
+            <td id="table-45"></td>
+            <td id="table-46"></td>
+            <td id="table-47"></td>
+          </tr>
+          <!-- 虚无  -->
+          <tr>
+            <td class="table-title">
+              <img loading="lazy" decoding="async" src="img/table/Nihility.png">
+            </td>
+            <td id="table-51"></td>
+            <td id="table-52"></td>
+            <td id="table-53"></td>
+            <td id="table-54"></td>
+            <td id="table-55"></td>
+            <td id="table-56"></td>
+            <td id="table-57"></td>
+          </tr>
+          <!-- 存护  -->
+          <tr>
+            <td class="table-title">
+              <img loading="lazy" decoding="async" src="img/table/Preservation.png">
+            </td>
+            <td id="table-61"></td>
+            <td id="table-62"></td>
+            <td id="table-63"></td>
+            <td id="table-64"></td>
+            <td id="table-65"></td>
+            <td id="table-66"></td>
+            <td id="table-67"></td>
+          </tr>
+          <!-- 丰饶  -->
+          <tr>
+            <td class="table-title">
+              <img loading="lazy" decoding="async" src="img/table/Abundance.png">
+            </td>
+            <td id="table-71"></td>
+            <td id="table-72"></td>
+            <td id="table-73"></td>
+            <td id="table-74"></td>
+            <td id="table-75"></td>
+            <td id="table-76"></td>
+            <td id="table-77"></td>
+          </tr>
+          <!-- 记忆 -->
+          <tr>
+            <td class="table-title">
+              <img loading="lazy" decoding="async" src="img/table/Memory.png"></img>
+            </td>
+            <td id="table-81"></td>
+            <td id="table-83"></td>
+            <td id="table-83"></td>
+            <td id="table-84"></td>
+            <td id="table-85"></td>
+            <td id="table-86"></td>
+            <td id="table-87"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <a style="display: none;" id="text4"></a>
+    <!-- <div id="moble-div" style="display: none">
+      <h5 id="text4">续表</h5>
+      <table colspan="2">
+        <thead>
+          <tr class="table-title">
+            <td></td>
+            风(手机)
+            <td id="table2-05">
+              <img loading="lazy" decoding="async" src="img/table/Wind.png">
+            </td>
+            量子(手机)
+            <td id="table2-06">
+              <img loading="lazy" decoding="async" src="img/table/Quantum.png">
+            </td>
+            虚数(手机)
+            <td id="table2-07">
+              <img loading="lazy" decoding="async" src="img/table/Imaginary.png">
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr></tr>
+          毁灭 
+          <tr>
+            <td class="table-title">
+              <img loading="lazy" decoding="async" src="img/table/Destruction.png">
+            </td>
             <td id="table2-15"></td>
             <td id="table2-16"></td>
             <td id="table2-17"></td>
           </tr>
-          <!-- 巡猎  -->
+          巡猎 
           <tr>
             <td class="table-title">
               <img loading="lazy" decoding="async" src="img/table/The Hunt.png">
@@ -223,7 +231,7 @@
             <td id="table2-26"></td>
             <td id="table2-27"></td>
           </tr>
-          <!-- 智识  -->
+          智识 
           <tr>
             <td class="table-title">
               <img loading="lazy" decoding="async" src="img/table/Erudition.png">
@@ -232,7 +240,7 @@
             <td id="table2-36"></td>
             <td id="table2-37"></td>
           </tr>
-          <!-- 同谐  -->
+          同谐 
           <tr>
             <td class="table-title">
               <img loading="lazy" decoding="async" src="img/table/Harmony.png">
@@ -241,7 +249,7 @@
             <td id="table2-46"></td>
             <td id="table2-47"></td>
           </tr>
-          <!-- 虚无  -->
+          虚无 
           <tr>
             <td class="table-title">
               <img loading="lazy" decoding="async" src="img/table/Nihility.png">
@@ -250,7 +258,7 @@
             <td id="table2-56"></td>
             <td id="table2-57"></td>
           </tr>
-          <!-- 存护  -->
+          存护 
           <tr>
             <td class="table-title">
               <img loading="lazy" decoding="async" src="img/table/Preservation.png">
@@ -259,7 +267,7 @@
             <td id="table2-66"></td>
             <td id="table2-67"></td>
           </tr>
-          <!-- 丰饶  -->
+          丰饶 
           <tr>
             <td class="table-title">
               <img loading="lazy" decoding="async" src="img/table/Abundance.png">
@@ -270,7 +278,7 @@
           </tr>
         </tbody>
       </table>
-    </div>
+    </div> -->
     <h3 id="text5">未分类模型</h3>
     <table colspan="2">
       <thead>

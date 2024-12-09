@@ -4,11 +4,9 @@ let rolename, rolename2;
 const Debug = isDebug();
 const nopic = [4, 12, 17, 45, 53]; // 无介绍立绘id
 
-(async function() {
+(async function () {
   try {
     await init();
-    console.log(serverRoot);
-    console.log([data, data2, text]);
   } catch (error) {
     console.error("Initialization failed:", error);
   }
@@ -93,11 +91,13 @@ async function WriteTable(lang) {
 }
 
 function JsonToTable(name, data, tablename, main) {
+  // const phone = isMobile();
+  // const range1 = ['0', '1', '2', '3', '4', '5', '6', '7'];
+  // const range2 = ['5', '6', '7'];
   for (let i = 1; i <= data[0]['total']; i++) {
     const parts = data[i]['data'].split(",");
     const cell = document.getElementById(`${tablename}-${parts[0]}${parts[1]}`);
     if (!cell) continue;
-
     const a = document.createElement('a');
     const note = document.createElement('a');
     const br = document.createElement('br');
@@ -107,43 +107,54 @@ function JsonToTable(name, data, tablename, main) {
     a.style.cursor = "pointer";
 
     if (main) {
-      a.addEventListener('click', e => {
+      a.onclick = function (e) {
         e.preventDefault();
         document.getElementById('text21').style.display = null;
         ChangeCard('picture');
         ShowPicture(i);
-      });
+      };
 
       if (!data[i]['model']) {
         a.style.color = "aqua";
-        note.innerText = "(3)";
+        note.innerText = "(2)";
         note.href = "#note3";
       } else if (nopic.includes(i)) {
         a.style.color = "greenyellow";
-        note.innerText = "(2)";
+        note.innerText = "(1)";
         note.href = "#note2";
       }
     } else {
       a.href = `3d.html?id=${i}&other=y`;
     }
-
+    // console.log(i);
+    // tmp1 = i.toString();
+    // if (main && phone && range1.includes(tmp1[0]) && range2.includes(tmp1[1])) {
+    //   console.log(i);
+    //   document.getElementById(`table2-${i}`).append(a, br)
+    // } else {
     cell.append(a, note, br);
+    // }
   }
 
-  // 手机
+
   if (isMobile()) {
-    document.getElementById('moble-div').style.display = null;
-    for (let i = 0; i <= 7; i++) {
-      for (let e = 5; e <= 7; e++) {
-        const td = document.getElementById(`table-${i}${e}`);
-        const td2 = document.getElementById(`table2-${i}${e}`);
-        if (td && td2) {
-          td2.innerHTML = td.innerHTML;
-          td.style.display = "none";
-        }
-      }
-    }
+    document.getElementById('tmp1').style = " color: #fff";
   }
+  // 手机
+  // if (isMobile()) {
+  // document.getElementById('moble-div').style.display = null;
+  //   for (let i = 0; i <= 7; i++) {
+  //     for (let e = 5; e <= 7; e++) {
+  //       const td = document.getElementById(`table-${i}${e}`);
+  //       const td2 = document.getElementById(`table2-${i}${e}`);
+  //       if (td && td2) {
+  //         td2.innerHTML = td.innerHTML;
+  //         // td2.onclick = td.onclick();
+  //         td.style.display = "none";
+  //       }
+  //     }
+  // }
+  // }
 }
 
 function ShowPicture(id) {
@@ -183,7 +194,7 @@ function ShowPicture(id) {
 
     document.getElementById('img1').src = `${serverRoot}/img/character/${lang}/${id}.jpg`;
 
-    if ([4, 45, 53].includes(id)) {
+    if ([4, 45, 53, 65].includes(id)) {
       const img2 = document.createElement('img');
       img2.id = "img2";
       img2.style.width = "48%";
@@ -206,6 +217,24 @@ function ShowPicture(id) {
 }
 
 function ChangeText(ChangeLang) {
+  switch (ChangeLang) {
+    case "zh":
+      alert('自从上次添加记忆命途后屎山代码崩溃了，项目已加入重构列表. 如有翻译错误以中文为主')
+      break;
+    case "jp":
+      alert('前回メモリの運命が追加されてから、Hill コードがクラッシュし、プロジェクトがリファクタリングリストに追加されました。 翻訳エラーがある場合は、主に中国語です')
+      break;
+    case "ko":      
+      alert('마지막으로 기억하는 목적을 추가한 후에 屎山 코드가 충돌했습니다. 프로젝트가 리팩토링 목록에 들어갔습니다. 번역 오류는 중국어를 기본으로 합니다.')
+      break;
+    case "en":
+      alert('Since adding memory lengths, the code has crashed. The project has been added to the refactoring list. If there are translation errors, they are mainly Chinese.')
+      break;
+    default:
+      alert('自从上次添加记忆命途后屎山代码崩溃了，项目已加入重构列表.')
+      break;
+  }
+  return
   const warn = document.getElementsByClassName('warn')[0];
   const bar = document.getElementById('bar');
 
@@ -225,9 +254,11 @@ function ChangeText(ChangeLang) {
       const isko = (ChangeLang === 'ko');
       warn.style.backgroundColor = isko ? "#ff000035" : "#ffff0035";
       bar.style.backgroundColor = isko ? "red" : "yellow";
-      for (let i = 0; i <= 21; i++) {
-        document.getElementById(`text${i}`).innerHTML = text[i];
-      }
+        for (let i = 0; i < 22; i++) {
+          console.log(i);
+          console.log(document.getElementById(`text${i}`).innerHTML)
+          document.getElementById(`text${i}`).innerHTML = text[i];
+        }
     }),
     new Promise(() => {
       fetch(`${serverRoot}/lang/${lang}/note.html`) // 注释

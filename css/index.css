@@ -21,6 +21,12 @@ h5 {
     text-align: center;
 }
 
+.tmp1 {
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap; 
+}
+
 table {
     width: 90%;
     margin: 0 auto;
@@ -146,6 +152,27 @@ td {
     font-weight: 550;
     margin-left: 10px;
 }
+/*****/
+.awarn {
+    margin: 0 auto;
+    width: 95%;
+    background-color: #ff000035;
+    display: flex;
+    justify-content: space-evenly;
+    text-align: left;
+    margin-top: 10px;
+}
+
+.awarn div {
+    width: 7px;
+    background-color: red;
+}
+
+.awarn a {
+    font-weight: 550;
+    margin-left: 10px;
+}
+/*******/
 
 .tip {
     margin: 0 auto;
