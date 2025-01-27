@@ -89,7 +89,7 @@ function getUrlParams(name) {
 }
 
 /**
- * Json处理函数
+ * Json处理函数 (以遗弃，保留仅作为兼容性)
  * @param {string} url Json文件URL路径
  * @param {string} [val1] 返回Json数据键名
  * @param {string} [val2] 返回Json数据对象名
@@ -126,7 +126,7 @@ async function ServerChoose(TestURLs, isConsole = false) {
     const results = await Promise.all(
         TestURLs.map(async (url, index) => {
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 3000);
+            const timeoutId = setTimeout(() => controller.abort(), 3000); // 超时时间3s
             const start = performance.now();
             try {
                 const response = await fetch(`${url}/test.bin`, { signal: controller.signal });

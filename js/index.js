@@ -1,116 +1,131 @@
-let serverRoot, lang;
-let data, data2, text;
-let rolename, rolename2;
+const langCfg = {
+  zh: { data: null, data2: null, text: null },
+  jp: { data: null, data2: null, text: null },
+  en: { data: null, data2: null, text: null },
+  ko: { data: null, data2: null, text: null },
+  userSelect: null
+};
+let serverRoot, data, data2;
 const Debug = isDebug();
+const serverMap = ["//139.224.2.122", "//globe-res-sr.ycl.cool"]; // 可用服务器
 const nopic = [4, 12, 17, 45, 53]; // 无介绍立绘id
 
-(async function () {
-  try {
-    await init();
-  } catch (error) {
-    console.error("Initialization failed:", error);
-  }
-})();
 
-async function init() {
+(async () => {
   const server = getUrlParams('server'); // 用户服务器选择处理
-  const serverMap = ["//139.224.2.122", "//globe-res-sr.ycl.cool"];
   serverRoot = serverMap[server] || (Debug ? "//127.0.0.1:8081" : null);
-
   if (!serverRoot) {
     const servers = await ServerChoose(serverMap, Debug);
     const serverID = chooseServer(servers);
-    if (serverID === -1) throw new Error("No valid server available");
+    if (serverID === -1) /**错误处理**/;
     serverRoot = serverMap[serverID];
   }
-
-  [data, data2, text] = await Promise.all([
-    ReadJson(serverRoot + '/data.json', null, null, true),
-    ReadJson(serverRoot + '/data2.json', null, null, true),
-    ReadJson(serverRoot + '/lang/zh/text.json', null, null, true)
-  ]);
-
-  // 版本信息
-  ['', '2'].forEach(e => {
-    const a = document.createElement('a');
-    a.innerText = data[0][`version${e}`];
-    a.style.color = "#3391ff";
-    document.getElementById(`ver${e}`).appendChild(a);
-  });
-
-  // 默认中文
-  lang = "zh";
-  await WriteTable('zh');
-}
-
-// 服务器筛选
-function chooseServer(servers) {
-  const validServers = servers.filter(s => !s.isError);
-  if (validServers.length === 0) return -1;
-
-  return servers.indexOf(validServers.reduce((fastest, current) =>
-    current.elapsedTime < fastest.elapsedTime ? current : fastest
-  ));
-}
-
-async function WriteTable(lang) {
-  try {
-    [rolename, rolename2] = await Promise.all([
-      ReadJson(`${serverRoot}/lang/${lang}/data.json`, null, null, true),
-      ReadJson(`${serverRoot}/lang/${lang}/data2.json`, null, null, true)
-    ]);
-
-    await Promise.all([
-      JsonToTable(rolename, data, 'table', true, 'table2'),
-      (async () => {
-        const table = document.getElementById('unknow');
-        if (!table) throw new Error("Table element not found");
-
-        for (let a = 1; a <= data2[0]['total_line']; a++) {
-          const tr = document.createElement('tr');
-          tr.id = `table3-line${a}`;
-          table.appendChild(tr);
-
-          const tr_ = document.getElementById(`table3-line${a}`);
-          if (!tr_) throw new Error(`Row with id table3-line${a} not found`);
-
-          const [td1, td2, td3] = [1, 2, 3].map(i => {
-            const td = document.createElement('td');
-            td.id = `table3-${a}${i}`;
-            return td;
-          });
-
-          tr_.append(td1, td2, td3);
-        }
-        JsonToTable(rolename2, data2, 'table3', false);
-      })()
-    ]);
-  } catch (error) {
-    console.error("Failed to write table:", error);
+  // 用户语言选择
+  if (localStorage.userlang === undefined || !['zh', 'en', 'ko', 'jp'].includes(localStorage.userlang)) {
+    // 默认中文
+    langCfg.userSelect = "zh";
+    localStorage.setItem('userlang', 'zh');
+  } else {
+    langCfg.userSelect = localStorage.userlang;
   }
+  ChangeLang(langCfg.userSelect);
+})();
+
+async function ChangeLang(lang) {
+  // 获取语言数据
+  await Promise.all(['data', 'data2', 'text'].map(async (name) => {
+    if (langCfg[lang][name] === null) {
+      try {
+        const response = await fetch(`${serverRoot}/lang/${lang}/${name}.json`);
+        const json = await response.json();
+        langCfg[lang][name] = json;
+      } catch (error) { }
+    }
+  }));
+
+  // 处理主表格
+  if (data === undefined) {
+    fetch(`${serverRoot}/data.json`)
+      .then(response => response.json())
+      .then(json => {
+        data = json;
+        WriteToTable(json, langCfg[lang].data, true)
+        // 处理页脚
+        document.getElementById('text8').innerHTML += `<a style="color:#3391ff">${data[0]['version']}</a>`;
+        document.getElementById('text9').innerHTML += `<a style='color:#3391ff'>${data[0]['version2']}</a>`;
+      })
+      .catch(error => { /**错误处理**/ });
+  } else {
+    WriteToTable(data, langCfg[lang].data, true);
+  }
+
+  // 处理副表格
+  if (data2 === undefined) {
+    fetch(`${serverRoot}/data2.json`)
+      .then(response => response.json())
+      .then(json => {
+        data2 = json;
+        WriteToTable(json, langCfg[lang].data2, false);
+      })
+      .catch(error => { /**错误处理**/ });
+  } else {
+    WriteToTable(data2, langCfg[lang].data2, false);
+  }
+
+  // 处理文字翻译
+  for (let i = 1; i <= 17; i++) {
+    document.getElementById(`text${i}`).innerHTML = langCfg[lang]['text'][i];
+  }
+  ['tip', 'warn', 'error', 'note'].map((id) => {
+    document.getElementsByClassName(id)[0].innerHTML = langCfg[lang]['text'][id];
+  })
+  if (data != undefined) { // 处理页脚
+    document.getElementById('text8').innerHTML += `<a style="color:#3391ff">${data[0]['version']}</a>`;
+    document.getElementById('text9').innerHTML += `<a style='color:#3391ff'>${data[0]['version2']}</a>`;
+  }
+
+  // 处理按钮视觉效果
+  ['zh', 'en', 'ko', 'jp'].map((id) => {
+    document.getElementById(id).dataset.selent = (id == lang) ? 1 : 0
+  })
 }
 
-function JsonToTable(name, data, tablename, main) {
-  // const phone = isMobile();
-  // const range1 = ['0', '1', '2', '3', '4', '5', '6', '7'];
-  // const range2 = ['5', '6', '7'];
+function WriteToTable(data, text, ismain) {
+  // 生成未分类表格单元格
+  if (!ismain) {
+    const tbody = document.getElementById('unknow');
+    if (tbody.dataset.gencell) {
+      const cell_array = Array.from({ length: data[0]['total_line'] }, (_, i) =>
+        Array.from({ length: 3 }, (_, j) => (i + 1) * 10 + (j + 1))
+      );
+      cell_array.map((item) => {
+        const tr = document.createElement('tr');
+        item.map((id) => {
+          const td = document.createElement('td');
+          td.id = `table3-${id}`;
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      })
+    }
+  }
+
+  // 填表
   for (let i = 1; i <= data[0]['total']; i++) {
-    const parts = data[i]['data'].split(",");
-    const cell = document.getElementById(`${tablename}-${parts[0]}${parts[1]}`);
-    if (!cell) continue;
+    const cellId = data[i]['data'].replace(',', '');
+    const cell = document.getElementById(`table${ismain ? '' : '3'}-${cellId}`);
     const a = document.createElement('a');
     const note = document.createElement('a');
     const br = document.createElement('br');
-    a.innerText = name[i]['name'];
-    note.classList = "note";
+    a.innerText = text[i].name;
     a.style.userSelect = "none";
     a.style.cursor = "pointer";
+    note.classList = "note-mark";
 
-    if (main) {
-      a.onclick = function (e) {
+    if (ismain) {
+      a.onclick = e => {
         e.preventDefault();
-        document.getElementById('text21').style.display = null;
-        ChangeCard('picture');
+        document.getElementsByClassName('overlay')[0].style.display = null;
         ShowPicture(i);
       };
 
@@ -124,176 +139,115 @@ function JsonToTable(name, data, tablename, main) {
         note.href = "#note2";
       }
     } else {
+      a.style.textDecoration = "none";
+      a.style.color = "#000";
       a.href = `3d.html?id=${i}&other=y`;
     }
-    // console.log(i);
-    // tmp1 = i.toString();
-    // if (main && phone && range1.includes(tmp1[0]) && range2.includes(tmp1[1])) {
-    //   console.log(i);
-    //   document.getElementById(`table2-${i}`).append(a, br)
-    // } else {
-    cell.append(a, note, br);
-    // }
-  }
 
+    cell.appendChild(a);
+    cell.appendChild(note);
+    cell.appendChild(br);
 
-  if (isMobile()) {
-    document.getElementById('tmp1').style = " color: #fff";
+    // 主表格续表
+    if (ismain && cell.dataset.phone === '0') {
+      const table2 = document.getElementById(`table2-${cellId}`);
+      const a2 = a.cloneNode(true);
+      const note2 = note.cloneNode(true);
+      const br2 = br.cloneNode(true);
+      a2.onclick = e => {
+        e.preventDefault();
+        document.getElementsByClassName('overlay')[0].style.display = null;
+        ShowPicture(i);
+      };
+      table2.appendChild(a2);
+      table2.appendChild(note2);
+      table2.appendChild(br2)
+    }
   }
-  // 手机
-  // if (isMobile()) {
-  // document.getElementById('moble-div').style.display = null;
-  //   for (let i = 0; i <= 7; i++) {
-  //     for (let e = 5; e <= 7; e++) {
-  //       const td = document.getElementById(`table-${i}${e}`);
-  //       const td2 = document.getElementById(`table2-${i}${e}`);
-  //       if (td && td2) {
-  //         td2.innerHTML = td.innerHTML;
-  //         // td2.onclick = td.onclick();
-  //         td.style.display = "none";
-  //       }
-  //     }
-  // }
-  // }
 }
 
+// 服务器筛选
+function chooseServer(servers) {
+  const validServers = servers.filter(s => !s.isError);
+  if (validServers.length === 0) return -1;
+
+  return servers.indexOf(validServers.reduce((fastest, current) =>
+    current.elapsedTime < fastest.elapsedTime ? current : fastest
+  ));
+}
+
+// 显示立绘
 function ShowPicture(id) {
-  try {
-    document.getElementById('name').innerHTML = rolename[id]['name'];
-    const parts = data[id]['data'].split(",");
-    const [line, list] = [parts[0], parts[1]];
-    document.getElementById('line').innerText = text['linedata'][line - 1]; // 命途
-    document.getElementById('list').innerText = text['listdata'][list - 1]; // 战斗属性
-    document.getElementById('firstup').innerText = data[id]['firstup'];
+  if (id == -1) { // 关闭立绘展示
+    document.getElementsByClassName('overlay')[0].style.display = 'none';
+    document.getElementById('btn1').style.display = 'none';
+    document.getElementById('nomodel').style.display = 'none';
+    document.getElementById('img0').dataset.imgdata = 'no';
+    document.getElementById('img1').style.display = 'none';
+    return
+  }
+  const lang = langCfg.userSelect;
+  const text = langCfg[lang]['text'];
+  const data_text = langCfg[lang]['data'];
+  document.getElementById('name').innerHTML = data_text[id]['name']; // 姓名
+  // 属性和命途
+  const parts = data[id]['data'].split(",");
+  const [line, list] = [parts[0], parts[1]];
+  document.getElementById('line').innerText = text.linedata[line - 1];
+  document.getElementById('list').innerText = text.listdata[list - 1];
+  document.getElementById('firstup').innerText = data[id]['firstup']; // 首次跃迁
 
-    const model = document.getElementById('showmodel');
-    model.innerHTML = '';
+  // 模型
+  const btn0 = document.getElementById('btn0');
+  const btn1 = document.getElementById('btn1');
+  btn0.innerText = "查看(Show)";
+  btn0.onclick = () => { location.href = `3d.html?id=${id}` };
+  if (!data[id].model) {
+    document.getElementById('nomodel').style.display = null;
+    btn0.style.display = 'none';
+    btn1.style.display = 'none';
+  }
+  if (data[id].special) {
+    btn0.innerText = data_text[id].special[0];
+    btn1.style.display = null;
+    btn1.innerText = data_text[id].special[1];
+    btn1.onclick = () => { location.href = `3d.html?id=${id}&${data[id]['special']}=1` };
+  }
 
-    const createButton = (text, href) => {
-      const btn = document.createElement('button');
-      btn.innerText = text;
-      btn.onclick = () => { window.location.href = href };
-      model.appendChild(btn);
-    };
-
-    switch (id) {
-      case 4:
-      case 45:
-      case 53:
-      case 46:
-        rolename[id]['special'].forEach(cfg => createButton(cfg.text, `3d.html?id=${id}&${data[id]['special']}`));
-        break;
-      default:
-        if (data[id]['model']) {
-          createButton(text['model'][0], `3d.html?id=${id}`);
-        } else {
-          model.innerHTML = `<a style='color:red'>${text['model'][1]}</a>`;
-        }
-        break;
-    }
-
-    document.getElementById('img1').src = `${serverRoot}/img/character/${lang}/${id}.jpg`;
-
-    if ([4, 45, 53, 65].includes(id)) {
-      const img2 = document.createElement('img');
-      img2.id = "img2";
-      img2.style.width = "48%";
-      img2.src = `${serverRoot}/img/character/${lang}/${id}_isman.jpg`;
-      document.getElementById('imgdiv').appendChild(img2);
-      document.getElementById('img1').style.width = "48%";
-      document.getElementById('text20').innerText = rolename[id]['special'][0];
-      document.getElementById('text12').onclick = () => { location.reload() };
-    } else {
-      fetch(`img/character/${lang}/${id}.txt`, { method: 'HEAD' })
-        .then(response => {
-          if (response.ok) {
-            document.getElementById('img1').src = `${serverRoot}/img/character/zh/${id}.jpg`;
-          }
-        });
-    }
-  } catch (error) {
-    console.error("Failed to show picture:", error);
+  // 图像
+  const img0 = document.getElementById('img0');
+  const img1 = document.getElementById('img1');
+  img0.src = `${serverRoot}/img/character/${lang}/${id}.jpg`;
+  if ([4, 45, 53, 65].includes(id)) {
+    img0.dataset.imgdata = "two";
+    img1.style.display = null;
+    img1.src = `${serverRoot}/img/character/${lang}/${id}_isman.jpg`;
+  } else if ([12, 17].includes(id)) {
+    img0.dataset.imgdata = "center";
+  } else {
+    fetch(`${serverRoot}/img/character/${lang}/${id}.txt`, { method: 'HEAD' })
+      .then(response => {
+        if (response.ok) { img0.src = `${serverRoot}/img/character/zh/${id}.jpg` }
+      })
+      .catch(_ => { })
   }
 }
 
-function ChangeText(ChangeLang) {
-  switch (ChangeLang) {
-    case "zh":
-      alert('自从上次添加记忆命途后屎山代码崩溃了，项目已加入重构列表. 如有翻译错误以中文为主')
-      break;
-    case "jp":
-      alert('前回メモリの運命が追加されてから、Hill コードがクラッシュし、プロジェクトがリファクタリングリストに追加されました。 翻訳エラーがある場合は、主に中国語です')
-      break;
-    case "ko":      
-      alert('마지막으로 기억하는 목적을 추가한 후에 屎山 코드가 충돌했습니다. 프로젝트가 리팩토링 목록에 들어갔습니다. 번역 오류는 중국어를 기본으로 합니다.')
-      break;
-    case "en":
-      alert('Since adding memory lengths, the code has crashed. The project has been added to the refactoring list. If there are translation errors, they are mainly Chinese.')
-      break;
-    default:
-      alert('自从上次添加记忆命途后屎山代码崩溃了，项目已加入重构列表.')
-      break;
-  }
-  return
-  const warn = document.getElementsByClassName('warn')[0];
-  const bar = document.getElementById('bar');
-
-  Promise.all([
-    new Promise(() => { // 按钮样式
-      ['zh', 'en', 'jp', 'ko'].forEach(e => {
-        document.getElementById(e).style = null;
-      });
-      document.getElementById(ChangeLang).style.border = "solid #0069d2";
-    }),
-    new Promise(() => { // 提示信息
-      const text = ReadJson(`${serverRoot}/lang/${ChangeLang}/text.json`, null, null, true);
-      lang = ChangeLang;
-      document.getElementById('warn').innerText = text.warn;
-      document.getElementsByClassName('tip-txt')[0].innerHTML = text.tip;
-      warn.style.display = (ChangeLang === 'zh') ? "none" : null;
-      const isko = (ChangeLang === 'ko');
-      warn.style.backgroundColor = isko ? "#ff000035" : "#ffff0035";
-      bar.style.backgroundColor = isko ? "red" : "yellow";
-        for (let i = 0; i < 22; i++) {
-          console.log(i);
-          console.log(document.getElementById(`text${i}`).innerHTML)
-          document.getElementById(`text${i}`).innerHTML = text[i];
-        }
-    }),
-    new Promise(() => {
-      fetch(`${serverRoot}/lang/${lang}/note.html`) // 注释
-        .then(response => response.text())
-        .then(text => { document.getElementsByClassName('note-div')[0].innerHTML = text })
-    }),
-    new Promise(() => { // 表格
-      const ranges = [[11, 17], [21, 27], [31, 37], [41, 47], [51, 57], [61, 67], [71, 77], [81, 87]];
-      ranges.forEach(([start, end]) => {
-        for (let i = start; i <= end; i++) {
-          document.getElementById(`table-${i}`).innerHTML = null;
-        }
-      });
-      if (isMobile()) {
-        const mobileRanges = [[15, 17], [25, 27], [35, 37], [45, 47], [55, 57], [65, 67], [75, 77]];
-        mobileRanges.forEach(([start, end]) => {
-          for (let i = start; i <= end; i++) {
-            document.getElementById(`table2-${i}`).innerHTML = null;
-          }
-        });
-      }
-      document.getElementById('unknow').innerHTML = null;
-      WriteTable(ChangeLang);
-    })
-  ]);
-}
-
-function ChangeCard(card) {
-  const main = document.getElementById('main');
-  const picture = document.getElementById('picture');
-  if (card === "picture") {
-    main.style.display = "none";
-    picture.style.display = null;
-  } else if (card === "main") {
-    picture.style.display = "none";
-    main.style.display = null;
-  }
+function ChangeText(langCho) {
+  // 清空表格
+  const formcell = Array.from({ length: 8 }, (_, i) =>
+    Array.from({ length: 7 }, (_, j) => (i + 1) * 10 + (j + 1))
+  ).flat();
+  formcell.map(id => {
+    const maincell = document.getElementById(`table-${id}`);
+    maincell.innerHTML = "";
+    const phonecell = document.getElementById(`table2-${id}`);
+    if (!phonecell) return;
+    phonecell.innerHTML = "";
+  });
+  document.getElementById('unknow').innerHTML = "";
+  // 保存语言数据并加载表格
+  langCfg.userSelect = langCho;
+  localStorage.setItem('userlang', langCho);
+  ChangeLang(langCho);
 }
