@@ -3,11 +3,12 @@ const langCfg = {
   jp: { data: null, data2: null, text: null },
   en: { data: null, data2: null, text: null },
   ko: { data: null, data2: null, text: null },
+  allLang: ['zh', 'en', 'ko', 'jp'],
   userSelect: null
 };
 let serverRoot, data, data2;
 const Debug = isDebug();
-const serverMap = ["//139.224.2.122", "//globe-res-sr.ycl.cool"]; // 可用服务器
+const serverMap = ["//139.224.2.122", "//server1.ycl.cool/srroot"]; // 可用服务器
 const nopic = [4, 12, 17, 45, 53]; // 无介绍立绘id
 
 
@@ -21,7 +22,7 @@ const nopic = [4, 12, 17, 45, 53]; // 无介绍立绘id
     serverRoot = serverMap[serverID];
   }
   // 用户语言选择
-  if (localStorage.userlang === undefined || !['zh', 'en', 'ko', 'jp'].includes(localStorage.userlang)) {
+  if (localStorage.userlang === undefined || !langCfg.allLang.includes(localStorage.userlang)) {
     // 默认中文
     langCfg.userSelect = "zh";
     localStorage.setItem('userlang', 'zh');
@@ -41,7 +42,7 @@ async function ChangeLang(lang) {
         langCfg[lang][name] = json;
       } catch (error) { }
     }
-  }));
+  }))
 
   // 处理主表格
   if (data === undefined) {
@@ -49,7 +50,7 @@ async function ChangeLang(lang) {
       .then(response => response.json())
       .then(json => {
         data = json;
-        WriteToTable(json, langCfg[lang].data, true)
+        WriteToTable(json, langCfg[lang].data, true);
         // 处理页脚
         document.getElementById('text8').innerHTML += `<a style="color:#3391ff">${data[0]['version']}</a>`;
         document.getElementById('text9').innerHTML += `<a style='color:#3391ff'>${data[0]['version2']}</a>`;
@@ -57,6 +58,8 @@ async function ChangeLang(lang) {
       .catch(error => { /**错误处理**/ });
   } else {
     WriteToTable(data, langCfg[lang].data, true);
+    document.getElementById('text8').innerHTML += `<a style="color:#3391ff">${data[0]['version']}</a>`;
+    document.getElementById('text9').innerHTML += `<a style='color:#3391ff'>${data[0]['version2']}</a>`;
   }
 
   // 处理副表格
@@ -79,15 +82,9 @@ async function ChangeLang(lang) {
   ['tip', 'warn', 'error', 'note'].map((id) => {
     document.getElementsByClassName(id)[0].innerHTML = langCfg[lang]['text'][id];
   })
-  if (data != undefined) { // 处理页脚
-    document.getElementById('text8').innerHTML += `<a style="color:#3391ff">${data[0]['version']}</a>`;
-    document.getElementById('text9').innerHTML += `<a style='color:#3391ff'>${data[0]['version2']}</a>`;
-  }
 
   // 处理按钮视觉效果
-  ['zh', 'en', 'ko', 'jp'].map((id) => {
-    document.getElementById(id).dataset.selent = (id == lang) ? 1 : 0
-  })
+  langCfg.allLang.map((id)=>{})
 }
 
 function WriteToTable(data, text, ismain) {
