@@ -18,6 +18,7 @@
     <div class="main">
         <div id="title">
             <h2 id="text1" style="margin: 10px 0px">《崩坏:星穹铁道》角色立绘及3D模型展示</h2>
+            <b class="updata" style="display: none;">当前为测试版! Is currently in beta!</b>
             <div class="info">
                 <a href="//www.ycl.cool/blog/index.php/archives/17" target="_blank">
                     <img decoding="async" src="//res.ycl.cool/img/icon.ico" height="16" width="16">
@@ -32,10 +33,10 @@
                 </a>
             </div>
             <div class="lang">
-                <button id="zh" onclick="ChangeText('zh')" data-selent="1">中文</button>
-                <button id="en" onclick="ChangeText('en')" data-selent="0">English</button>
-                <button id="jp" onclick="ChangeText('jp')" data-selent="0">日本語</button>
-                <button id="ko" onclick="ChangeText('ko')" data-selent="0">한국어</button>
+                <button id="zh" onclick="ChangeLang('zh')" data-selent="1">中文</button>
+                <button id="en" onclick="ChangeLang('en')" data-selent="0">English</button>
+                <button id="jp" onclick="ChangeLang('jp')" data-selent="0">日本語</button>
+                <button id="ko" onclick="ChangeLang('ko')" data-selent="0">한국어</button>
             </div>
             <div class="tip">
                 官方素材的权利归米哈游所有，其他内容的相关权利均归各自所有者享有. 如有侵权请向
@@ -47,10 +48,9 @@
                 <a href="https://www.cloudflare-cn.com/"><img src="img/cloudflare.svg" height="16"></a>
                 作为CDN加速服务和网络攻击防护服务, 国内部分地区可能出现随机性访问变慢.
             </div>
-            <div class="error">
-                此项目代码正在重构中, 当前版本只有核心功能, 可能出现未知问题.<br>
-                This project code is being refactored, the current version only has core features, and there may be
-                unknown issues.
+            <div class="error"></div>
+            <div class="server">
+                <!-- <a>当前无可用服务器:</a> -->
             </div>
         </div>
         <div id="form">
@@ -58,8 +58,8 @@
             <table colspan="2">
                 <thead>
                     <!-- 战斗属性  -->
-                    <tr class="table-title">
-                        <td style="min-width: 20px;"></td>
+                    <tr>
+                        <td></td>
                         <!-- 物理  -->
                         <td><img loading="lazy" decoding="async" src="img/table/Physical.png"></td>
                         <!-- 火  -->
@@ -287,15 +287,15 @@
                     <tr class="table-title" style="color: white;">
                         <td>
                             <a id="text5">已公布人物</a>
-                            <a class="note-mark" href="#note4">(4)</a>
+                            <a class="note-mark" href="#note3">(3)</a>
                         </td>
                         <td>
                             <a id="text6">未公布人物</a>
-                            <a class="note-mark" href="#note5">(5)</a>
+                            <a class="note-mark" href="#note4">(4)</a>
                         </td>
                         <td>
                             <a id="text7">其他人物模型</a>
-                            <a class="note-mark" href="#note6">(6)</a>
+                            <a class="note-mark" href="#note5">(5)</a>
                         </td>
                     </tr>
                 </thead>
@@ -312,9 +312,10 @@
         </div>
         <div class="footer">
             <a id="text8">程序版本:</a>
+            <a id="ver0" style="color:#3391ff"></a>
             <a id="text9">数据库版本:</a>
-            <a id="text10" href="//www.ycl.cool/blog/index.php/archives/17/" target="_blank"
-                style="color: deepskyblue">更新日志</a>
+            <a id="ver1" style="color:#3391ff"></a>
+            <a id="text10" href="update.html" target="_blank" style="color: deepskyblue">更新日志</a>
             <a id="text11">校对:</a>
         </div>
     </div>
@@ -351,7 +352,8 @@
                             <h3 id="imgload" style="line-height: 0cm">Loading...</h3>
                             <img id="img0" src="img/background.jpg" data-imgdata="no" onclick="window.open(this.src)"
                                 onload="document.getElementById('imgload').style.display = 'none'">
-                            <img id="img1" src="" style="display: none;" data-imgdata="two" onclick="window.open(this.src)">
+                            <img id="img1" src="" style="display: none;" data-imgdata="two"
+                                onclick="window.open(this.src)">
                         </td>
                     </tr>
                     <tr class="closebtn">

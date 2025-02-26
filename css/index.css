@@ -12,6 +12,7 @@ body {
     min-height: 100vh;
 }
 
+/* 主体 */
 .main {
     width: 80%;
     max-width: 1000px;
@@ -20,6 +21,12 @@ body {
     text-align: center;
     box-sizing: border-box;
     background-color: #4c4c4cc7
+}
+
+.updata {
+    color:chocolate;
+    font-style: italic;
+    text-decoration: underline;
 }
 
 .info {
@@ -33,6 +40,7 @@ body {
 
 }
 
+/* 主体-语言选择 */
 .lang {
     margin: 0 auto;
     margin-top: 10px;
@@ -61,6 +69,7 @@ body {
     background-color: #00cece;
 }
 
+/* 主体-公告类 */
 .tip {
     margin: 0 auto;
     width: 95%;
@@ -101,14 +110,22 @@ body {
     text-decoration: underline
 }
 
+.server {
+    margin: 0 auto;
+    width: 95%;
+    color: #f00;
+    text-align: left;
+}
+
+/* 主体-表格 */
 table {
     width: 90%;
     margin: 0 auto;
     border-collapse: collapse;
 }
 
-.table-title,
-.table-title td {
+thead td,
+.table-title {
     background-color: #2e2e2e;
 }
 
@@ -119,6 +136,11 @@ td {
     padding: 5px 0px;
 }
 
+tbody[data-gencell] td {
+    width: calc(100% / 3);
+}
+
+/******/
 .phone {
     display: none;
 }
@@ -137,19 +159,7 @@ td {
     text-align: left;
 }
 
-tfoot {
-    margin-top: 10px;
-    display: inline-block;
-    width: 100%;
-    text-align: center;
-}
-
-tfoot * {
-    display: inline-block;
-    line-height: 0;
-    margin: 0 10px;
-}
-
+/* 立绘覆盖页 */
 .overlay {
     position: fixed;
     top: 0;
@@ -197,9 +207,10 @@ tfoot * {
     padding: 0;
     border: none;
     cursor: pointer;
-    background-color:#878787 ;
+    background-color: #878787;
 }
 
+/* 适配手机端 */
 @media (max-width: 768px) {
     .main {
         width: 100%;

@@ -36,10 +36,10 @@ initServer() // 服务器初始化
 async function initServer() {
     let server = getUrlParams('server'); // 用户服务器选择处理
     if (server === 1) return Promise.resolve("//139.224.2.122");
-    if (server === 2) return Promise.resolve("//globe-res-sr.ycl.cool");
+    if (server === 2) return Promise.resolve("//server1.ycl.cool/srroot");
     if (Debug) return Promise.resolve("//127.0.0.1:8081");
     const response = await fetch('?cf_iscn&' + RandomString(64), { method: 'HEAD' });
-    return response.headers.has('iscn') ? "//139.224.2.122" : "//globe-res-sr.ycl.cool";
+    return response.headers.has('iscn') ? "//139.224.2.122" : "//server1.ycl.cool/srroot";
 }
 
 

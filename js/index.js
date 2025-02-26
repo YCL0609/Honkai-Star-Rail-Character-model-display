@@ -8,7 +8,7 @@ const langCfg = {
 };
 let serverRoot, data, data2;
 const Debug = isDebug();
-const serverMap = ["//139.224.2.122", "//server1.ycl.cool/srroot"]; // 可用服务器
+const serverMap = ["//139.224.2.122", "//server1.ycl.cool/srroot" , "//server0.ycl.cool/srroot/"]; // 可用服务器
 const nopic = [4, 12, 17, 45, 53]; // 无介绍立绘id
 
 
@@ -18,7 +18,7 @@ const nopic = [4, 12, 17, 45, 53]; // 无介绍立绘id
   if (!serverRoot) {
     const servers = await ServerChoose(serverMap, Debug);
     const serverID = chooseServer(servers);
-    if (serverID === -1) /**错误处理**/;
+    if (serverID === -1) InError();///////////////////////////////
     serverRoot = serverMap[serverID];
   }
   // 用户语言选择
@@ -32,7 +32,39 @@ const nopic = [4, 12, 17, 45, 53]; // 无介绍立绘id
   ChangeLang(langCfg.userSelect);
 })();
 
+// 服务器筛选
+function chooseServer(servers) {
+  const validServers = servers.filter(s => !s.isError);
+  if (validServers.length === 0) return -1;
+
+  return servers.indexOf(validServers.reduce((fastest, current) =>
+    current.elapsedTime < fastest.elapsedTime ? current : fastest
+  ));
+}
+
+// 语言切换
 async function ChangeLang(lang) {
+  // 保存语言数据
+  langCfg.userSelect = lang;
+  localStorage.setItem('userlang', lang);
+
+  // 清空表格
+  const formcell = Array.from({ length: 8 }, (_, i) =>
+    Array.from({ length: 7 }, (_, j) => (i + 1) * 10 + (j + 1))
+  ).flat();
+  formcell.map(id => {
+    const maincell = document.getElementById(`table-${id}`);
+    maincell.innerHTML = "";
+    const phonecell = document.getElementById(`table2-${id}`);
+    if (!phonecell) return;
+    phonecell.innerHTML = "";
+  });
+  document.getElementById('unknow').innerHTML = "";
+  // 处理语言按钮变化
+  langCfg.allLang.map(btn => {
+    document.getElementById(btn).dataset.selent = (btn === lang) ? 1 : 0;
+  });
+
   // 获取语言数据
   await Promise.all(['data', 'data2', 'text'].map(async (name) => {
     if (langCfg[lang][name] === null) {
@@ -52,14 +84,12 @@ async function ChangeLang(lang) {
         data = json;
         WriteToTable(json, langCfg[lang].data, true);
         // 处理页脚
-        document.getElementById('text8').innerHTML += `<a style="color:#3391ff">${data[0]['version']}</a>`;
-        document.getElementById('text9').innerHTML += `<a style='color:#3391ff'>${data[0]['version2']}</a>`;
+        document.getElementById('ver0').innerHTML = data[0]['version'];
+        document.getElementById('ver1').innerHTML = data[0]['version2'];
       })
       .catch(error => { /**错误处理**/ });
   } else {
     WriteToTable(data, langCfg[lang].data, true);
-    document.getElementById('text8').innerHTML += `<a style="color:#3391ff">${data[0]['version']}</a>`;
-    document.getElementById('text9').innerHTML += `<a style='color:#3391ff'>${data[0]['version2']}</a>`;
   }
 
   // 处理副表格
@@ -84,9 +114,10 @@ async function ChangeLang(lang) {
   })
 
   // 处理按钮视觉效果
-  langCfg.allLang.map((id)=>{})
+  langCfg.allLang.map((id) => { })
 }
 
+// 生成表格
 function WriteToTable(data, text, ismain) {
   // 生成未分类表格单元格
   if (!ismain) {
@@ -163,16 +194,6 @@ function WriteToTable(data, text, ismain) {
   }
 }
 
-// 服务器筛选
-function chooseServer(servers) {
-  const validServers = servers.filter(s => !s.isError);
-  if (validServers.length === 0) return -1;
-
-  return servers.indexOf(validServers.reduce((fastest, current) =>
-    current.elapsedTime < fastest.elapsedTime ? current : fastest
-  ));
-}
-
 // 显示立绘
 function ShowPicture(id) {
   if (id == -1) { // 关闭立绘展示
@@ -230,21 +251,10 @@ function ShowPicture(id) {
   }
 }
 
-function ChangeText(langCho) {
-  // 清空表格
-  const formcell = Array.from({ length: 8 }, (_, i) =>
-    Array.from({ length: 7 }, (_, j) => (i + 1) * 10 + (j + 1))
-  ).flat();
-  formcell.map(id => {
-    const maincell = document.getElementById(`table-${id}`);
-    maincell.innerHTML = "";
-    const phonecell = document.getElementById(`table2-${id}`);
-    if (!phonecell) return;
-    phonecell.innerHTML = "";
-  });
-  document.getElementById('unknow').innerHTML = "";
-  // 保存语言数据并加载表格
-  langCfg.userSelect = langCho;
-  localStorage.setItem('userlang', langCho);
-  ChangeLang(langCho);
+// 错误处理
+function InError(errid) {
+  const errInfo = {
+    0: "无可用服务器",
+  }
+  throw new Error(errInfo[errid]);
 }
