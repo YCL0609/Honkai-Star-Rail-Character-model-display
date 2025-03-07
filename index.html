@@ -49,8 +49,17 @@
                 作为CDN加速服务和网络攻击防护服务, 国内部分地区可能出现随机性访问变慢.
             </div>
             <div class="error"></div>
+            <div class="fault"></div>
             <div class="server">
-                <!-- <a>当前无可用服务器:</a> -->
+                <b>资源服务器无法连接或响应超时, 可手动选择服务器尝试<br>The resource server is unreachable or the response timed out. You may manually select a server to attempt.</b><br>
+                <label for="server">服务器(Server): </label>
+                <select id="server">
+                    <option style="display: none" selected></option>
+                    <option value="0">国际服务器0 - Globe server #0</option>
+                    <option value="1">国际服务器1 - Globe server #1</option>
+                    <option value="9">国内服务器 - China server #CN</option>
+                </select>
+                <button onclick="userChooseServer()">OK</button>
             </div>
         </div>
         <div id="form">

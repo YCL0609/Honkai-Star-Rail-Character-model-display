@@ -118,18 +118,18 @@ function ReadJson(url, val1, val2, all = false, allkey = false) {
 /**
  * 选择最快的服务器
  * @param {string[]} TestURLs 需要测试的服务器 URL 数组
- * @param {boolean} [isConsole=false] 是否将结果输出到控制台
+ * @param {boolean} [isDebug=false] 调试模式使用no-cross执行请求，并将结果输出到控制台
  * @returns {Promise<object[]>} 一个对象数组，包含每个服务器的 URL、耗时、是否出错、出错信息、是否最快等信息
  * @description 该函数会并发地测试每个服务器的响应速度，并返回一个Json对象
  */
-async function ServerChoose(TestURLs, isConsole = false) {
+async function ServerChoose(TestURLs, isDebug = false) {
     const results = await Promise.all(
         TestURLs.map(async (url, index) => {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 3000); // 超时时间3s
             const start = performance.now();
             try {
-                const response = await fetch(`${url}/test.bin`, { signal: controller.signal });
+                const response = await fetch(`${url}/test.bin`, { signal: controller.signal, mode: isDebug ? 'no-cors' : 'cors' });
                 clearTimeout(timeoutId);
                 if (!response.ok) throw new Error('Fetch error');
                 await response.arrayBuffer();
@@ -149,7 +149,7 @@ async function ServerChoose(TestURLs, isConsole = false) {
         isFastest: result.elapsedTime === minElapsedTime,
         index: result.index
     }));
-    if (isConsole) {
+    if (isDebug) {
         resultsArray.map(e => {
             console.log(`URL: ${e.url} 响应时间: %c${e.elapsedTime}ms %c出错: %c${e.isError}${e.isError ? `\n${e.error.stack}` : ''}`, `color:${e.isFastest ? '#0ff' : '#fff'}`, 'color:#fff', `color:${e.isError ? '#f00' : '#0f0'}`);
         });
@@ -162,7 +162,7 @@ async function ServerChoose(TestURLs, isConsole = false) {
  * @returns {boolean} 是否处于调试模式
  */
 function isDebug() {
-    const urldebug = getUrlParams('debug');
+    const urldebug = (getUrlParams('debug') !== undefined);
     const hostdebug = /^localhost|^127(?:\.0(?:\.0(?:\.0?)?)?\.0?)|(?:0*:)?::1$/i.test(window.location.hostname);
     return urldebug || hostdebug;
 }

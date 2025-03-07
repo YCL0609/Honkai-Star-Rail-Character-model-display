@@ -110,7 +110,13 @@ body {
     text-decoration: underline
 }
 
+.fault {
+    font-size: larger;
+    color: orange;
+}
+
 .server {
+    display: none;
     margin: 0 auto;
     width: 95%;
     color: #f00;
