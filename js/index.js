@@ -24,7 +24,7 @@ if (Debug) { // 调试初始化
    * 是否启动性能计时器
    **/
 }
-
+ 
 (async () => {
   timmer = DbgTimmer(Number(DebugID[3]));
   timmer.Start('init');

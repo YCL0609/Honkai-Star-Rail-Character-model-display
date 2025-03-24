@@ -7,7 +7,7 @@ import { MMDLoader } from 'three/loaders/MMDLoader.js';
 import { MMDAnimationHelper } from 'three/animation/MMDAnimationHelper.js';
 import { GUI } from 'three/lil-gui.module.min.js';
 console.log('3D page version: ' + page_version + '\nthree.js version: ' + THREE.REVISION);
-
+ 
 let stats, vmdurl, mp3url;
 let helper, mesh;
 let name, vmd, weapon, islocal;

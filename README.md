@@ -84,7 +84,7 @@ Animation:
  ID:1 Name:极乐净土 From:だんぶち
 ```
 ![mmd][4]
-
+ 
 [en]: README_EN.md
 [0]: mailto:email@ycl.cool
 [1]: https://blog.ycl.cool/usr/uploads/2025/03/2416911427.jpg

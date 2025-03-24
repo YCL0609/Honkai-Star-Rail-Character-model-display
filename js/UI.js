@@ -75,7 +75,7 @@ export const Progress = {
         document.getElementById('texte0').innerText = `(${num}/5)${infoe[num]}`;
         document.getElementById('progress0').style.width = `${num * 20}%`;
     },
-
+ 
     Model: (id, xhr, text = '', texten = '') => {
         document.getElementById(`text${id}`).innerText = text + "(" + (xhr.loaded / 1024).toFixed(0) + " KB/" + (xhr.total / 1024).toFixed(0) + " KB)";
         document.getElementById(`texte${id}`).innerText = texten + "(" + (xhr.loaded / 1024).toFixed(0) + " KB/" + (xhr.total / 1024).toFixed(0) + " KB)";

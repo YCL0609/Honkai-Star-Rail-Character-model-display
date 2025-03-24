@@ -70,7 +70,7 @@ if (isSafari) {
 	alert('由于Webkit内核对于WebGL兼容性有限, 页面可能出现未知渲染问题。\nDue to the limited compatibility of the Webkit kernel for WebGL, pages may have unknown rendering issues.')
 }
 ```
-
+ 
 When the model is successfully loaded, detailed information will be output to the console.<br>
 Normal loading example:
 ```

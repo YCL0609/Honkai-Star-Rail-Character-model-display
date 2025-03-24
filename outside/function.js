@@ -55,7 +55,7 @@ function loadExternalResource(url, type, isModule = false, callback) {
         document.head.appendChild(tag);
     });
 }
-
+ 
 /**
  * 网页URL参数获取
  * @param {string} [name] 不传返回所有值，传入则返回对应值
