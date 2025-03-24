@@ -6,24 +6,28 @@ const langCfg = {
   allLang: ['zh', 'en', 'ko', 'jp'],
   userSelect: null
 };
-let serverRoot, data, data2;
+let serverRoot, data, data2, timmer, DbgRoot;
+let DebugID = "1000";
 const Debug = isDebug();
-let DebugID = "100";
-const serverMap = ["//139.224.2.122", "//server1.ycl.cool/srroot", "//server0.ycl.cool/srroot"]; // 可用服务器
 const nopic = [4, 12, 17, 45, 53]; // 无介绍立绘id
+const serverMap = ["//139.224.2.122", "//server1.ycl.cool/srroot", "//server0.ycl.cool/srroot"]; // 可用服务器
 
 if (Debug) { // 调试初始化
   const id = getUrlParams('debug');
-  if (!isNaN(id)) DebugID = id.padEnd(3, 0);
-  console.log(`调试ID: %c${id}`, 'color: #0ff');
+  DebugID = !isNaN(id) ? id.padEnd(4, 0) : "0010";
+  log(`调试ID: %c${DebugID}`, 'color: #0ff');
+  DbgRoot = "//localhost" + (window.location.protocol == "https:" ? "/sr_db" : ":8081")
   /**
    * 是否进行服务器连接测试
    * 是否打印到控制台
    * 是否使用本地资源文件
+   * 是否启动性能计时器
    **/
 }
 
 (async () => {
+  timmer = DbgTimmer(Number(DebugID[3]));
+  timmer.Start('init');
   // 用户语言选择
   if (localStorage.userlang === undefined || !langCfg.allLang.includes(localStorage.userlang)) {
     // 默认中文
@@ -33,17 +37,17 @@ if (Debug) { // 调试初始化
     langCfg.userSelect = localStorage.userlang;
   }
   // 服务器选择
+  let serverID;
   if (Number(DebugID[0])) {
     const servers = await ServerChoose(serverMap, Number(DebugID[1]));
-    const serverID = chooseServer(servers);
+    serverID = chooseServer(servers);
     if (serverID === -1) {
       document.getElementsByClassName('server')[0].style.display = "block";
-      InError(1, '所有服务器无法连接或响应超时');
+      InError(1, '所有服务器无法连接或响应超时', !Number(DebugID[2]));
     }
-    serverRoot = Number(DebugID[2]) ? "//127.0.0.1:8081" : serverMap[serverID];
-  } else {
-    serverRoot = "//127.0.0.1:8081"
-  }
+  } else { serverID = 0 }
+  serverRoot = Number(DebugID[2]) ? DbgRoot : serverMap[serverID];
+  timmer.Stop('init', '初始化')
   ChangeLang(langCfg.userSelect);
 })();
 
@@ -59,10 +63,11 @@ function chooseServer(servers) {
 
 // 语言切换
 async function ChangeLang(lang) {
+  timmer.Start('lang');
   // 保存语言数据
   langCfg.userSelect = lang;
   localStorage.setItem('userlang', lang);
-  if (DebugID) console.log(`语言切换为 ${lang}`);
+  if (Debug) log(`语言切换为 ${lang}`);
 
   // 清空表格
   try {
@@ -133,11 +138,14 @@ async function ChangeLang(lang) {
   langCfg.allLang.map((id) => {
     document.getElementById(id).dataset.selent = (id === lang) ? 1 : 0;
   })
+
+  timmer.Stop('lang', '语言切换');
 }
 
 // 生成表格
 function WriteToTable(data, text, ismain) {
-  try {    
+  timmer.Start('totab');
+  try {
     // 生成未分类表格单元格
     if (!ismain) {
       const tbody = document.getElementById('unknow');
@@ -212,6 +220,7 @@ function WriteToTable(data, text, ismain) {
       }
     }
   } catch (error) { InError(5, (ismain ? '主表格错误' : '副表格错误') + error.stack, true) }
+  timmer.Stop('totab', '表格生成');
 }
 
 // 显示立绘
@@ -224,6 +233,7 @@ function ShowPicture(id) {
     document.getElementById('img1').style.display = 'none';
     return
   }
+  timmer.Start('showpic');
   const lang = langCfg.userSelect;
   const text = langCfg[lang]['text'];
   const data_text = langCfg[lang]['data'];
@@ -265,29 +275,56 @@ function ShowPicture(id) {
     img0.dataset.imgdata = "two";
     img1.style.display = null;
     img1.src = `${serverRoot}/img/character/${lang}/${id}_isman.jpg`;
-    if (Debug) console.log(`ID:${id} 使用双立绘`)
+    if (Debug) log(`ID:${id} 使用双立绘`)
   } else if ([12, 17].includes(id)) { // 无人物介绍立绘
     img0.dataset.imgdata = "center";
-    if (Debug) console.log(`ID:${id} 使用大招立绘`)
+    if (Debug) log(`ID:${id} 使用大招立绘`)
   } else {
     fetch(`${serverRoot}/img/character/${lang}/${id}.txt`, { method: 'HEAD' })
       .then(response => {
         if (response.ok) {
           img0.src = `${serverRoot}/img/character/zh/${id}.jpg`;
-          if (Debug) console.log(`ID:${id} 使用中文立绘图`)
+          if (Debug) log(`ID:${id} 使用中文立绘图`)
         }
       })
   }
+  timmer.Stop('showpic', '显示立绘')
 }
 
 // 用户服务器选择
 function userChooseServer() {
   const selent = document.getElementById('server');
-  const serverID = selent.options[selent.selectedIndex].value
-  langCfg.userSelect = (serverID === 9) ? '//139.224.2.122' : `//server${serverID}.ycl.cool`;
-  fetch(`${langCfg.userSelect}/test.bin`)
-    .then(response => { if (!response.ok) InError(2) });
-  ChangeLang(langCfg.userSelect);
+  const serverID = selent.options[selent.selectedIndex].value;
+  const resultdiv = document.getElementById('test-result');
+  if (serverID == -1) return;
+  serverRoot = (serverID === 9) ? '//139.224.2.122' : `//server${serverID}.ycl.cool`;
+
+  // 服务器连接测试
+  timmer.Start('usercho');
+  fetch(`${serverRoot}/test.bin`)
+    .then(response => {
+      timmer.Stop('usercho', '服务器响应');
+      if (!response.ok) {
+        UI("✕", `HTTP Code ${response.status}`, "orange");
+        InError(2, `HTTP Code ${response.status}`)
+      }
+    })
+    .then(() => {
+      UI("✓", "OK", "chartreuse");
+      document.getElementsByClassName('fault')[0].innerHTML = "";
+      setTimeout(() => document.getElementsByClassName('server')[0].style.display = "none", 1000);
+      ChangeLang(langCfg.userSelect)
+    })
+    .catch(error => {
+      timmer.Stop('usercho', '服务器响应');
+      UI("✕", "Server Connect Failed", "orange");
+      InError(2, error.stack, true)
+    })
+
+  function UI(icon, text, color) {
+    resultdiv.innerHTML = `<b>${icon}</b> ${text}`;
+    resultdiv.style.color = color
+  }
 }
 
 // 错误处理
@@ -301,7 +338,7 @@ function InError(errid = 0, errtxt, isThrow = false) {
     5: "表格数据填充错误",
     6: "角色信息获取失败"
   };
-  console.log(`%c${errName[errid]}: ${errtxt}`, 'color: orange');
-  document.getElementsByClassName('fault')[0].innerText = langCfg[langCfg.userSelect]["errInfo"];
+  log(`%c${errName[errid]}: ${errtxt}`, 'color: orange');
+  document.getElementsByClassName('fault')[0].innerHTML = `<i>Error Code ${errid}</i> ` + langCfg[langCfg.userSelect]["errInfo"];
   if (isThrow) { throw new Error(errName[errid]) }
 }

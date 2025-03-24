@@ -12,8 +12,8 @@ English version please see [README_EN.md][en]
 data2.json示例:
 
 ```json
-"3": {  // 模型编号
-    "folder": "Other3",  // 模型文件夹
+"5": {  // 模型编号
+    "folder": "sr_March7th",  // 模型文件夹
     "from": "给你柠檬椰果养乐多你会跟我玩吗",  // 模型来自
     "data": "1,2",  // 表格位置
     "weapons": 0  // 有几个附属模型
@@ -23,18 +23,20 @@ data2.json示例:
 URL参数示例:
 
 ```
-https://sr.ycl.cool/3d.html?id=3&other (id=3:使用模型ID为4的模型, other:使用data2.json)
+https://sr.ycl.cool/3d.html?id=3&other=y (id=3:使用模型ID为4的模型, other=y:使用data2.json)
 ```
 ![main][1]
 
-点击已分类的对应角色名字将进入立绘查看页，此处可根据需要下载立绘或返回主页。<br><br>
-点击查看3D模型后会从data.json里读取模型ID并传递给3D页面。<br>
+点击已分类的对应角色名字将查看立绘，此处可根据需要下载立绘或返回主页。<br><br>
+点击查看3D模型后会将当前的模型ID传递给3D页面。<br>
 data.json示例:
 
 ```json
 "1": {  // 人物编号
     "data": "4,2",  // 表格位置
     "firstup": "V1.0",  // 人物首次跃迁版本
+    "special": "iswhite", // 是否有第二个主模型
+    "folder": 46,  // 若上一行存在，则此行为模型所在文件夹
     "model": true,  // 是否有3D模型
     "weapons": 1   // 人物有几个武器模型
 },
@@ -43,22 +45,13 @@ data.json示例:
 中文data.json示例:
 
 ```json
-"0": {
-    "urlroot1": "https://patchwiki.biligame.com/images/sr", // 第一立绘网站根地址
-    "urlroot2": "https://upload-bbs.miyoushe.com/upload"   // 第二立绘网站根地址
-},
-"1": {  // 人物编号
-    "name": "艾丝妲",  // 人物名称
-    "picurl": "/f/fb/t3l8ksl1j60xbi9zpfdhj8w2wb5hibh.png", // 立绘地址
-    "urlroot": true  // 是否使用urlroot1
-},
-```
-
-若网站带宽充足，可删除"urlroot"行并替换"picurl"为本地路径，同时请删除以下代码。
-
-```javascript
-let picurl_root = name[id]['urlroot'] ? name[0]['urlroot1'] : name[0]['urlroot2'] // 判断立绘图片的所属域名前缀
-
+"46": { // 人物编号
+    "name": "黄泉", // 人物名称
+    "special": [ // 若存在第二个主模型
+        "正常", // 正常名字
+        "大招"  // 第二主模型名字
+    ]
+}
 ```
 ![picture][2]
 
@@ -94,7 +87,7 @@ Animation:
 
 [en]: README_EN.md
 [0]: mailto:email@ycl.cool
-[1]: https://www.ycl.cool/blog/usr/uploads/2024/06/786176234.jpg
-[2]: https://www.ycl.cool/blog/usr/uploads/2024/06/2019666578.jpg
-[3]: https://www.ycl.cool/blog/usr/uploads/2024/06/3134407100.jpeg
-[4]: https://www.ycl.cool/blog/usr/uploads/2024/06/2736328017.jpeg
+[1]: https://blog.ycl.cool/usr/uploads/2025/03/2416911427.jpg
+[2]: https://blog.ycl.cool/usr/uploads/2025/03/302793935.jpg
+[3]: https://blog.ycl.cool/usr/uploads/2025/03/2962774676.jpg
+[4]: https://blog.ycl.cool/usr/uploads/2025/03/224161822.jpg

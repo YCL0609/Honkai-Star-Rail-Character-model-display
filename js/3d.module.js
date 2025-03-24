@@ -16,12 +16,14 @@ const clock = new THREE.Clock();
 const gui = new GUI();
 
 // 初始化
+timmer.Start('threeinit')
 UI.Init((params) => {
   name = params[0];
   vmd = params[1];
   weapon = params[2];
   islocal = params[3];
 });
+timmer.Stop('threeinit', 'three初始化')
 
 // 主函数
 try {
@@ -36,6 +38,7 @@ try {
 
 // 场景配置
 async function init() {
+  timmer.Start('screeninit')
   UI.Progress.main(3);
   const container = document.createElement('div');
   document.body.appendChild(container);
@@ -75,20 +78,24 @@ async function init() {
   // 模型加载器
   const loader = new MMDLoader();
   helper = new MMDAnimationHelper();
-  // 帧数显示
+  // 帧数显示和其他
   stats = new Stats();
   container.appendChild(stats.dom);
+  timmer.Stop('screeninit', '画布初始化');
+  UI.Progress.main(4);
   // 天空盒
+  timmer.Start('skybox');
   const skybox = new THREE.CubeTextureLoader();
-  skybox.setPath(`${serverURL}/img/skybox/`);
+  skybox.setPath(`${serverRoot}/img/skybox/`);
   skybox.load(['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg',], (mesh) => {
     scene.background = mesh;
-    UI.Finish.Skybox()
+    UI.Finish.Skybox();
+    timmer.Stop('skybox', '天空盒');
   }, null, () => { UI.Error(3); UI.Finish.Skybox(true) })
-  UI.Progress.main(4)
   // 场景模型
+  timmer.Start('bgmodel');
   loader.load(
-    `${serverURL}/models/background/index.pmx`,
+    `${serverRoot}/models/background/index.pmx`,
     (mesh) => {
       // 添加到屏幕( X:0 y:-11.7 Z:0)
       mesh.position.y = -11.7;
@@ -101,7 +108,8 @@ async function init() {
       modelFolder.add(modelParams, 'z', -500, 500).onChange(() => {
         mesh.position.z = modelParams.z;
       });
-      UI.Finish.Model('text2', 'texte2', 'background')
+      UI.Finish.Model('text2', 'texte2', 'background');
+      timmer.Stop('bgmodel', '背景模型')
     },
     (xhr) => { UI.Progress.Model(2, xhr) },
     (err) => { UI.Error(4, err) }
@@ -117,17 +125,18 @@ async function init() {
         if (window.loadok) {
           clearInterval(check_value); // 清除定时器
           vmdurl = document.getElementById('vmdInput').value;
-          mp3url = document.getElementById('mp3Input').value || `${serverURL}/vmd/0/index.mp3`;
+          mp3url = document.getElementById('mp3Input').value || `${serverRoot}/vmd/0/index.mp3`;
           resolve(); // 解析 Promise
         }
       }, 1500); // 每1500毫秒检查一次
     });
   } else {
-    vmdurl = `${serverURL}/vmd/${vmd}/index.vmd`;
-    mp3url = `${serverURL}/vmd/${vmd}/index.mp3`;
+    vmdurl = `${serverRoot}/vmd/${vmd}/index.vmd`;
+    mp3url = `${serverRoot}/vmd/${vmd}/index.mp3`;
   }
+  timmer.Start('mainmodel');
   loader.loadWithAnimation(
-    `${serverURL}/models/${name}/index.pmx`,
+    `${serverRoot}/models/${name}/index.pmx`,
     vmdurl,
     (mmd) => {
       // 添加到屏幕( X:0 y:-10 Z:0)
@@ -143,7 +152,8 @@ async function init() {
         mesh.position.z = modelParams.z;
       });
       UI.Finish.Model('text1', 'texte1', 'module')
-      if (vmd !== 0) { Audioload(mmd) }
+      if (vmd !== 0) { Audioload(mmd) };
+      timmer.Stop('mainmodel', '人物模型')
     },
     (xhr) => {
       UI.Progress.Model(1, xhr, text, texten);
@@ -185,9 +195,10 @@ function Weapons(loader) {
     z = [0, 0, 0, -20, -20];
   }
   for (let i = 1; i <= weapon; i++) {
+    timmer.Start(`weapon${i}`);
     UI.Start(`weapon${i}`, `-w${i}`, `武器模型${i}:`, `Weapon model${i}:`);
     loader.load(
-      `${serverURL}/models/${name}/${i}.pmx`,
+      `${serverRoot}/models/${name}/${i}.pmx`,
       (mesh) => {
         // 添加到屏幕(X,Y,Z)
         mesh.position.x = x[i];
@@ -203,6 +214,7 @@ function Weapons(loader) {
         });
         scene.add(mesh);
         UI.Finish.Model(`text-w${i}`, `texte-w${i}`, `weapon${i}`);
+        timmer.Stop(`weapon${i}`, `武器模型${i}`)
       },
       (xhr) => {
         UI.Progress.Model(`-w${i}`, xhr);
@@ -214,6 +226,7 @@ function Weapons(loader) {
 }
 
 function Audioload(mmd) {
+  timmer.Start('music');
   UI.Start('music', 4, '音乐文件:', 'Music file:');
   // 监听
   const audioListener = new THREE.AudioListener();
@@ -230,6 +243,7 @@ function Audioload(mmd) {
       oceanAmbientSound.setLoop(true);//设置音频循环
       document.getElementById('text4').innerText = "加载完成.";
       document.getElementById('music').style.display = "none";
+      timmer.Stop('music', '音频文件');
       setTimeout(() => {
         UI.Finish.MMD();
         let ok = document.getElementById('start');
