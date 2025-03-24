@@ -118,7 +118,7 @@ function ReadJson(url, val1, val2, all = false, allkey = false) {
 /**
  * 选择最快的服务器
  * @param {string[]} TestURLs 需要测试的服务器 URL 数组
- * @param {boolean} [isDebug=false] 调试模式使用no-cross执行请求，并将结果输出到控制台
+ * @param {boolean} [isDebug=false] 调试模式将使用no-cross执行请求，并将结果输出到控制台
  * @returns {Promise<object[]>} 一个对象数组，包含每个服务器的 URL、耗时、是否出错、出错信息、是否最快等信息
  * @description 该函数会并发地测试每个服务器的响应速度，并返回一个Json对象
  */
@@ -129,7 +129,7 @@ async function ServerChoose(TestURLs, isDebug = false) {
             const timeoutId = setTimeout(() => controller.abort(), 3000); // 超时时间3s
             const start = performance.now();
             try {
-                const response = await fetch(`${url}/test.bin`, { signal: controller.signal, mode: isDebug ? 'no-cors' : 'cors' });
+                const response = await fetch(`${url}/test.bin`, { signal: controller.signal });
                 clearTimeout(timeoutId);
                 if (!response.ok) throw new Error('Fetch error');
                 await response.arrayBuffer();
@@ -149,11 +149,12 @@ async function ServerChoose(TestURLs, isDebug = false) {
         isFastest: result.elapsedTime === minElapsedTime,
         index: result.index
     }));
+    /* 可能出现问题 */
     if (isDebug) {
         resultsArray.map(e => {
             console.log(`URL: ${e.url} 响应时间: %c${e.elapsedTime}ms %c出错: %c${e.isError}${e.isError ? `\n${e.error.stack}` : ''}`, `color:${e.isFastest ? '#0ff' : '#fff'}`, 'color:#fff', `color:${e.isError ? '#f00' : '#0f0'}`);
         });
-    }
+    };
     return resultsArray;
 }
 
@@ -181,12 +182,30 @@ function RandomString(length = 32) {
     return result;
 }
 
+/**
+ * 根据传入的布尔值决定是否启用计时功能，返回一个方法的对象用于执行性能计时
+ * @param {boolean} isTimmer - 是否启用计时器功能
+ * @returns {object} 返回一个包含 Start 和 Stop 方法的对象，用于启动和停止性能计时
+ */
+function DbgTimmer(isTimmer) {
+    if (!isTimmer) return { Start: () => { return }, Stop: () => { return } };
+    let timmer = [];
+    return {
+        Start: function (name = 'noname') {
+            timmer[name] = performance.now();
+        },
+        Stop: function (name = 'noname', text = '') {
+            const time = performance.now() - timmer[name];
+            console.log(`${text}: %c${time}ms`, 'color: #6495ed');
+            return time;
+        }
+    };
+}
 
 // IndexDB数据库操作
-class IndexedDBControl {
+window.indexedDBControl = class IndexedDBControl {
     /**
-     * 打开数据库
-     * 如果数据库不存在，会创建一个新的数据库并添加对象存储
+     * 打开数据库, 如数据库不存在则创建一个新的数据库并添加对象存储
      * @param {string} dbName 数据库名称
      * @param {string} storeName 对象存储名称
      * @returns {Promise<IDBDatabase>} 返回一个 Promise 对象，表示数据库打开操作
@@ -242,7 +261,6 @@ class IndexedDBControl {
         });
     }
 }
-window.indexedDBControl = IndexedDBControl;
 
 // YCL
 console.log(`

@@ -1,10 +1,8 @@
 let data, vmd, id, islocal;
-const serverURL = window.serverURL + "/";
 let other = getUrlParams('other'); // 模型数据
-const dataurl = other ? "data2.json" : "data.json";
-try { data = ReadJson(serverURL + dataurl, null, null, true) } catch (e) { Error(0, e) }
+const dataurl = other ? "/data2.json" : "/data.json";
+try { data = ReadJson(serverRoot + dataurl, null, null, true) } catch (e) { Error(0, e) }
 const total = data[0]['total'];
-
 export async function Init(callback) {
     try {
         Progress.main(3);
@@ -100,8 +98,8 @@ export const Finish = {
     },
 
     Auto: async () => {
-        let dataurl = other ? "data2.json" : "data.json";
-        let roledata = ReadJson(serverURL + dataurl, id, 0, false, true)
+        let dataurl = other ? "/data2.json" : "/data.json";
+        let roledata = ReadJson(serverRoot + dataurl, id, 0, false, true)
         let total = localStorage.onload;
         if (total != (2 + roledata['weapons'])) {
             total++;
@@ -134,8 +132,8 @@ export const Finish = {
     },
 
     MMD: async () => {
-        let roledata = ReadJson(serverURL + dataurl, id, 0, false, true)
-        let vmddata = ReadJson(serverURL + 'vmd/data.json', vmd, 0, false, true);
+        let roledata = ReadJson(serverRoot + dataurl, id, 0, false, true)
+        let vmddata = ReadJson(serverRoot + '/vmd/data.json', vmd, 0, false, true);
         let total = localStorage.onload;
         if (total != 3) {
             total++;

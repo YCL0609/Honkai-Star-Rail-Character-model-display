@@ -10,15 +10,16 @@
     <title>《崩坏:星穹铁道》角色立绘和3D模型展示</title>
     <link href="favicon.ico" rel="shortcut icon">
     <link rel="stylesheet" type="text/css" href="css/index.css">
-    <!-- <script src="//api.ycl.cool/js/function.js"></script> -->
-    <script src="outside/function.js"></script>
+    <script src="//api.ycl.cool/js/function.js"></script>
+    <!-- <script src="outside/function.js"></script> -->
+    <script> function log(...obj) { console.log(...obj) } </script>
 </head>
 
 <body>
     <div class="main">
         <div id="title">
             <h2 id="text1" style="margin: 10px 0px">《崩坏:星穹铁道》角色立绘及3D模型展示</h2>
-            <b class="updata" style="display: none;">当前为测试版! Is currently in beta!</b>
+            <!-- <b class="updata">当前为测试版! Is currently in beta!</b> -->
             <div class="info">
                 <a href="//www.ycl.cool/blog/index.php/archives/17" target="_blank">
                     <img decoding="async" src="//res.ycl.cool/img/icon.ico" height="16" width="16">
@@ -51,15 +52,17 @@
             <div class="error"></div>
             <div class="fault"></div>
             <div class="server">
-                <b>资源服务器无法连接或响应超时, 可手动选择服务器尝试<br>The resource server is unreachable or the response timed out. You may manually select a server to attempt.</b><br>
+                <b>资源服务器无法连接或响应超时, 可手动选择服务器尝试<br>The resource server is unreachable or the response timed out. You may
+                    manually select a server to attempt.</b><br>
                 <label for="server">服务器(Server): </label>
                 <select id="server">
-                    <option style="display: none" selected></option>
+                    <option value="-1" style="display: none" selected></option>
                     <option value="0">国际服务器0 - Globe server #0</option>
                     <option value="1">国际服务器1 - Globe server #1</option>
                     <option value="9">国内服务器 - China server #CN</option>
                 </select>
                 <button onclick="userChooseServer()">OK</button>
+                <a id="test-result"></a>
             </div>
         </div>
         <div id="form">
@@ -332,7 +335,7 @@
         <div class="overlay-box">
             <table style="width: 100%">
                 <thead>
-                    <td colspan="5" style="background-color: #2e2e2e;color: white;" id="text14">角色立绘展示</td>
+                    <td colspan="5" style="background-color: #2e2e2e;color: white">角色立绘展示</td>
                 </thead>
                 <tbody>
                     <tr>
@@ -371,7 +374,7 @@
             </table>
         </div>
     </div>
-    <script src="js/index.js"></script>
+    <script src="js/index.min.js"></script>
 </body>
 
 </html>

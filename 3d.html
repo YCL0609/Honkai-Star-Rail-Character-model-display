@@ -8,15 +8,17 @@
 	<link type="text/css" rel="stylesheet" href="css/3d.css">
 	<link href="favicon.ico" rel="shortcut icon">
 	<script>
-		const page_version = "2.7.0.0906";
+		const page_version = "3.0.0.0324";
 		// Webkit内核判断
 		if (/WebKit/i.test(navigator.userAgent) && !/(Chrome|android)/i.test(navigator.userAgent)) {
 			alert('由于Webkit内核对于WebGL兼容性有限, 页面可能出现未知渲染问题。\nDue to the limited compatibility of the Webkit kernel for WebGL, pages may have unknown rendering issues.')
 		}
+
+		// function log(...obj) { console.log(...obj) }
 	</script>
-	<script src="js/baidu.js"></script>
+	<!-- <script src="js/baidu.js"></script> -->
 	<script src="outside/function.js"></script>
-	<!-- <script src="//www.ycl.cool/js/function.js"></script> -->
+	<!-- <script src="//api.ycl.cool/js/function.js"></script> -->
 </head>
 
 <body>
@@ -41,11 +43,13 @@
 					<div style="margin-top: 10px;">
 						<label for="server">服务器(Server): </label>
 						<select id="server">
-							<option style="display: none" selected></option>
-							<option value="0">国内服务器 - China server</option>
-							<option value="1">国际服务器 - Globe server</option>
+							<option value="-1" style="display: none" selected></option>
+							<option value="0">国际服务器0 - Globe server #0</option>
+							<option value="1">国际服务器1 - Globe server #1</option>
+							<option value="9">国内服务器 - China server #CN</option>
 						</select>
-						<button onclick="userChooseServer()">OK</button>
+						<button onclick="userServerChoose()">OK</button>
+						<a id="test-result"></a>
 					</div>
 				</div>
 			</div>
@@ -115,7 +119,7 @@
 			</div>
 			<a style="color: aquamarine;">* 音乐文件是可选的(audio is optional)</a><br>
 			<a style="color: goldenrod;">请确保输入的网站允许来自sr.ycl.cool的跨域请求<br>
-			Please make sure that the website you enter allows cross-origin requests from sr.ycl.cool</a><br>
+				Please make sure that the website you enter allows cross-origin requests from sr.ycl.cool</a><br>
 			<button onclick="VMD_process('load')">OK</button>
 		</div>
 	</div>
