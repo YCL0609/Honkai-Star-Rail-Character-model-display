@@ -5,7 +5,7 @@ const serverMap = ["//139.224.2.122", "//server0.ycl.cool/srroot", "//server1.yc
 
 if (Debug) { // 调试初始化
     const id = getUrlParams('debug');
-    DebugID = !isNaN(id) ? id.padEnd(5, 0) : "00100";
+    DebugID = !isNaN(id) ? id.padEnd(5, 0) : "00101";
     console.log(`调试ID: %c${DebugID}`, 'color: #0ff');
     DbgRoot = "//localhost" + (window.location.protocol === "https:" ? "/sr_db" : ":8081")
     /**

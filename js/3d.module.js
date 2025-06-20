@@ -7,23 +7,21 @@ import { MMDLoader } from 'three/loaders/MMDLoader.js';
 import { MMDAnimationHelper } from 'three/animation/MMDAnimationHelper.js';
 import { GUI } from 'three/lil-gui.module.min.js';
 console.log('3D page version: ' + page_version + '\nthree.js version: ' + THREE.REVISION);
- 
+
 let stats, vmdurl, mp3url;
 let helper, mesh;
-let name, vmd, weapon, islocal;
 let camera, scene, renderer, effect;
 const clock = new THREE.Clock();
 const gui = new GUI();
 
 // 初始化
-timmer.Start('threeinit')
-UI.Init((params) => {
-  name = params[0];
-  vmd = params[1];
-  weapon = params[2];
-  islocal = params[3];
-});
-timmer.Stop('threeinit', 'three初始化')
+timmer.Start('threeinit');
+const initdata = await UI.Init();
+const name = initdata[0];
+const vmd = initdata[1];
+const weapon = initdata[2];
+const islocal = initdata[3];
+timmer.Stop('threeinit', 'three初始化');
 
 // 主函数
 try {

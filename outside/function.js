@@ -89,13 +89,14 @@ function getUrlParams(name) {
 }
 
 /**
- * Json处理函数 (以遗弃，保留仅作为兼容性)
+ * Json处理函数 (已遗弃，保留仅作为兼容性)
  * @param {string} url Json文件URL路径
  * @param {string} [val1] 返回Json数据键名
  * @param {string} [val2] 返回Json数据对象名
  * @param {boolean} [all=false] 是否返回全部Json数据
  * @param {boolean} [allkey=false] 是否返回选定键值全部数据
  * @returns {string|object} 返回指定值或数据对象
+ * @deprecated 当所有页面更改新的Json处理方法后删除
  */
 function ReadJson(url, val1, val2, all = false, allkey = false) {
     let xhr = new XMLHttpRequest();
@@ -149,7 +150,6 @@ async function ServerChoose(TestURLs, isDebug = false) {
         isFastest: result.elapsedTime === minElapsedTime,
         index: result.index
     }));
-    /* 可能出现问题 */
     if (isDebug) {
         resultsArray.map(e => {
             console.log(`URL: ${e.url} 响应时间: %c${e.elapsedTime}ms %c出错: %c${e.isError}${e.isError ? `\n${e.error.stack}` : ''}`, `color:${e.isFastest ? '#0ff' : '#fff'}`, 'color:#fff', `color:${e.isError ? '#f00' : '#0f0'}`);
@@ -220,7 +220,7 @@ window.indexedDBControl = class IndexedDBControl {
                 }
             };
             request.onsuccess = event => resolve(event.target.result);
-            request.onerror = event => reject(event.target.error);
+            request.onerror = event => reject(new Error(event.target.error));
         });
     }
 
@@ -239,7 +239,7 @@ window.indexedDBControl = class IndexedDBControl {
             const store = transaction.objectStore(storeName);
             const request = store.put(value, key);
             request.onsuccess = () => resolve();
-            request.onerror = event => reject(event.target.error);
+            request.onerror = event => reject(new Error(event.target.error));
         });
     }
 
@@ -257,7 +257,7 @@ window.indexedDBControl = class IndexedDBControl {
             const store = transaction.objectStore(storeName);
             const request = store.get(key);
             request.onsuccess = event => resolve(event.target.result);
-            request.onerror = event => reject(event.target.error);
+            request.onerror = event => reject(new Error(event.target.error));
         });
     }
 }

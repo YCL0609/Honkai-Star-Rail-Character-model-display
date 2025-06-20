@@ -10,11 +10,11 @@ let serverRoot, data, data2, timmer, DbgRoot;
 let DebugID = "1000";
 const Debug = isDebug();
 const nopic = [4, 12, 17, 45, 53]; // 无介绍立绘id
-const serverMap = ["//139.224.2.122", "//server1.ycl.cool/srroot", "//server0.ycl.cool/srroot"]; // 可用服务器
+const serverMap = ["//server1.ycl.cool/srroot", "//server0.ycl.cool/srroot"]; // 可用服务器
 
 if (Debug) { // 调试初始化
   const id = getUrlParams('debug');
-  DebugID = !isNaN(id) ? id.padEnd(4, 0) : "0010";
+  DebugID = !isNaN(id) ? id.padEnd(4, 0) : "0011";
   log(`调试ID: %c${DebugID}`, 'color: #0ff');
   DbgRoot = "//localhost" + (window.location.protocol == "https:" ? "/sr_db" : ":8081")
   /**
@@ -24,7 +24,7 @@ if (Debug) { // 调试初始化
    * 是否启动性能计时器
    **/
 }
- 
+
 (async () => {
   timmer = DbgTimmer(Number(DebugID[3]));
   timmer.Start('init');
@@ -67,7 +67,7 @@ async function ChangeLang(lang) {
   // 保存语言数据
   langCfg.userSelect = lang;
   localStorage.setItem('userlang', lang);
-  if (Debug) log(`语言切换为 ${lang}`);
+  Debug ? log(`语言切换为 ${lang}`) : null;
 
   // 清空表格
   try {
@@ -84,45 +84,66 @@ async function ChangeLang(lang) {
     document.getElementById('unknow').innerHTML = "";
   } catch (error) { InError(0, error.stack) }
 
-  // 获取语言数据
-  await Promise.all(['data', 'data2', 'text'].map(async (name) => {
-    if (langCfg[lang][name] === null) {
-      try {
-        const response = await fetch(`${serverRoot}/lang/${lang}/${name}.json`);
-        const json = await response.json();
-        langCfg[lang][name] = json;
-      } catch (error) { InError(3, `${name}.json文件获取失败:\n  ` + error.stack) }
-    }
-  }))
+  // 获取本地缓存
+  let langData = localStorage.getItem(`lang_${lang}`);
+  let mainData = localStorage.getItem('maindata');
 
-  // 处理主表格
-  if (data === undefined) {
-    fetch(`${serverRoot}/data.json`)
-      .then(response => response.json())
-      .then(json => {
-        data = json;
-        WriteToTable(json, langCfg[lang].data, true);
-        // 处理页脚
-        document.getElementById('ver0').innerHTML = data[0]['version'];
-        document.getElementById('ver1').innerHTML = data[0]['version2'];
-      })
-      .catch(error => InError(4, `data.json文件获取失败:\n  ` + error.stack));
-  } else {
-    WriteToTable(data, langCfg[lang].data, true);
+  // 获取服务器版本信息
+  let serverVer = null;
+  try {
+    const response = await fetch(`${serverRoot}/lang/version.txt`);
+    if (response.ok) serverVer = await response.text();
+  } catch (error) { InError(2, `本地缓存版本检查失败: ${error.stack}`) }
+
+  // 判断是否需要更新
+  const isCacheok = langData && mainData;
+  const isCacheverok = serverVer && localStorage.getItem('lang_version') == serverVer;
+  if (!isCacheok || !isCacheverok) {
+    // 从网络获取数据
+    Debug ? log('缓存: %c使用网络资源', 'color:#ff0') : null;
+    try {
+      await Promise.all([
+        // 加载语言数据
+        ...['data', 'data2', 'text'].map(async (name) => {
+          const response = await fetch(`${serverRoot}/lang/${lang}/${name}.json?t=${Date.now()}`);
+          if (!response.ok) InError(4, `语言文件 ${name}.json 获取失败: HTTP ${response.status} ${response.statusText}`);
+          const json = await response.json();
+          langCfg[lang][name] = json;
+        }),
+
+        // 加载 data.json
+        (async () => {
+          const response = await fetch(`${serverRoot}/data.json`);
+          if (!response.ok) InError(4, `data.json 文件获取失败: HTTP ${response.status} ${response.statusText}`);
+          data = await response.json();
+        })(),
+
+        // 加载 data2.json
+        (async () => {
+          const response2 = await fetch(`${serverRoot}/data2.json`);
+          if (!response2.ok) InError(4, `data2.json 文件获取失败: HTTP ${response.status} ${response.statusText}`);
+          data2 = await response2.json();
+        })()
+      ]).catch(error => InError(2, `异步获取资源失败: ${error.message}`, true));
+
+      // 缓存数据并存储版本号
+      localStorage.setItem(`lang_${lang}`, JSON.stringify(langCfg[lang]));
+      localStorage.setItem('maindata', JSON.stringify({ 'data': data, 'data2': data2 }));
+      if (serverVer) localStorage.setItem('lang_version', serverVer);
+    } catch (error) { InError(3, `网络资源加载失败: ${error.message}`, true) }
+  } else { // 使用缓存
+    langCfg[lang] = JSON.parse(langData);
+    data = JSON.parse(mainData).data;
+    data2 = JSON.parse(mainData).data2;
+    Debug ? log('缓存: %c使用缓存资源', 'color:#0f0') : null;
   }
 
-  // 处理副表格
-  if (data2 === undefined) {
-    fetch(`${serverRoot}/data2.json`)
-      .then(response => response.json())
-      .then(json => {
-        data2 = json;
-        WriteToTable(json, langCfg[lang].data2, false);
-      })
-      .catch(error => InError(4, `data2.json文件获取失败:\n  ` + error.stack));
-  } else {
-    WriteToTable(data2, langCfg[lang].data2, false);
-  }
+  // 处理页脚
+  document.getElementById('ver0').innerHTML = data[0]['version'];
+  document.getElementById('ver1').innerHTML = data[0]['version2'];
+  // 处理主副表格
+  WriteToTable(data, langCfg[lang].data, true);
+  WriteToTable(data2, langCfg[lang].data2, false);
 
   // 处理文字翻译
   try {
@@ -275,16 +296,16 @@ function ShowPicture(id) {
     img0.dataset.imgdata = "two";
     img1.style.display = null;
     img1.src = `${serverRoot}/img/character/${lang}/${id}_isman.jpg`;
-    if (Debug) log(`ID:${id} 使用双立绘`)
+    Debug ? log(`ID:${id} 使用双立绘`) : null
   } else if ([12, 17].includes(id)) { // 无人物介绍立绘
     img0.dataset.imgdata = "center";
-    if (Debug) log(`ID:${id} 使用大招立绘`)
+    Debug ? log(`ID:${id} 使用大招立绘`) : null
   } else {
     fetch(`${serverRoot}/img/character/${lang}/${id}.txt`, { method: 'HEAD' })
       .then(response => {
         if (response.ok) {
           img0.src = `${serverRoot}/img/character/zh/${id}.jpg`;
-          if (Debug) log(`ID:${id} 使用中文立绘图`)
+          Debug ? log(`ID:${id} 使用中文立绘图`) : null
         }
       })
   }
